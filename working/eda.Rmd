@@ -26,10 +26,11 @@ summary(twitter_data)
 sum(is.na(twitter_data))
 ```
 
-## Check sentiment class balance
+## Check the balance of sentiment categories
+Imbalanced Data
+A classification data set with skewed class proportions is called imbalanced.
 ```{r}
-sentiment_counts <- table(twitter_data$sentiment)
-sentiment_counts
+table(twitter_data$sentiment)
 ```
 
 ## Word Cloud
@@ -86,11 +87,70 @@ loadPkgs(trainpkgnames)
 # library(cli)
 ```
 
-# Train multinomial regression
+# Train naive Bayes model
 ## Load the necessary libraries: 
 Start by loading the required libraries for data manipulation, modeling, and evaluation.
 ```{r}
 source("usePackages.R")
-trainpkgnames <- c("tidyverse","text")
+trainpkgnames <- c("tidyverse","tm","caret")
 loadPkgs(trainpkgnames)
 ```
+
+```{r}
+# Load the data from a csv file
+tweets_data <- read_csv('../input/train1.csv')
+
+tweets_data$sentiment <- tweets_data$sentiment - 1
+
+# Create a Corpus from the text column
+corpus <- Corpus(VectorSource(tweets_data$tweet))
+
+# Clean and preprocess the Corpus
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, removeNumbers)
+corpus <- tm_map(corpus, removeWords, stopwords("en"))
+
+# Define a control function to select a minimum word frequency
+control <- list(wordLengths=c(1, Inf), bounds = list(global = c(5, Inf)))
+
+# Create a Document-Term Matrix
+dtm <- DocumentTermMatrix(corpus, control)
+
+# Convert the Document-Term Matrix to a dataframe
+dtm_df <- as.data.frame(as.matrix(dtm))
+
+# Add sentiment as a column to the dataframe
+dtm_df$sentiment <- as.factor(tweets_data$sentiment)
+```
+
+```{r}
+# Split the data into training and testing sets
+set.seed(123) 
+train_indices <- sample(1:nrow(dtm_df), 0.8*nrow(dtm_df))
+train_data <- dtm_df[train_indices, ]
+test_data <- dtm_df[-train_indices, ]
+
+# Check the balance of sentiment categories
+print(table(train_data$sentiment))
+
+# If the classes are imbalanced, we can do a simple resampling
+# Here is a simple way to upsample the minority classes
+up_train <- upSample(x = train_data[, -ncol(train_data)],
+                     y = train_data$sentiment)
+up_train$sentiment <- as.factor(up_train$Class)
+```
+
+```{r}
+# Fit a Random Forest model to the training data
+model <- train(sentiment ~ ., data = up_train, method = 'rf')
+```
+
+```{r}
+# Use the model to predict sentiment on test data
+test_data$predicted_sentiment <- predict(model, test_data)
+
+# Check the accuracy on the test set
+print(mean(test_data$sentiment == test_data$predicted_sentiment))
+```
+
