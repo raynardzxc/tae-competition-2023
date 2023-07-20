@@ -7,9 +7,13 @@ Discrete Choice Model
 
 # Import Libraries
 ```{r}
-library(mlogit)
-library(splitTools)
-library(dplyr)
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("mlogit","dplyr")
+# Use our custom load function
+loadPkgs(pkgnames)
 ```
 
 # Import Data
@@ -122,7 +126,9 @@ which(colnames(safety)=="Price4")
 Columns 4 to 83 of the safety data frame contains the attribute levels for each of the 4 alternatives (choices) indexed by 1,2,3 and 4 respectively.
 
 ```{r}
-S<-dfidx(subset(safety, Task<=15), shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
+# S<-dfidx(subset(safety, Task<=15), shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
+
+S<-dfidx(safety, shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
 ```
 
 ```{r}
@@ -177,7 +183,7 @@ prediction_df$No <- predict_data$No
 prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
 
 # Writing the output to a csv file
-write.csv(prediction_df, file = "../output/submission.csv", row.names = FALSE)
+write.csv(prediction_df, file = "../output/submission1.csv", row.names = FALSE)
 ```
 
 # Calculate Loss

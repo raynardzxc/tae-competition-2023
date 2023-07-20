@@ -1,0 +1,28 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Trying Stuff
+## Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("mlogit","dplyr")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+## Import Data
+```{r}
+safety <- read.csv("../input/train_preprocessed.csv")
+str(safety)
+head(safety)
+```
+## Getting column id's of start and end
+```{r}
+which(colnames(safety)=="CC1")
+which(colnames(safety)=="pparkYearly")
+```
