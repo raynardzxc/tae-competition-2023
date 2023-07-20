@@ -1,0 +1,25 @@
+---
+title: "Raynard EDA Notebook"
+output: html_notebook
+---
+
+Discrete Choice Model
+
+```{r}
+library(mlogit)
+library(splitTools)
+```
+
+Note that the four alternatives (choice observations) are comparable, so we introduce alternate specific estimates.
+
+```{r}
+set.seed(42)
+inds <- partition(data$class, p = c(train = 0.8, test = 0.2))
+str(inds)
+```
+
+```{r}
+train <- data[inds$train, ]
+test <- data[inds$test, ]
+```
+
