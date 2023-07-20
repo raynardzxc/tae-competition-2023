@@ -102,20 +102,20 @@ predict_data$educ <- as.factor(predict_data$educ)
 predict_data$region <- as.factor(predict_data$region)
 predict_data$Urb <- as.factor(predict_data$Urb)
 
-which(colnames(safety)=="CC1")
-which(colnames(safety)=="Price4")
+which(colnames(predict_data)=="CC1")
+which(colnames(predict_data)=="Price4")
+str(predict_data)
+str(test_set)
 ```
 
 
 ```{r}
-predict_data <- dfidx(predict_data, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
-prediction <- predict(M1, newdata=predict_data)
+predict_set <- dfidx(predict_data, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+prediction <- predict(M1, newdata=predict_set)
 ```
 
 ```{r}
-predict_data
-```
-```{r}
+predict_set
 Test
 ```
 

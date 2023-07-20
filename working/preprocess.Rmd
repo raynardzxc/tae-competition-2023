@@ -10,7 +10,7 @@ rm(list=ls())
 # Execute our custom script for loading packages
 source("usePackages.R")
 # Name of the packages 
-pkgnames <- c("dplyr","caret","mltools","data.table")
+pkgnames <- c("dplyr")
 # Use our custom load function
 loadPkgs(pkgnames)
 ```
