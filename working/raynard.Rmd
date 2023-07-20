@@ -51,10 +51,13 @@ table(test_set$Choice)
 ```{r}
 S<-dfidx(train_set, shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
 # segment+year+milesa+nighta+ppark+gender+agea+educ+region+Urb+incomea
+# | segment+ppark+gender+educ+region+Urb
+# | year+milesa+nighta+agea+incomea
+# year doesnt work
 ```
 
 ```{r}
-M1 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1 | segment+ppark+gender+educ+region+Urb, data=S, rpar=c(CC='n', GN='n', NS='n', BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
+M1 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1| milesa+nighta+agea+incomea, data=S, rpar=c(CC='n', GN='n', NS='n', BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
 ```
 
 ```{r}
@@ -77,14 +80,10 @@ ActualChoice1 <- test_set[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
 ```
-
+# Calculate Loss
 ```{r}
 testpredict_df <- as.data.frame(TestPredict1)
 colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
-```
-
-# Calculate Loss
-```{r}
 loss <- -1/nrow(test_set) * sum(test_set$Ch1 * log(testpredict_df$Ch1) +
                                 test_set$Ch2 * log(testpredict_df$Ch2) +
                                 test_set$Ch3 * log(testpredict_df$Ch3) +
@@ -158,7 +157,7 @@ prediction_df$No <- predict_data$No
 prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
 
 # Writing the output to a csv file
-write.csv(prediction_df, file = "../output/submission1.csv", row.names = FALSE)
+write.csv(prediction_df, file = "../output/submission.csv", row.names = FALSE)
 ```
 
 
