@@ -10,14 +10,14 @@ rm(list=ls())
 # Execute our custom script for loading packages
 source("usePackages.R")
 # Name of the packages 
-pkgnames <- c("dplyr","caret")
+pkgnames <- c("dplyr","caret","mltools","data.table")
 # Use our custom load function
 loadPkgs(pkgnames)
 ```
 
 ## Import Data
 ```{r}
-safety <- read.csv("../input/train.csv")
+safety <- read.csv("../input/train1.csv")
 str(safety)
 head(safety)
 ```
@@ -30,16 +30,46 @@ safety$Choice <- ifelse(safety$Ch1 == 1, 1,
 table(safety$Choice)
 ```
 
-## One-hot Encoding
+## Drop Columns
 ```{r}
-dummy <- dummyVars(" ~ .", data=safety)
-newdata <- data.frame(predict(dummy, newdata = safety)) 
-head(newdata)
+# might have collinearity with miles, milesind and milesa
+# might have collinearity with night, nightind and nighta
+df <- subset(safety, select = -c(segmentind,yearind,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind))
+head(df)
 ```
 
 ## Export
 ```{r}
 # Writing the output to a csv file
-write.csv(newdata, file = "../input/train_preprocessed.csv", row.names = FALSE)
+write.csv(df, file = "../input/train1_preprocessed.csv", row.names = FALSE)
 ```
 
+# Test Data
+## Import Test Data
+```{r}
+safety <- read.csv("../input/test1.csv")
+str(safety)
+head(safety)
+```
+## Add Choice
+```{r}
+safety$Choice <- 0
+safety$Ch1 <- 0
+safety$Ch2 <- 0
+safety$Ch3 <- 0
+safety$Ch4 <- 0
+```
+
+## Drop Columns
+```{r}
+# might have collinearity with miles, milesind and milesa
+# might have collinearity with night, nightind and nighta
+df <- subset(safety, select = -c(segmentind,yearind,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind))
+head(df)
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df, file = "../input/test1_preprocessed.csv", row.names = FALSE)
+```

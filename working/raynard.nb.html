@@ -1758,18 +1758,49 @@ display: none;
 <h2>Import Libraries</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdD1scygpKVxuIyBFeGVjdXRlIG91ciBjdXN0b20gc2NyaXB0IGZvciBsb2FkaW5nIHBhY2thZ2VzXG5zb3VyY2UoXCJ1c2VQYWNrYWdlcy5SXCIpXG4jIE5hbWUgb2YgdGhlIHBhY2thZ2VzIFxucGtnbmFtZXMgPC0gYyhcIm1sb2dpdFwiLFwiZHBseXJcIilcbiMgVXNlIG91ciBjdXN0b20gbG9hZCBmdW5jdGlvblxubG9hZFBrZ3MocGtnbmFtZXMpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdD1scygpKVxuIyBFeGVjdXRlIG91ciBjdXN0b20gc2NyaXB0IGZvciBsb2FkaW5nIHBhY2thZ2VzXG5zb3VyY2UoXCJ1c2VQYWNrYWdlcy5SXCIpXG4jIE5hbWUgb2YgdGhlIHBhY2thZ2VzIFxucGtnbmFtZXMgPC0gYyhcIm1sb2dpdFwiLFwiZHBseXJcIixcInNwbGl0VG9vbHNcIilcbiMgVXNlIG91ciBjdXN0b20gbG9hZCBmdW5jdGlvblxubG9hZFBrZ3MocGtnbmFtZXMpXG5gYGAifQ== -->
 <pre class="r"><code>rm(list=ls())
 # Execute our custom script for loading packages
 source(&quot;usePackages.R&quot;)
 # Name of the packages 
-pkgnames &lt;- c(&quot;mlogit&quot;,&quot;dplyr&quot;)
+pkgnames &lt;- c(&quot;mlogit&quot;,&quot;dplyr&quot;,&quot;splitTools&quot;)
 # Use our custom load function
 loadPkgs(pkgnames)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiJ21sb2dpdCcgaXMgbG9hZGVkIGNvcnJlY3RseVwiXG5bMV0gXCInZHBseXInIGlzIGxvYWRlZCBjb3JyZWN0bHlcIlxuIn0= -->
-<pre><code>[1] &quot;&#39;mlogit&#39; is loaded correctly&quot;
-[1] &quot;&#39;dplyr&#39; is loaded correctly&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBtbG9naXRcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogZGZpZHhcblxuQXR0YWNoaW5nIHBhY2thZ2U6IOKAmGRmaWR44oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6c3RhdHPigJk6XG5cbiAgICBmaWx0ZXJcbiJ9 -->
+<pre><code>Loading required package: mlogit
+Loading required package: dfidx
+
+Attaching package: ‘dfidx’
+
+The following object is masked from ‘package:stats’:
+
+    filter</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiJ21sb2dpdCcgaXMgbG9hZGVkIGNvcnJlY3RseVwiXG4ifQ== -->
+<pre><code>[1] &quot;&#39;mlogit&#39; is loaded correctly&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBkcGx5clxuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<pre><code>Loading required package: dplyr
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiJ2RwbHlyJyBpcyBsb2FkZWQgY29ycmVjdGx5XCJcbiJ9 -->
+<pre><code>[1] &quot;&#39;dplyr&#39; is loaded correctly&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBzcGxpdFRvb2xzXG4ifQ== -->
+<pre><code>Loading required package: splitTools</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiJ3NwbGl0VG9vbHMnIGlzIGxvYWRlZCBjb3JyZWN0bHlcIlxuIn0= -->
+<pre><code>[1] &quot;&#39;splitTools&#39; is loaded correctly&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1778,120 +1809,125 @@ loadPkgs(pkgnames)</code></pre>
 <h2>Import Data</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FmZXR5IDwtIHJlYWQuY3N2KFwiLi4vaW5wdXQvdHJhaW5fcHJlcHJvY2Vzc2VkLmNzdlwiKVxuc3RyKHNhZmV0eSlcbmBgYCJ9 -->
-<pre class="r"><code>safety &lt;- read.csv(&quot;../input/train_preprocessed.csv&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FmZXR5IDwtIHJlYWQuY3N2KFwiLi4vaW5wdXQvdHJhaW4xX3ByZXByb2Nlc3NlZC5jc3ZcIilcbnNhZmV0eSRzZWdtZW50IDwtIGFzLmZhY3RvcihzYWZldHkkc2VnbWVudClcbnNhZmV0eSRwcGFyayA8LSBhcy5mYWN0b3Ioc2FmZXR5JHBwYXJrKVxuc2FmZXR5JGdlbmRlciA8LSBhcy5mYWN0b3Ioc2FmZXR5JGdlbmRlcilcbnNhZmV0eSRlZHVjIDwtIGFzLmZhY3RvcihzYWZldHkkZWR1YylcbnNhZmV0eSRyZWdpb24gPC0gYXMuZmFjdG9yKHNhZmV0eSRyZWdpb24pXG5zYWZldHkkVXJiIDwtIGFzLmZhY3RvcihzYWZldHkkVXJiKVxuc3RyKHNhZmV0eSlcbmBgYCJ9 -->
+<pre class="r"><code>safety &lt;- read.csv(&quot;../input/train1_preprocessed.csv&quot;)
+safety$segment &lt;- as.factor(safety$segment)
+safety$ppark &lt;- as.factor(safety$ppark)
+safety$gender &lt;- as.factor(safety$gender)
+safety$educ &lt;- as.factor(safety$educ)
+safety$region &lt;- as.factor(safety$region)
+safety$Urb &lt;- as.factor(safety$Urb)
 str(safety)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MTQyNTAgb2JzLiBvZiAgMTYzIHZhcmlhYmxlczpcbiAkIENhc2UgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAxIDEgMSAxIDEgMSAxIDEgMSAxIC4uLlxuICQgTm8gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDEgMiAzIDQgNSA2IDcgOCA5IDEwIC4uLlxuICQgVGFzayAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDEgMiAzIDQgNSA2IDcgOCA5IDEwIC4uLlxuICQgQ0MxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMyAxIDAgMCAzIDAgMyAzIDAgLi4uXG4gJCBHTjEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAwIDEgMCAyIDAgMiAwIDAgMCAuLi5cbiAkIE5TMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICA0IDAgNSAwIDIgMCAwIDEgMCAwIC4uLlxuICQgQlUxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDYgMCAwIDIgMCA1IDAgMCAzIDAgLi4uXG4gJCBGQTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAyIDIgMCAxIDAgMSAwIDAgMCAuLi5cbiAkIExEMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDIgMCAzIDIgMCAwIDIgMCAwIC4uLlxuICQgQloxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMiAzIDAgMCAxIDIgMCAyIDAgLi4uXG4gJCBGQzEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAxIDAgMiAyIDAgMCAwIDIgMiAuLi5cbiAkIEZQMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAzIDAgMSAwIDAgNCAwIDIgMCAxIC4uLlxuICQgUlAxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDEgMCAwIDEgMCAwIDEgMSAwIDIgLi4uXG4gJCBQUDEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAwIDAgMCAyIDIgMSAwIDIgMCAuLi5cbiAkIEtBMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDEgMCAwIDEgMiAwIDEgMiAwIC4uLlxuICQgU0MxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMyAxIDAgMCA0IDQgMCAwIDEgLi4uXG4gJCBUUzEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAwIDIgMCAwIDEgMCAwIDEgMSAuLi5cbiAkIE5WMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAxIDAgMCAzIDMgMCAwIDAgMyAzIC4uLlxuICQgTUExICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDQgMCAwIDQgMCAwIDEgMSAyIDAgLi4uXG4gJCBMQjEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCA0IDAgNCAzIDAgMCAyIDAgNCAuLi5cbiAkIEFGMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDIgMCAyIDAgMSAzIDAgMCAyIC4uLlxuICQgSFUxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAyIDEgMCAwIDIgMiAwIDEgLi4uXG4gJCBQcmljZTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMiA4IDQgMyAxIDEgMyA0IDExIDYgLi4uXG4gJCBDQzIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAxIDIgMCAwIDEgMCAyIDIgMCAuLi5cbiAkIEdOMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAyIDAgMiAwIDEgMCAyIDAgMCAwIC4uLlxuICQgTlMyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDEgMCA1IDAgMSAwIDAgMyAwIDAgLi4uXG4gJCBCVTIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMiAwIDAgNCAwIDEgMCAwIDYgMCAuLi5cbiAkIEZBMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDEgMSAwIDEgMCAxIDAgMCAwIC4uLlxuICQgTEQyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMyAwIDIgMyAwIDAgMiAwIDAgLi4uXG4gJCBCWjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAxIDEgMCAwIDIgMiAwIDMgMCAuLi5cbiAkIEZDMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDIgMCAyIDEgMCAwIDAgMiAxIC4uLlxuICQgRlAyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDIgMCA0IDAgMCAxIDAgNCAwIDIgLi4uXG4gJCBSUDIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAwIDAgMiAwIDAgMSAxIDAgMiAuLi5cbiAkIFBQMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAxIDAgMCAwIDIgMSAxIDAgMiAwIC4uLlxuICQgS0EyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMiAwIDAgMSAyIDAgMiAxIDAgLi4uXG4gJCBTQzIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAyIDQgMCAwIDQgMyAwIDAgMyAuLi5cbiAkIFRTMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAxIDAgMyAwIDAgMiAwIDAgMiAyIC4uLlxuICQgTlYyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDEgMCAwIDMgMSAwIDAgMCAxIDMgLi4uXG4gJCBNQTIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAwIDAgNCAwIDAgNCA0IDIgMCAuLi5cbiAkIExCMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDEgMCAyIDIgMCAwIDQgMCAxIC4uLlxuICQgQUYyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMyAwIDIgMCAzIDEgMCAwIDIgLi4uXG4gJCBIVTIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDIgMSAwIDAgMSAxIDAgMSAuLi5cbiAkIFByaWNlMiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAyIDcgNiA3IDQgNyAyIDExIDQgNSAuLi5cbiAkIENDMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDIgMyAwIDAgMiAwIDIgMiAwIC4uLlxuICQgR04zICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDIgMCAyIDAgMSAwIDIgMCAwIDAgLi4uXG4gJCBOUzMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgNCAwIDUgMCA0IDAgMCA0IDAgMCAuLi5cbiAkIEJVMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICA1IDAgMCA1IDAgNSAwIDAgNCAwIC4uLlxuICQgRkEzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMiAyIDAgMiAwIDIgMCAwIDAgLi4uXG4gJCBMRDMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAxIDAgMiAyIDAgMCAzIDAgMCAuLi5cbiAkIEJaMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDMgMiAwIDAgMyAxIDAgMiAwIC4uLlxuICQgRkMzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMiAwIDIgMiAwIDAgMCAyIDIgLi4uXG4gJCBGUDMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMyAwIDEgMCAwIDIgMCAyIDAgNCAuLi5cbiAkIFJQMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAyIDAgMCAxIDAgMCAyIDEgMCAxIC4uLlxuICQgUFAzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDMgMCAwIDAgMSAzIDMgMCAxIDAgLi4uXG4gJCBLQTMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAyIDAgMCAxIDIgMCAyIDIgMCAuLi5cbiAkIFNDMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDIgMyAwIDAgMSAxIDAgMCA0IC4uLlxuICQgVFMzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDMgMCAyIDAgMCAxIDAgMCAyIDMgLi4uXG4gJCBOVjMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAwIDAgMSAxIDAgMCAwIDIgMyAuLi5cbiAkIE1BMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAxIDAgMCA0IDAgMCAyIDEgMiAwIC4uLlxuICQgTEIzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgNCAwIDEgMSAwIDAgMyAwIDIgLi4uXG4gJCBBRjMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAzIDAgMSAwIDIgMiAwIDAgMyAuLi5cbiAkIEhVMyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMSAyIDAgMCAxIDEgMCAyIC4uLlxuICQgUHJpY2UzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDIgMTIgNyAxMCAyIDExIDEyIDExIDExIDggLi4uXG4gJCBDQzQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEdONCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgTlM0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBCVTQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEZBNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgTEQ0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBCWjQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEZDNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgRlA0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBSUDQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFBQNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgS0E0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBTQzQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFRTNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgTlY0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBNQTQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIExCNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgQUY0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBIVTQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFByaWNlNCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgc2VnbWVudEZ1bGwuc2l6ZS5QaWNrdXAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBzZWdtZW50TWlkc2l6ZS5DYXIgICAgICAgICAgICAgICAgICAgICA6IGludCAgMSAxIDEgMSAxIDEgMSAxIDEgMSAuLi5cbiAkIHNlZ21lbnRNaWRzaXplLkx1eHVyeS5VdGlsaXR5LnNlZ2VtZW50czogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgc2VnbWVudE1pZHNpemUuVXRpbGl0eSAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBzZWdtZW50UHJlc3RpZ2UuTHV4dXJ5LlNlZGFuICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIHNlZ21lbnRTbWFsbC5DYXIgICAgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgeWVhciAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDIwMDAgMjAwMCAyMDAwIDIwMDAgMjAwMCAyMDAwIDIwMDAgMjAwMCAyMDAwIDIwMDAgLi4uXG4gJCBtaWxlczEwMS5Uby4xNTAuTWlsZXMgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIG1pbGVzMTUxLlRvLjIwMC5NaWxlcyAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgbWlsZXMyMDEuVG8uMjUwLk1pbGVzICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBtaWxlczI1MS5Uby4zMDAuTWlsZXMgICAgICAgICAgICAgICAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIG1pbGVzMzAxLlRvLjM1MC5NaWxlcyAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgbWlsZXMzNTEuVG8uNDAwLk1pbGVzICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gJCBtaWxlczUxLlRvLjEwMC5NaWxlcyAgICAgICAgICAgICAgICAgICA6IGludCAgMSAxIDEgMSAxIDEgMSAxIDEgMSAuLi5cbiAkIG1pbGVzT3Zlci40MDAuTWlsZXMgICAgICAgICAgICAgICAgICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgbWlsZXNVbmRlci41MC5NaWxlcyAgICAgICAgICAgICAgICAgICAgOiBpbnQgIDAgMCAwIDAgMCAwIDAgMCAwIDAgLi4uXG4gIFtsaXN0IG91dHB1dCB0cnVuY2F0ZWRdXG4ifQ== -->
-<pre><code>&#39;data.frame&#39;:   14250 obs. of  163 variables:
- $ Case                                   : int  1 1 1 1 1 1 1 1 1 1 ...
- $ No                                     : int  1 2 3 4 5 6 7 8 9 10 ...
- $ Task                                   : int  1 2 3 4 5 6 7 8 9 10 ...
- $ CC1                                    : int  0 3 1 0 0 3 0 3 3 0 ...
- $ GN1                                    : int  1 0 1 0 2 0 2 0 0 0 ...
- $ NS1                                    : int  4 0 5 0 2 0 0 1 0 0 ...
- $ BU1                                    : int  6 0 0 2 0 5 0 0 3 0 ...
- $ FA1                                    : int  0 2 2 0 1 0 1 0 0 0 ...
- $ LD1                                    : int  0 2 0 3 2 0 0 2 0 0 ...
- $ BZ1                                    : int  0 2 3 0 0 1 2 0 2 0 ...
- $ FC1                                    : int  0 1 0 2 2 0 0 0 2 2 ...
- $ FP1                                    : int  3 0 1 0 0 4 0 2 0 1 ...
- $ RP1                                    : int  1 0 0 1 0 0 1 1 0 2 ...
- $ PP1                                    : int  1 0 0 0 2 2 1 0 2 0 ...
- $ KA1                                    : int  0 1 0 0 1 2 0 1 2 0 ...
- $ SC1                                    : int  0 3 1 0 0 4 4 0 0 1 ...
- $ TS1                                    : int  1 0 2 0 0 1 0 0 1 1 ...
- $ NV1                                    : int  1 0 0 3 3 0 0 0 3 3 ...
- $ MA1                                    : int  4 0 0 4 0 0 1 1 2 0 ...
- $ LB1                                    : int  0 4 0 4 3 0 0 2 0 4 ...
- $ AF1                                    : int  0 2 0 2 0 1 3 0 0 2 ...
- $ HU1                                    : int  0 0 2 1 0 0 2 2 0 1 ...
- $ Price1                                 : int  2 8 4 3 1 1 3 4 11 6 ...
- $ CC2                                    : int  0 1 2 0 0 1 0 2 2 0 ...
- $ GN2                                    : int  2 0 2 0 1 0 2 0 0 0 ...
- $ NS2                                    : int  1 0 5 0 1 0 0 3 0 0 ...
- $ BU2                                    : int  2 0 0 4 0 1 0 0 6 0 ...
- $ FA2                                    : int  0 1 1 0 1 0 1 0 0 0 ...
- $ LD2                                    : int  0 3 0 2 3 0 0 2 0 0 ...
- $ BZ2                                    : int  0 1 1 0 0 2 2 0 3 0 ...
- $ FC2                                    : int  0 2 0 2 1 0 0 0 2 1 ...
- $ FP2                                    : int  2 0 4 0 0 1 0 4 0 2 ...
- $ RP2                                    : int  1 0 0 2 0 0 1 1 0 2 ...
- $ PP2                                    : int  1 0 0 0 2 1 1 0 2 0 ...
- $ KA2                                    : int  0 2 0 0 1 2 0 2 1 0 ...
- $ SC2                                    : int  0 2 4 0 0 4 3 0 0 3 ...
- $ TS2                                    : int  1 0 3 0 0 2 0 0 2 2 ...
- $ NV2                                    : int  1 0 0 3 1 0 0 0 1 3 ...
- $ MA2                                    : int  1 0 0 4 0 0 4 4 2 0 ...
- $ LB2                                    : int  0 1 0 2 2 0 0 4 0 1 ...
- $ AF2                                    : int  0 3 0 2 0 3 1 0 0 2 ...
- $ HU2                                    : int  0 0 2 1 0 0 1 1 0 1 ...
- $ Price2                                 : int  2 7 6 7 4 7 2 11 4 5 ...
- $ CC3                                    : int  0 2 3 0 0 2 0 2 2 0 ...
- $ GN3                                    : int  2 0 2 0 1 0 2 0 0 0 ...
- $ NS3                                    : int  4 0 5 0 4 0 0 4 0 0 ...
- $ BU3                                    : int  5 0 0 5 0 5 0 0 4 0 ...
- $ FA3                                    : int  0 2 2 0 2 0 2 0 0 0 ...
- $ LD3                                    : int  0 1 0 2 2 0 0 3 0 0 ...
- $ BZ3                                    : int  0 3 2 0 0 3 1 0 2 0 ...
- $ FC3                                    : int  0 2 0 2 2 0 0 0 2 2 ...
- $ FP3                                    : int  3 0 1 0 0 2 0 2 0 4 ...
- $ RP3                                    : int  2 0 0 1 0 0 2 1 0 1 ...
- $ PP3                                    : int  3 0 0 0 1 3 3 0 1 0 ...
- $ KA3                                    : int  0 2 0 0 1 2 0 2 2 0 ...
- $ SC3                                    : int  0 2 3 0 0 1 1 0 0 4 ...
- $ TS3                                    : int  3 0 2 0 0 1 0 0 2 3 ...
- $ NV3                                    : int  1 0 0 1 1 0 0 0 2 3 ...
- $ MA3                                    : int  1 0 0 4 0 0 2 1 2 0 ...
- $ LB3                                    : int  0 4 0 1 1 0 0 3 0 2 ...
- $ AF3                                    : int  0 3 0 1 0 2 2 0 0 3 ...
- $ HU3                                    : int  0 0 1 2 0 0 1 1 0 2 ...
- $ Price3                                 : int  2 12 7 10 2 11 12 11 11 8 ...
- $ CC4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ GN4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ NS4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ BU4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ FA4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ LD4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ BZ4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ FC4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ FP4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ RP4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ PP4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ KA4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ SC4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ TS4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ NV4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ MA4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ LB4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ AF4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ HU4                                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ Price4                                 : int  0 0 0 0 0 0 0 0 0 0 ...
- $ segmentFull.size.Pickup                : int  0 0 0 0 0 0 0 0 0 0 ...
- $ segmentMidsize.Car                     : int  1 1 1 1 1 1 1 1 1 1 ...
- $ segmentMidsize.Luxury.Utility.segements: int  0 0 0 0 0 0 0 0 0 0 ...
- $ segmentMidsize.Utility                 : int  0 0 0 0 0 0 0 0 0 0 ...
- $ segmentPrestige.Luxury.Sedan           : int  0 0 0 0 0 0 0 0 0 0 ...
- $ segmentSmall.Car                       : int  0 0 0 0 0 0 0 0 0 0 ...
- $ year                                   : int  2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 ...
- $ miles101.To.150.Miles                  : int  0 0 0 0 0 0 0 0 0 0 ...
- $ miles151.To.200.Miles                  : int  0 0 0 0 0 0 0 0 0 0 ...
- $ miles201.To.250.Miles                  : int  0 0 0 0 0 0 0 0 0 0 ...
- $ miles251.To.300.Miles                  : int  0 0 0 0 0 0 0 0 0 0 ...
- $ miles301.To.350.Miles                  : int  0 0 0 0 0 0 0 0 0 0 ...
- $ miles351.To.400.Miles                  : int  0 0 0 0 0 0 0 0 0 0 ...
- $ miles51.To.100.Miles                   : int  1 1 1 1 1 1 1 1 1 1 ...
- $ milesOver.400.Miles                    : int  0 0 0 0 0 0 0 0 0 0 ...
- $ milesUnder.50.Miles                    : int  0 0 0 0 0 0 0 0 0 0 ...
-  [list output truncated]</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiJ2RhdGEuZnJhbWUnOlx0MjE1NjUgb2JzLiBvZiAgOTkgdmFyaWFibGVzOlxuICQgQ2FzZSAgIDogaW50ICAxIDEgMSAxIDEgMSAxIDEgMSAxIC4uLlxuICQgTm8gICAgIDogaW50ICAxIDIgMyA0IDUgNiA3IDggOSAxMCAuLi5cbiAkIFRhc2sgICA6IGludCAgMSAyIDMgNCA1IDYgNyA4IDkgMTAgLi4uXG4gJCBDQzEgICAgOiBpbnQgIDAgMyAxIDAgMCAzIDAgMyAzIDAgLi4uXG4gJCBHTjEgICAgOiBpbnQgIDEgMCAxIDAgMiAwIDIgMCAwIDAgLi4uXG4gJCBOUzEgICAgOiBpbnQgIDQgMCA1IDAgMiAwIDAgMSAwIDAgLi4uXG4gJCBCVTEgICAgOiBpbnQgIDYgMCAwIDIgMCA1IDAgMCAzIDAgLi4uXG4gJCBGQTEgICAgOiBpbnQgIDAgMiAyIDAgMSAwIDEgMCAwIDAgLi4uXG4gJCBMRDEgICAgOiBpbnQgIDAgMiAwIDMgMiAwIDAgMiAwIDAgLi4uXG4gJCBCWjEgICAgOiBpbnQgIDAgMiAzIDAgMCAxIDIgMCAyIDAgLi4uXG4gJCBGQzEgICAgOiBpbnQgIDAgMSAwIDIgMiAwIDAgMCAyIDIgLi4uXG4gJCBGUDEgICAgOiBpbnQgIDMgMCAxIDAgMCA0IDAgMiAwIDEgLi4uXG4gJCBSUDEgICAgOiBpbnQgIDEgMCAwIDEgMCAwIDEgMSAwIDIgLi4uXG4gJCBQUDEgICAgOiBpbnQgIDEgMCAwIDAgMiAyIDEgMCAyIDAgLi4uXG4gJCBLQTEgICAgOiBpbnQgIDAgMSAwIDAgMSAyIDAgMSAyIDAgLi4uXG4gJCBTQzEgICAgOiBpbnQgIDAgMyAxIDAgMCA0IDQgMCAwIDEgLi4uXG4gJCBUUzEgICAgOiBpbnQgIDEgMCAyIDAgMCAxIDAgMCAxIDEgLi4uXG4gJCBOVjEgICAgOiBpbnQgIDEgMCAwIDMgMyAwIDAgMCAzIDMgLi4uXG4gJCBNQTEgICAgOiBpbnQgIDQgMCAwIDQgMCAwIDEgMSAyIDAgLi4uXG4gJCBMQjEgICAgOiBpbnQgIDAgNCAwIDQgMyAwIDAgMiAwIDQgLi4uXG4gJCBBRjEgICAgOiBpbnQgIDAgMiAwIDIgMCAxIDMgMCAwIDIgLi4uXG4gJCBIVTEgICAgOiBpbnQgIDAgMCAyIDEgMCAwIDIgMiAwIDEgLi4uXG4gJCBQcmljZTEgOiBpbnQgIDIgOCA0IDMgMSAxIDMgNCAxMSA2IC4uLlxuICQgQ0MyICAgIDogaW50ICAwIDEgMiAwIDAgMSAwIDIgMiAwIC4uLlxuICQgR04yICAgIDogaW50ICAyIDAgMiAwIDEgMCAyIDAgMCAwIC4uLlxuICQgTlMyICAgIDogaW50ICAxIDAgNSAwIDEgMCAwIDMgMCAwIC4uLlxuICQgQlUyICAgIDogaW50ICAyIDAgMCA0IDAgMSAwIDAgNiAwIC4uLlxuICQgRkEyICAgIDogaW50ICAwIDEgMSAwIDEgMCAxIDAgMCAwIC4uLlxuICQgTEQyICAgIDogaW50ICAwIDMgMCAyIDMgMCAwIDIgMCAwIC4uLlxuICQgQloyICAgIDogaW50ICAwIDEgMSAwIDAgMiAyIDAgMyAwIC4uLlxuICQgRkMyICAgIDogaW50ICAwIDIgMCAyIDEgMCAwIDAgMiAxIC4uLlxuICQgRlAyICAgIDogaW50ICAyIDAgNCAwIDAgMSAwIDQgMCAyIC4uLlxuICQgUlAyICAgIDogaW50ICAxIDAgMCAyIDAgMCAxIDEgMCAyIC4uLlxuICQgUFAyICAgIDogaW50ICAxIDAgMCAwIDIgMSAxIDAgMiAwIC4uLlxuICQgS0EyICAgIDogaW50ICAwIDIgMCAwIDEgMiAwIDIgMSAwIC4uLlxuICQgU0MyICAgIDogaW50ICAwIDIgNCAwIDAgNCAzIDAgMCAzIC4uLlxuICQgVFMyICAgIDogaW50ICAxIDAgMyAwIDAgMiAwIDAgMiAyIC4uLlxuICQgTlYyICAgIDogaW50ICAxIDAgMCAzIDEgMCAwIDAgMSAzIC4uLlxuICQgTUEyICAgIDogaW50ICAxIDAgMCA0IDAgMCA0IDQgMiAwIC4uLlxuICQgTEIyICAgIDogaW50ICAwIDEgMCAyIDIgMCAwIDQgMCAxIC4uLlxuICQgQUYyICAgIDogaW50ICAwIDMgMCAyIDAgMyAxIDAgMCAyIC4uLlxuICQgSFUyICAgIDogaW50ICAwIDAgMiAxIDAgMCAxIDEgMCAxIC4uLlxuICQgUHJpY2UyIDogaW50ICAyIDcgNiA3IDQgNyAyIDExIDQgNSAuLi5cbiAkIENDMyAgICA6IGludCAgMCAyIDMgMCAwIDIgMCAyIDIgMCAuLi5cbiAkIEdOMyAgICA6IGludCAgMiAwIDIgMCAxIDAgMiAwIDAgMCAuLi5cbiAkIE5TMyAgICA6IGludCAgNCAwIDUgMCA0IDAgMCA0IDAgMCAuLi5cbiAkIEJVMyAgICA6IGludCAgNSAwIDAgNSAwIDUgMCAwIDQgMCAuLi5cbiAkIEZBMyAgICA6IGludCAgMCAyIDIgMCAyIDAgMiAwIDAgMCAuLi5cbiAkIExEMyAgICA6IGludCAgMCAxIDAgMiAyIDAgMCAzIDAgMCAuLi5cbiAkIEJaMyAgICA6IGludCAgMCAzIDIgMCAwIDMgMSAwIDIgMCAuLi5cbiAkIEZDMyAgICA6IGludCAgMCAyIDAgMiAyIDAgMCAwIDIgMiAuLi5cbiAkIEZQMyAgICA6IGludCAgMyAwIDEgMCAwIDIgMCAyIDAgNCAuLi5cbiAkIFJQMyAgICA6IGludCAgMiAwIDAgMSAwIDAgMiAxIDAgMSAuLi5cbiAkIFBQMyAgICA6IGludCAgMyAwIDAgMCAxIDMgMyAwIDEgMCAuLi5cbiAkIEtBMyAgICA6IGludCAgMCAyIDAgMCAxIDIgMCAyIDIgMCAuLi5cbiAkIFNDMyAgICA6IGludCAgMCAyIDMgMCAwIDEgMSAwIDAgNCAuLi5cbiAkIFRTMyAgICA6IGludCAgMyAwIDIgMCAwIDEgMCAwIDIgMyAuLi5cbiAkIE5WMyAgICA6IGludCAgMSAwIDAgMSAxIDAgMCAwIDIgMyAuLi5cbiAkIE1BMyAgICA6IGludCAgMSAwIDAgNCAwIDAgMiAxIDIgMCAuLi5cbiAkIExCMyAgICA6IGludCAgMCA0IDAgMSAxIDAgMCAzIDAgMiAuLi5cbiAkIEFGMyAgICA6IGludCAgMCAzIDAgMSAwIDIgMiAwIDAgMyAuLi5cbiAkIEhVMyAgICA6IGludCAgMCAwIDEgMiAwIDAgMSAxIDAgMiAuLi5cbiAkIFByaWNlMyA6IGludCAgMiAxMiA3IDEwIDIgMTEgMTIgMTEgMTEgOCAuLi5cbiAkIENDNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEdONCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIE5TNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEJVNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEZBNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIExENCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEJaNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEZDNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEZQNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFJQNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFBQNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEtBNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFNDNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFRTNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIE5WNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIE1BNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIExCNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEFGNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIEhVNCAgICA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIFByaWNlNCA6IGludCAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuLi5cbiAkIHNlZ21lbnQ6IEZhY3RvciB3LyA2IGxldmVscyBcIkZ1bGwtc2l6ZSBQaWNrdXBcIiwuLjogMiAyIDIgMiAyIDIgMiAyIDIgMiAuLi5cbiAkIHllYXIgICA6IGludCAgMjAwMCAyMDAwIDIwMDAgMjAwMCAyMDAwIDIwMDAgMjAwMCAyMDAwIDIwMDAgMjAwMCAuLi5cbiAkIG1pbGVzYSA6IGludCAgODAgODAgODAgODAgODAgODAgODAgODAgODAgODAgLi4uXG4gJCBuaWdodGEgOiBpbnQgIDMwIDMwIDMwIDMwIDMwIDMwIDMwIDMwIDMwIDMwIC4uLlxuICQgcHBhcmsgIDogRmFjdG9yIHcvIDUgbGV2ZWxzIFwiRGFpbHlcIixcIk1vbnRobHlcIiwuLjogMSAxIDEgMSAxIDEgMSAxIDEgMSAuLi5cbiAkIGdlbmRlciA6IEZhY3RvciB3LyAyIGxldmVscyBcIkZlbWFsZVwiLFwiTWFsZVwiOiAxIDEgMSAxIDEgMSAxIDEgMSAxIC4uLlxuICQgYWdlYSAgIDogaW50ICA1MyA1MyA1MyA1MyA1MyA1MyA1MyA1MyA1MyA1MyAuLi5cbiAkIGVkdWMgICA6IEZhY3RvciB3LyA2IGxldmVscyBcIkNvbGxlZ2UgR3JhZHVhdGUgKDQgWWVhcnMpXCIsLi46IDUgNSA1IDUgNSA1IDUgNSA1IDUgLi4uXG4gJCByZWdpb24gOiBGYWN0b3Igdy8gNSBsZXZlbHMgXCJNV1wiLFwiTkVcIixcIlNFXCIsLi46IDIgMiAyIDIgMiAyIDIgMiAyIDIgLi4uXG4gJCBVcmIgICAgOiBGYWN0b3Igdy8gMyBsZXZlbHMgXCJSdXJhbC9Db3VudHJ5XCIsLi46IDIgMiAyIDIgMiAyIDIgMiAyIDIgLi4uXG4gJCBpbmNvbWVhOiBpbnQgIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIDQ0NTAwIC4uLlxuICQgQ2gxICAgIDogaW50ICAwIDEgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgQ2gyICAgIDogaW50ICAxIDAgMSAxIDEgMSAxIDEgMSAxIC4uLlxuICQgQ2gzICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgQ2g0ICAgIDogaW50ICAwIDAgMCAwIDAgMCAwIDAgMCAwIC4uLlxuICQgQ2hvaWNlIDogaW50ICAyIDEgMiAyIDIgMiAyIDIgMiAyIC4uLlxuIn0= -->
+<pre><code>&#39;data.frame&#39;:   21565 obs. of  99 variables:
+ $ Case   : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ No     : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Task   : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ CC1    : int  0 3 1 0 0 3 0 3 3 0 ...
+ $ GN1    : int  1 0 1 0 2 0 2 0 0 0 ...
+ $ NS1    : int  4 0 5 0 2 0 0 1 0 0 ...
+ $ BU1    : int  6 0 0 2 0 5 0 0 3 0 ...
+ $ FA1    : int  0 2 2 0 1 0 1 0 0 0 ...
+ $ LD1    : int  0 2 0 3 2 0 0 2 0 0 ...
+ $ BZ1    : int  0 2 3 0 0 1 2 0 2 0 ...
+ $ FC1    : int  0 1 0 2 2 0 0 0 2 2 ...
+ $ FP1    : int  3 0 1 0 0 4 0 2 0 1 ...
+ $ RP1    : int  1 0 0 1 0 0 1 1 0 2 ...
+ $ PP1    : int  1 0 0 0 2 2 1 0 2 0 ...
+ $ KA1    : int  0 1 0 0 1 2 0 1 2 0 ...
+ $ SC1    : int  0 3 1 0 0 4 4 0 0 1 ...
+ $ TS1    : int  1 0 2 0 0 1 0 0 1 1 ...
+ $ NV1    : int  1 0 0 3 3 0 0 0 3 3 ...
+ $ MA1    : int  4 0 0 4 0 0 1 1 2 0 ...
+ $ LB1    : int  0 4 0 4 3 0 0 2 0 4 ...
+ $ AF1    : int  0 2 0 2 0 1 3 0 0 2 ...
+ $ HU1    : int  0 0 2 1 0 0 2 2 0 1 ...
+ $ Price1 : int  2 8 4 3 1 1 3 4 11 6 ...
+ $ CC2    : int  0 1 2 0 0 1 0 2 2 0 ...
+ $ GN2    : int  2 0 2 0 1 0 2 0 0 0 ...
+ $ NS2    : int  1 0 5 0 1 0 0 3 0 0 ...
+ $ BU2    : int  2 0 0 4 0 1 0 0 6 0 ...
+ $ FA2    : int  0 1 1 0 1 0 1 0 0 0 ...
+ $ LD2    : int  0 3 0 2 3 0 0 2 0 0 ...
+ $ BZ2    : int  0 1 1 0 0 2 2 0 3 0 ...
+ $ FC2    : int  0 2 0 2 1 0 0 0 2 1 ...
+ $ FP2    : int  2 0 4 0 0 1 0 4 0 2 ...
+ $ RP2    : int  1 0 0 2 0 0 1 1 0 2 ...
+ $ PP2    : int  1 0 0 0 2 1 1 0 2 0 ...
+ $ KA2    : int  0 2 0 0 1 2 0 2 1 0 ...
+ $ SC2    : int  0 2 4 0 0 4 3 0 0 3 ...
+ $ TS2    : int  1 0 3 0 0 2 0 0 2 2 ...
+ $ NV2    : int  1 0 0 3 1 0 0 0 1 3 ...
+ $ MA2    : int  1 0 0 4 0 0 4 4 2 0 ...
+ $ LB2    : int  0 1 0 2 2 0 0 4 0 1 ...
+ $ AF2    : int  0 3 0 2 0 3 1 0 0 2 ...
+ $ HU2    : int  0 0 2 1 0 0 1 1 0 1 ...
+ $ Price2 : int  2 7 6 7 4 7 2 11 4 5 ...
+ $ CC3    : int  0 2 3 0 0 2 0 2 2 0 ...
+ $ GN3    : int  2 0 2 0 1 0 2 0 0 0 ...
+ $ NS3    : int  4 0 5 0 4 0 0 4 0 0 ...
+ $ BU3    : int  5 0 0 5 0 5 0 0 4 0 ...
+ $ FA3    : int  0 2 2 0 2 0 2 0 0 0 ...
+ $ LD3    : int  0 1 0 2 2 0 0 3 0 0 ...
+ $ BZ3    : int  0 3 2 0 0 3 1 0 2 0 ...
+ $ FC3    : int  0 2 0 2 2 0 0 0 2 2 ...
+ $ FP3    : int  3 0 1 0 0 2 0 2 0 4 ...
+ $ RP3    : int  2 0 0 1 0 0 2 1 0 1 ...
+ $ PP3    : int  3 0 0 0 1 3 3 0 1 0 ...
+ $ KA3    : int  0 2 0 0 1 2 0 2 2 0 ...
+ $ SC3    : int  0 2 3 0 0 1 1 0 0 4 ...
+ $ TS3    : int  3 0 2 0 0 1 0 0 2 3 ...
+ $ NV3    : int  1 0 0 1 1 0 0 0 2 3 ...
+ $ MA3    : int  1 0 0 4 0 0 2 1 2 0 ...
+ $ LB3    : int  0 4 0 1 1 0 0 3 0 2 ...
+ $ AF3    : int  0 3 0 1 0 2 2 0 0 3 ...
+ $ HU3    : int  0 0 1 2 0 0 1 1 0 2 ...
+ $ Price3 : int  2 12 7 10 2 11 12 11 11 8 ...
+ $ CC4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ GN4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ NS4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ BU4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ FA4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ LD4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ BZ4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ FC4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ FP4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ RP4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ PP4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ KA4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ SC4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ TS4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ NV4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ MA4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ LB4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ AF4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ HU4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Price4 : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ segment: Factor w/ 6 levels &quot;Full-size Pickup&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ year   : int  2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 ...
+ $ milesa : int  80 80 80 80 80 80 80 80 80 80 ...
+ $ nighta : int  30 30 30 30 30 30 30 30 30 30 ...
+ $ ppark  : Factor w/ 5 levels &quot;Daily&quot;,&quot;Monthly&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ gender : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+ $ agea   : int  53 53 53 53 53 53 53 53 53 53 ...
+ $ educ   : Factor w/ 6 levels &quot;College Graduate (4 Years)&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
+ $ region : Factor w/ 5 levels &quot;MW&quot;,&quot;NE&quot;,&quot;SE&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ Urb    : Factor w/ 3 levels &quot;Rural/Country&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ incomea: int  44500 44500 44500 44500 44500 44500 44500 44500 44500 44500 ...
+ $ Ch1    : int  0 1 0 0 0 0 0 0 0 0 ...
+ $ Ch2    : int  1 0 1 1 1 1 1 1 1 1 ...
+ $ Ch3    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Ch4    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Choice : int  2 1 2 2 2 2 2 2 2 2 ...</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChzYWZldHkpXG5gYGAifQ== -->
 <pre class="r"><code>head(safety)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NiwibmNvbCI6MTYzLCJzdW1tYXJ5Ijp7IkRlc2NyaXB0aW9uIjpbImRmIFs2IMOXIDE2M10iXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBKzFhWFcvYk5oUlYvRkczVHRvR3k3b1YyN0RYUFlXd1NUbUpIeHRuYm9IVm5oRW5hWmMzeGRac0lZb1V5TkxXN0duL3BYOW92NmdiSllxNlY3ZDBtbTBJNGcweElKZzg1MXplZTBpS2tkd2VIcndWemJkTnk3S3FWcTFTc2FwMTJiVHF4MGY5N1QxTElyS3padFdzUituM095bmFrbzMzOG5vc3J3Y1phYjR3WDhsR2w2T2xJK2Y0VFhrcjU5WXMrRlJKdklXK0svbTM1bXQ1djc2RTF6a3dWeWY1SzRqVGVTaXY2NkxqYTc2Szhxd1JIdGRPNDZ0RVkrV2VxSCtxTWZFNGh5bS9ibE9lenI4cGZ3WHhkUDMxcDRyODBQV3hTQnZucjZGdkdvOXo0elhDdk9aTTg1UGlEOUhZZFAvcThaYjVNK1hHNCt0K2ZRbVB4NjBoRGMxUDl6bGRIMTJEYVg1d3ZOWXRtNzlsOWVHMVdiYSsyTXQxKzQvNm8zTnJxby91RXpvK3ZyOHFCbDVybHEwUDlYalQreFBueHVmQTM5bC9qYnpkeUd0b1dCLzdYK2J2VS91UG5uODF3bXNjYTY0Ny8weitiekkvZUkzcC9PQ3hiM0wrbWZ4VERZM0htbVg1TlcvYWY4dk9iN3IybEtkbjZ6L1pmL2hjdU83K3grdEE5eDg5dy9EOGJWaHF6elh6L3JvaG5uN3UrWHQrRmZoUFBYL2VjWDJOUDh6WHF0VDNyL203bnYrN3pyL3EvRjNQejEzbnYyMyt0djJ0K3Z5dGVuMzMvR3J6Ly9mOTgxL3dSOS9STVk5L2Q3aU4rdlY3Y2FWOGxYNTRyQWZPaGJ1UWpVMHIvZkZSZ2JXZXMzRHpkbVVZYXZUSVdaem43V3F2MTliTmw4T2lPUndYemYzam90bC9VVFJmSDREZ0ZBUXdXSDlVTkEraE9ZTG1EekRZR01LT0lQSHdwR2dPVU9MOW92bWlYelJmRlVVK0dFWGV4RzJEUFE3Mk9OampZSStEUFE3MlFIQUtBaGlzUCtKZ2o0TTlEdlk0Mk9OZ0QybzQ0V0FQRXU5enNNZkJIaS9aNDJCUGdEMEI5Z1RZRTJCUGdEMFFuSUlBQnV1UEJOZ1RZRStBUFFIMkJOaURHazRFMklQRSt3THNDYkFuU3ZZRTJMUEJuZzMyYkxCbmd6MGI3SUhnRkFRd1dIOWtnejBiN05sZ3p3WjdOdGlER2s1c3NBZUo5MjJ3WjRNOXUyUlA5NzVjdUxNTE40ajdpZSt6aGZlYnkwYmU1RHk1ek9uUGNucmdUVE95NTBRNTh4MWhYaWZ2a3VpS0hjZWU3OFZYVExKdVNpOXkrUmRFbnV0eTlwdWNIVVh1SXZabXhXaGpkK29FdVdZejE0d3ZIRmtxRkZLN2NvdjJzd3ZQZHhmdFZwc2RoYXpkYWJGQjJpK1RuWXprTFJQSlZTUTNSbklWS1l5UlFrVUtZNlJRa1RhSi9Ed2pGZGNtM0ZiRy9maUxHMzBVcHFqallDbzVrdTVwNE0zbWNidkZsRVZXZ25tYnFmckxzRkN3VFdCYndSMENkeFM4UStBZEJlOFNlRmZCZXdUZVUzQzNnRGN6dUt2Z2RDcHkvRW1HSzZ2dEF0Mll1U25TZCtWTzBIOVptZ29iQUxMdXpGenBOWFhjUlpDZFFUYUdPaG5VMGRDR2hLUS94dExaUnpKVmhtamwwTGZ1TkpuMFF0K1hPNTI5akp4cDRzUXVZemI3U2U3SFJlRXNWYVdzeThhVGVSajZlaUpTL0pWMFY0YWZwL0FvWE1RelBXQ2VRZDhvS1Q4T0x3cWNzVFlUNVpSZnA1cWpMT1ZKT0hGaUx3d2N2NXptWWVUT0pEeDRVKzRQdnkvM3g3U3Y5UTNWMTkzTjQranNNSWxrbGw2WUJIR2tiK3QxaVkrVHN5UTZLKzdpeHhJNlR2dXNCN2YvVjE0d1NUMmxLOStTVnh4S1c2MHU2M2E3Vk5GR2lyWlJ3WkdDR3hVQ0tZUlJZU09GYlZSMGtLSmpWT3dneFk1UnNZc1V1MFpGRnltNkpnVkhNOGFOTThiUmZIRGpmSERraFJ1OWNGUXBOMWJLVWFXOFZPbnpYSUVtdlRUbnp3cGVDVXEzblE1RzYyR2JCa2NPT2lZZXJjV09pVWYrZGszOEh2QjdKaDY1TDVuZlVydzZPVmhwOXB1WGwwNTBmdUI0dnI0TE5qSmtFQWJ4dk1DVWF1aWlreWhEM3JqdWVTRlNVSG9HRkZDMU40Zkh6ems4cXMzaHNXWmVQQkQwNXFGOElpRFA4bytpOEZlbW4rZlRsNERLNzFiMmVVQWYraWUrczlBUC9ScHNUcDNZWVQ5SE1sNzJQcENRUm5pWm5rb3lxSkwrTjRVNkNWNkxDUEEwQ2RKS3B0dVRlUktjYnd0TC9STUlmc1ZaVTVVVjdmY3FaZVhQZktpNk51c0dNeS9ReDJuZGQ4NWNmU2cra1k0encrd3k4b0pZTzVIb1FxNXM3R2hkY3hMNkdzbThXUi8rQW9Oc3d2cWRJUUFBIn0= -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6NiwibmNvbCI6OTksInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzYgw5cgOTldIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQSsxWXpZN2JOaENtOVdObm5hUUowQll0ZWloOFRBL2V4VW9LMEd2c3JST2dzU0dzZDczcDNyZ3lZd3NyUzRaK2tteFBmYUcrU3c5OW5yU1V6ZUhRRE9WNmkvWVdBWVNITThPWitUakRvZVR6c3pkKzkwMlhFR0lUeDdLSTdYS1N1SmNYby82UGhIUDRwRVVjY2xUL2Z1QktYM0lpNHVNeEgrMk4wRHhVdWJXeHpxM1ZsZ1gvVURrUnNoYkJ4OWJXRStYWEVyOGdkOFRjYlpDREQxWG1hdjR0UlFaK2REbkVwZHNIdWEzNGFXbHlOWFo5dmEzcEVJRkp4Ni9ybU9TcUQ1Ti9vSFc1dnY4bS81WWkxL01QajYzZzBmTkRORnIxN3lpLytuclZ0NW9qVlE0eTAvN1UvQWVLYmIxK3dWNFRQcE52MVQ3TTNRYTVhdGRSZEhUL2VwM3IrWUVZVFB1anJnZTlwdjFyaWsvTlRWTitWU3o3NmsvSHArK3RLVDY5VG5UNzZ2bXlESExRYWNxUGp2SFE4Nm42VnZ2QWZlcXZJK2lPaUtGRFBzWGZoTytmNmsvdmY0NG1CNzZxczYvL21mQWZzajlxanZYOVVXMGYwdjlNK0hVZGZiMnEwK1FmNUtiNmErcmZldTUxdWQ1Yi8wMzlxWDFoMy9sWDg2RFhuOTdEMVAxN1JMWTExeFh6aDRiMSt2TlovbG4rUDhwdHRUNE5ZK2ZGdEoyd2R5d3BPUFYwczJyTGZUcXFrcVJmeEwreVhoaEh0OVZhOEIrTzQvbUdPNlM1WVBXQTlicjZVT1YzdmNzeVR1THlybGV3QlZ1eHRDeUUzaFBRRXdxQy9YV1lzNktNRjNMOWxNMXBLb1JIMHhWTmtvMnozYWpkS0tFRkJDMmh2S1ZSbVhGVjhoRTNxZk9IZWNoTkRCc0d5TDgzRDF0dFFvWlJoMnY5SlNKMElld3pHaWVBdkRQTzBuSXBwKzZFSndJMnRYM0YySzBVdFg5aE5PZXpqVkViakJwaDN5c3NDeXlNR045bkptYk91S1lQOENXMzZMbDV5RmhjODlpSkJTcnZ1MkdXSkx4MGVpOXpPcTlveVhyUGdsNk52L2hCYUR5cUphdzNqWlpabGtCZHZvb1h5MTNXVjJGV2xBc3dJcXdLMmJmVGJDVjV2V2VuZlgvWHhUY1h0WXVUV1JiUk1zNVNtb0RwKzJSZ3orbjdwRENzOFJWUWs1K0FtaUlGMHRiVmZ4NkNMU3c4UHE5eW1wd01zeW90YzZpOEI5UHFwc3B2NUlIc1h0YVRrMkY5ZnU5UkliLy9hUjZOWDFMd21MNVVUVi9LVGMraGNuakQzTmNwM1pTdUdQU2NDQTdMa0JaTXBpNEQ3Z1V0YmdWdEQ0ZW5RTDZjU0hJeWxlVGdVcEtqRjVKOGZZWUsxNmlBeGthaEpNK1JESkg4R1kxTmNka0ZPcDdNSkRsV0hBOGsrV0lreVZjeXlIYVl4eEU3UlhnZXd2TVFub2Z3UElUbklUeFV1RVlGTkRZS1BZVG5JVHdQNFhrSXowTjRHTVBNUTNqb2VPQWhQQS9oZVR2d1BJVG5JendmNGZrSXowZDRQc0pEaFd0VVFHT2owRWQ0UHNMekVaNlA4SHlFaHpITWZJU0hqZ2Mrd3ZNUm5yOER6MGQ0QWNJTEVGNkE4QUtFRnlBOFZMaEdCVFEyQ2dPRUZ5QzhBT0VGQ0M5QWVCakRMRUI0NkhnUUlMd0E0UVU3OEdEVzRTOGg5VHNJSE1zN0psOWIycXM0WVFXRldjcnZqeEptN25wTmN6aS83UVZMNS9KaWR1aUNnWnJENWhYMGdYYk9GdnltZ0lCNG00UVE0alRpbHcyVkc3N0VrN1BFS2x0aVJwWVN5M0NaY1RCYUd6cktzL2ZIMElycS9tWDl0dTFsN1lhTzNKM1RraDYvemZrU3N1bktPK1k2MmJxKzRyZ3hxLzU3MHRVV3QzS044YVJLYStmemZyU3MwdHUrUjdhZlBtcERiaEg4RzdLbW82MUxSNy8wMml4ZHhDbDBUemVoTnd3dTd5ODR5QTNHNDNVZXkveDFPYmM0THJPU2dsNDN5aExnYkcrY2ozOERYWFZiMVpVVkFBQT0ifQ== -->
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Case"],"name":[1],"type":["int"],"align":["right"]},{"label":["No"],"name":[2],"type":["int"],"align":["right"]},{"label":["Task"],"name":[3],"type":["int"],"align":["right"]},{"label":["CC1"],"name":[4],"type":["int"],"align":["right"]},{"label":["GN1"],"name":[5],"type":["int"],"align":["right"]},{"label":["NS1"],"name":[6],"type":["int"],"align":["right"]},{"label":["BU1"],"name":[7],"type":["int"],"align":["right"]},{"label":["FA1"],"name":[8],"type":["int"],"align":["right"]},{"label":["LD1"],"name":[9],"type":["int"],"align":["right"]},{"label":["BZ1"],"name":[10],"type":["int"],"align":["right"]},{"label":["FC1"],"name":[11],"type":["int"],"align":["right"]},{"label":["FP1"],"name":[12],"type":["int"],"align":["right"]},{"label":["RP1"],"name":[13],"type":["int"],"align":["right"]},{"label":["PP1"],"name":[14],"type":["int"],"align":["right"]},{"label":["KA1"],"name":[15],"type":["int"],"align":["right"]},{"label":["SC1"],"name":[16],"type":["int"],"align":["right"]},{"label":["TS1"],"name":[17],"type":["int"],"align":["right"]},{"label":["NV1"],"name":[18],"type":["int"],"align":["right"]},{"label":["MA1"],"name":[19],"type":["int"],"align":["right"]},{"label":["LB1"],"name":[20],"type":["int"],"align":["right"]},{"label":["AF1"],"name":[21],"type":["int"],"align":["right"]},{"label":["HU1"],"name":[22],"type":["int"],"align":["right"]},{"label":["Price1"],"name":[23],"type":["int"],"align":["right"]},{"label":["CC2"],"name":[24],"type":["int"],"align":["right"]},{"label":["GN2"],"name":[25],"type":["int"],"align":["right"]},{"label":["NS2"],"name":[26],"type":["int"],"align":["right"]},{"label":["BU2"],"name":[27],"type":["int"],"align":["right"]},{"label":["FA2"],"name":[28],"type":["int"],"align":["right"]},{"label":["LD2"],"name":[29],"type":["int"],"align":["right"]},{"label":["BZ2"],"name":[30],"type":["int"],"align":["right"]},{"label":["FC2"],"name":[31],"type":["int"],"align":["right"]},{"label":["FP2"],"name":[32],"type":["int"],"align":["right"]},{"label":["RP2"],"name":[33],"type":["int"],"align":["right"]},{"label":["PP2"],"name":[34],"type":["int"],"align":["right"]},{"label":["KA2"],"name":[35],"type":["int"],"align":["right"]},{"label":["SC2"],"name":[36],"type":["int"],"align":["right"]},{"label":["TS2"],"name":[37],"type":["int"],"align":["right"]},{"label":["NV2"],"name":[38],"type":["int"],"align":["right"]},{"label":["MA2"],"name":[39],"type":["int"],"align":["right"]},{"label":["LB2"],"name":[40],"type":["int"],"align":["right"]},{"label":["AF2"],"name":[41],"type":["int"],"align":["right"]},{"label":["HU2"],"name":[42],"type":["int"],"align":["right"]},{"label":["Price2"],"name":[43],"type":["int"],"align":["right"]},{"label":["CC3"],"name":[44],"type":["int"],"align":["right"]},{"label":["GN3"],"name":[45],"type":["int"],"align":["right"]},{"label":["NS3"],"name":[46],"type":["int"],"align":["right"]},{"label":["BU3"],"name":[47],"type":["int"],"align":["right"]},{"label":["FA3"],"name":[48],"type":["int"],"align":["right"]},{"label":["LD3"],"name":[49],"type":["int"],"align":["right"]},{"label":["BZ3"],"name":[50],"type":["int"],"align":["right"]},{"label":["FC3"],"name":[51],"type":["int"],"align":["right"]},{"label":["FP3"],"name":[52],"type":["int"],"align":["right"]},{"label":["RP3"],"name":[53],"type":["int"],"align":["right"]},{"label":["PP3"],"name":[54],"type":["int"],"align":["right"]},{"label":["KA3"],"name":[55],"type":["int"],"align":["right"]},{"label":["SC3"],"name":[56],"type":["int"],"align":["right"]},{"label":["TS3"],"name":[57],"type":["int"],"align":["right"]},{"label":["NV3"],"name":[58],"type":["int"],"align":["right"]},{"label":["MA3"],"name":[59],"type":["int"],"align":["right"]},{"label":["LB3"],"name":[60],"type":["int"],"align":["right"]},{"label":["AF3"],"name":[61],"type":["int"],"align":["right"]},{"label":["HU3"],"name":[62],"type":["int"],"align":["right"]},{"label":["Price3"],"name":[63],"type":["int"],"align":["right"]},{"label":["CC4"],"name":[64],"type":["int"],"align":["right"]},{"label":["GN4"],"name":[65],"type":["int"],"align":["right"]},{"label":["NS4"],"name":[66],"type":["int"],"align":["right"]},{"label":["BU4"],"name":[67],"type":["int"],"align":["right"]},{"label":["FA4"],"name":[68],"type":["int"],"align":["right"]},{"label":["LD4"],"name":[69],"type":["int"],"align":["right"]},{"label":["BZ4"],"name":[70],"type":["int"],"align":["right"]},{"label":["FC4"],"name":[71],"type":["int"],"align":["right"]},{"label":["FP4"],"name":[72],"type":["int"],"align":["right"]},{"label":["RP4"],"name":[73],"type":["int"],"align":["right"]},{"label":["PP4"],"name":[74],"type":["int"],"align":["right"]},{"label":["KA4"],"name":[75],"type":["int"],"align":["right"]},{"label":["SC4"],"name":[76],"type":["int"],"align":["right"]},{"label":["TS4"],"name":[77],"type":["int"],"align":["right"]},{"label":["NV4"],"name":[78],"type":["int"],"align":["right"]},{"label":["MA4"],"name":[79],"type":["int"],"align":["right"]},{"label":["LB4"],"name":[80],"type":["int"],"align":["right"]},{"label":["AF4"],"name":[81],"type":["int"],"align":["right"]},{"label":["HU4"],"name":[82],"type":["int"],"align":["right"]},{"label":["Price4"],"name":[83],"type":["int"],"align":["right"]},{"label":["segmentFull.size.Pickup"],"name":[84],"type":["int"],"align":["right"]},{"label":["segmentMidsize.Car"],"name":[85],"type":["int"],"align":["right"]},{"label":["segmentMidsize.Luxury.Utility.segements"],"name":[86],"type":["int"],"align":["right"]},{"label":["segmentMidsize.Utility"],"name":[87],"type":["int"],"align":["right"]},{"label":["segmentPrestige.Luxury.Sedan"],"name":[88],"type":["int"],"align":["right"]},{"label":["segmentSmall.Car"],"name":[89],"type":["int"],"align":["right"]},{"label":["year"],"name":[90],"type":["int"],"align":["right"]},{"label":["miles101.To.150.Miles"],"name":[91],"type":["int"],"align":["right"]},{"label":["miles151.To.200.Miles"],"name":[92],"type":["int"],"align":["right"]},{"label":["miles201.To.250.Miles"],"name":[93],"type":["int"],"align":["right"]},{"label":["miles251.To.300.Miles"],"name":[94],"type":["int"],"align":["right"]},{"label":["miles301.To.350.Miles"],"name":[95],"type":["int"],"align":["right"]},{"label":["miles351.To.400.Miles"],"name":[96],"type":["int"],"align":["right"]},{"label":["miles51.To.100.Miles"],"name":[97],"type":["int"],"align":["right"]},{"label":["milesOver.400.Miles"],"name":[98],"type":["int"],"align":["right"]},{"label":["milesUnder.50.Miles"],"name":[99],"type":["int"],"align":["right"]},{"label":["night10..To.20."],"name":[100],"type":["int"],"align":["right"]},{"label":["night21..To.30."],"name":[101],"type":["int"],"align":["right"]},{"label":["night31..To.40."],"name":[102],"type":["int"],"align":["right"]},{"label":["night41..To.50."],"name":[103],"type":["int"],"align":["right"]},{"label":["night51..To.60."],"name":[104],"type":["int"],"align":["right"]},{"label":["night61..To.70."],"name":[105],"type":["int"],"align":["right"]},{"label":["night71..To.80."],"name":[106],"type":["int"],"align":["right"]},{"label":["night81..To.90."],"name":[107],"type":["int"],"align":["right"]},{"label":["night91..To.100."],"name":[108],"type":["int"],"align":["right"]},{"label":["nightUnder.10."],"name":[109],"type":["int"],"align":["right"]},{"label":["genderFemale"],"name":[110],"type":["int"],"align":["right"]},{"label":["genderMale"],"name":[111],"type":["int"],"align":["right"]},{"label":["age30.To.39"],"name":[112],"type":["int"],"align":["right"]},{"label":["age40.To.49"],"name":[113],"type":["int"],"align":["right"]},{"label":["age50.To.59"],"name":[114],"type":["int"],"align":["right"]},{"label":["age60...Over"],"name":[115],"type":["int"],"align":["right"]},{"label":["ageUnder.30"],"name":[116],"type":["int"],"align":["right"]},{"label":["educCollege.Graduate..4.Years."],"name":[117],"type":["int"],"align":["right"]},{"label":["educGrade.School"],"name":[118],"type":["int"],"align":["right"]},{"label":["educHigh.School"],"name":[119],"type":["int"],"align":["right"]},{"label":["educPostgraduate.College"],"name":[120],"type":["int"],"align":["right"]},{"label":["educSome.College..1.3.Years."],"name":[121],"type":["int"],"align":["right"]},{"label":["educTrade.Vocational.School"],"name":[122],"type":["int"],"align":["right"]},{"label":["regionMW"],"name":[123],"type":["int"],"align":["right"]},{"label":["regionNE"],"name":[124],"type":["int"],"align":["right"]},{"label":["regionSE"],"name":[125],"type":["int"],"align":["right"]},{"label":["regionSW"],"name":[126],"type":["int"],"align":["right"]},{"label":["regionW"],"name":[127],"type":["int"],"align":["right"]},{"label":["UrbRural.Country"],"name":[128],"type":["int"],"align":["right"]},{"label":["UrbSuburban"],"name":[129],"type":["int"],"align":["right"]},{"label":["UrbUrban.City"],"name":[130],"type":["int"],"align":["right"]},{"label":["income.100.000.to..109.999"],"name":[131],"type":["int"],"align":["right"]},{"label":["income.110.000.to..119.999"],"name":[132],"type":["int"],"align":["right"]},{"label":["income.120.000.to..129.999"],"name":[133],"type":["int"],"align":["right"]},{"label":["income.130.000.to..139.999"],"name":[134],"type":["int"],"align":["right"]},{"label":["income.140.000.to..149.999"],"name":[135],"type":["int"],"align":["right"]},{"label":["income.150.000.to..159.999"],"name":[136],"type":["int"],"align":["right"]},{"label":["income.160.000.to..169.999"],"name":[137],"type":["int"],"align":["right"]},{"label":["income.170.000.to..179.999"],"name":[138],"type":["int"],"align":["right"]},{"label":["income.190.000.to..199.999"],"name":[139],"type":["int"],"align":["right"]},{"label":["income.200.000.to..209.999"],"name":[140],"type":["int"],"align":["right"]},{"label":["income.220.000.to..229.999"],"name":[141],"type":["int"],"align":["right"]},{"label":["income.250.000.to..259.999"],"name":[142],"type":["int"],"align":["right"]},{"label":["income.270.000.to..279.999"],"name":[143],"type":["int"],"align":["right"]},{"label":["income.290.000.to..299.999"],"name":[144],"type":["int"],"align":["right"]},{"label":["income.30.000.to..39.999"],"name":[145],"type":["int"],"align":["right"]},{"label":["income.300.000...Over"],"name":[146],"type":["int"],"align":["right"]},{"label":["income.40.000.to..49.999"],"name":[147],"type":["int"],"align":["right"]},{"label":["income.50.000.to..59.999"],"name":[148],"type":["int"],"align":["right"]},{"label":["income.60.000.to..69.999"],"name":[149],"type":["int"],"align":["right"]},{"label":["income.70.000.to..79.999"],"name":[150],"type":["int"],"align":["right"]},{"label":["income.80.000.to..89.999"],"name":[151],"type":["int"],"align":["right"]},{"label":["income.90.000.to..99.999"],"name":[152],"type":["int"],"align":["right"]},{"label":["incomeUnder..29.999"],"name":[153],"type":["int"],"align":["right"]},{"label":["pparkDaily"],"name":[154],"type":["int"],"align":["right"]},{"label":["pparkMonthly"],"name":[155],"type":["int"],"align":["right"]},{"label":["pparkNever"],"name":[156],"type":["int"],"align":["right"]},{"label":["pparkWeekly"],"name":[157],"type":["int"],"align":["right"]},{"label":["pparkYearly"],"name":[158],"type":["int"],"align":["right"]},{"label":["Ch1"],"name":[159],"type":["int"],"align":["right"]},{"label":["Ch2"],"name":[160],"type":["int"],"align":["right"]},{"label":["Ch3"],"name":[161],"type":["int"],"align":["right"]},{"label":["Ch4"],"name":[162],"type":["int"],"align":["right"]},{"label":["Choice"],"name":[163],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"1","4":"0","5":"1","6":"4","7":"6","8":"0","9":"0","10":"0","11":"0","12":"3","13":"1","14":"1","15":"0","16":"0","17":"1","18":"1","19":"4","20":"0","21":"0","22":"0","23":"2","24":"0","25":"2","26":"1","27":"2","28":"0","29":"0","30":"0","31":"0","32":"2","33":"1","34":"1","35":"0","36":"0","37":"1","38":"1","39":"1","40":"0","41":"0","42":"0","43":"2","44":"0","45":"2","46":"4","47":"5","48":"0","49":"0","50":"0","51":"0","52":"3","53":"2","54":"3","55":"0","56":"0","57":"3","58":"1","59":"1","60":"0","61":"0","62":"0","63":"2","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"0","85":"1","86":"0","87":"0","88":"0","89":"0","90":"2000","91":"0","92":"0","93":"0","94":"0","95":"0","96":"0","97":"1","98":"0","99":"0","100":"0","101":"1","102":"0","103":"0","104":"0","105":"0","106":"0","107":"0","108":"0","109":"0","110":"1","111":"0","112":"0","113":"0","114":"1","115":"0","116":"0","117":"0","118":"0","119":"0","120":"0","121":"1","122":"0","123":"0","124":"1","125":"0","126":"0","127":"0","128":"0","129":"1","130":"0","131":"0","132":"0","133":"0","134":"0","135":"0","136":"0","137":"0","138":"0","139":"0","140":"0","141":"0","142":"0","143":"0","144":"0","145":"0","146":"0","147":"1","148":"0","149":"0","150":"0","151":"0","152":"0","153":"0","154":"1","155":"0","156":"0","157":"0","158":"0","159":"0","160":"1","161":"0","162":"0","163":"2","_rn_":"1"},{"1":"1","2":"2","3":"2","4":"3","5":"0","6":"0","7":"0","8":"2","9":"2","10":"2","11":"1","12":"0","13":"0","14":"0","15":"1","16":"3","17":"0","18":"0","19":"0","20":"4","21":"2","22":"0","23":"8","24":"1","25":"0","26":"0","27":"0","28":"1","29":"3","30":"1","31":"2","32":"0","33":"0","34":"0","35":"2","36":"2","37":"0","38":"0","39":"0","40":"1","41":"3","42":"0","43":"7","44":"2","45":"0","46":"0","47":"0","48":"2","49":"1","50":"3","51":"2","52":"0","53":"0","54":"0","55":"2","56":"2","57":"0","58":"0","59":"0","60":"4","61":"3","62":"0","63":"12","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"0","85":"1","86":"0","87":"0","88":"0","89":"0","90":"2000","91":"0","92":"0","93":"0","94":"0","95":"0","96":"0","97":"1","98":"0","99":"0","100":"0","101":"1","102":"0","103":"0","104":"0","105":"0","106":"0","107":"0","108":"0","109":"0","110":"1","111":"0","112":"0","113":"0","114":"1","115":"0","116":"0","117":"0","118":"0","119":"0","120":"0","121":"1","122":"0","123":"0","124":"1","125":"0","126":"0","127":"0","128":"0","129":"1","130":"0","131":"0","132":"0","133":"0","134":"0","135":"0","136":"0","137":"0","138":"0","139":"0","140":"0","141":"0","142":"0","143":"0","144":"0","145":"0","146":"0","147":"1","148":"0","149":"0","150":"0","151":"0","152":"0","153":"0","154":"1","155":"0","156":"0","157":"0","158":"0","159":"1","160":"0","161":"0","162":"0","163":"1","_rn_":"2"},{"1":"1","2":"3","3":"3","4":"1","5":"1","6":"5","7":"0","8":"2","9":"0","10":"3","11":"0","12":"1","13":"0","14":"0","15":"0","16":"1","17":"2","18":"0","19":"0","20":"0","21":"0","22":"2","23":"4","24":"2","25":"2","26":"5","27":"0","28":"1","29":"0","30":"1","31":"0","32":"4","33":"0","34":"0","35":"0","36":"4","37":"3","38":"0","39":"0","40":"0","41":"0","42":"2","43":"6","44":"3","45":"2","46":"5","47":"0","48":"2","49":"0","50":"2","51":"0","52":"1","53":"0","54":"0","55":"0","56":"3","57":"2","58":"0","59":"0","60":"0","61":"0","62":"1","63":"7","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"0","85":"1","86":"0","87":"0","88":"0","89":"0","90":"2000","91":"0","92":"0","93":"0","94":"0","95":"0","96":"0","97":"1","98":"0","99":"0","100":"0","101":"1","102":"0","103":"0","104":"0","105":"0","106":"0","107":"0","108":"0","109":"0","110":"1","111":"0","112":"0","113":"0","114":"1","115":"0","116":"0","117":"0","118":"0","119":"0","120":"0","121":"1","122":"0","123":"0","124":"1","125":"0","126":"0","127":"0","128":"0","129":"1","130":"0","131":"0","132":"0","133":"0","134":"0","135":"0","136":"0","137":"0","138":"0","139":"0","140":"0","141":"0","142":"0","143":"0","144":"0","145":"0","146":"0","147":"1","148":"0","149":"0","150":"0","151":"0","152":"0","153":"0","154":"1","155":"0","156":"0","157":"0","158":"0","159":"0","160":"1","161":"0","162":"0","163":"2","_rn_":"3"},{"1":"1","2":"4","3":"4","4":"0","5":"0","6":"0","7":"2","8":"0","9":"3","10":"0","11":"2","12":"0","13":"1","14":"0","15":"0","16":"0","17":"0","18":"3","19":"4","20":"4","21":"2","22":"1","23":"3","24":"0","25":"0","26":"0","27":"4","28":"0","29":"2","30":"0","31":"2","32":"0","33":"2","34":"0","35":"0","36":"0","37":"0","38":"3","39":"4","40":"2","41":"2","42":"1","43":"7","44":"0","45":"0","46":"0","47":"5","48":"0","49":"2","50":"0","51":"2","52":"0","53":"1","54":"0","55":"0","56":"0","57":"0","58":"1","59":"4","60":"1","61":"1","62":"2","63":"10","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"0","85":"1","86":"0","87":"0","88":"0","89":"0","90":"2000","91":"0","92":"0","93":"0","94":"0","95":"0","96":"0","97":"1","98":"0","99":"0","100":"0","101":"1","102":"0","103":"0","104":"0","105":"0","106":"0","107":"0","108":"0","109":"0","110":"1","111":"0","112":"0","113":"0","114":"1","115":"0","116":"0","117":"0","118":"0","119":"0","120":"0","121":"1","122":"0","123":"0","124":"1","125":"0","126":"0","127":"0","128":"0","129":"1","130":"0","131":"0","132":"0","133":"0","134":"0","135":"0","136":"0","137":"0","138":"0","139":"0","140":"0","141":"0","142":"0","143":"0","144":"0","145":"0","146":"0","147":"1","148":"0","149":"0","150":"0","151":"0","152":"0","153":"0","154":"1","155":"0","156":"0","157":"0","158":"0","159":"0","160":"1","161":"0","162":"0","163":"2","_rn_":"4"},{"1":"1","2":"5","3":"5","4":"0","5":"2","6":"2","7":"0","8":"1","9":"2","10":"0","11":"2","12":"0","13":"0","14":"2","15":"1","16":"0","17":"0","18":"3","19":"0","20":"3","21":"0","22":"0","23":"1","24":"0","25":"1","26":"1","27":"0","28":"1","29":"3","30":"0","31":"1","32":"0","33":"0","34":"2","35":"1","36":"0","37":"0","38":"1","39":"0","40":"2","41":"0","42":"0","43":"4","44":"0","45":"1","46":"4","47":"0","48":"2","49":"2","50":"0","51":"2","52":"0","53":"0","54":"1","55":"1","56":"0","57":"0","58":"1","59":"0","60":"1","61":"0","62":"0","63":"2","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"0","85":"1","86":"0","87":"0","88":"0","89":"0","90":"2000","91":"0","92":"0","93":"0","94":"0","95":"0","96":"0","97":"1","98":"0","99":"0","100":"0","101":"1","102":"0","103":"0","104":"0","105":"0","106":"0","107":"0","108":"0","109":"0","110":"1","111":"0","112":"0","113":"0","114":"1","115":"0","116":"0","117":"0","118":"0","119":"0","120":"0","121":"1","122":"0","123":"0","124":"1","125":"0","126":"0","127":"0","128":"0","129":"1","130":"0","131":"0","132":"0","133":"0","134":"0","135":"0","136":"0","137":"0","138":"0","139":"0","140":"0","141":"0","142":"0","143":"0","144":"0","145":"0","146":"0","147":"1","148":"0","149":"0","150":"0","151":"0","152":"0","153":"0","154":"1","155":"0","156":"0","157":"0","158":"0","159":"0","160":"1","161":"0","162":"0","163":"2","_rn_":"5"},{"1":"1","2":"6","3":"6","4":"3","5":"0","6":"0","7":"5","8":"0","9":"0","10":"1","11":"0","12":"4","13":"0","14":"2","15":"2","16":"4","17":"1","18":"0","19":"0","20":"0","21":"1","22":"0","23":"1","24":"1","25":"0","26":"0","27":"1","28":"0","29":"0","30":"2","31":"0","32":"1","33":"0","34":"1","35":"2","36":"4","37":"2","38":"0","39":"0","40":"0","41":"3","42":"0","43":"7","44":"2","45":"0","46":"0","47":"5","48":"0","49":"0","50":"3","51":"0","52":"2","53":"0","54":"3","55":"2","56":"1","57":"1","58":"0","59":"0","60":"0","61":"2","62":"0","63":"11","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"0","85":"1","86":"0","87":"0","88":"0","89":"0","90":"2000","91":"0","92":"0","93":"0","94":"0","95":"0","96":"0","97":"1","98":"0","99":"0","100":"0","101":"1","102":"0","103":"0","104":"0","105":"0","106":"0","107":"0","108":"0","109":"0","110":"1","111":"0","112":"0","113":"0","114":"1","115":"0","116":"0","117":"0","118":"0","119":"0","120":"0","121":"1","122":"0","123":"0","124":"1","125":"0","126":"0","127":"0","128":"0","129":"1","130":"0","131":"0","132":"0","133":"0","134":"0","135":"0","136":"0","137":"0","138":"0","139":"0","140":"0","141":"0","142":"0","143":"0","144":"0","145":"0","146":"0","147":"1","148":"0","149":"0","150":"0","151":"0","152":"0","153":"0","154":"1","155":"0","156":"0","157":"0","158":"0","159":"0","160":"1","161":"0","162":"0","163":"2","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[163]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Case"],"name":[1],"type":["int"],"align":["right"]},{"label":["No"],"name":[2],"type":["int"],"align":["right"]},{"label":["Task"],"name":[3],"type":["int"],"align":["right"]},{"label":["CC1"],"name":[4],"type":["int"],"align":["right"]},{"label":["GN1"],"name":[5],"type":["int"],"align":["right"]},{"label":["NS1"],"name":[6],"type":["int"],"align":["right"]},{"label":["BU1"],"name":[7],"type":["int"],"align":["right"]},{"label":["FA1"],"name":[8],"type":["int"],"align":["right"]},{"label":["LD1"],"name":[9],"type":["int"],"align":["right"]},{"label":["BZ1"],"name":[10],"type":["int"],"align":["right"]},{"label":["FC1"],"name":[11],"type":["int"],"align":["right"]},{"label":["FP1"],"name":[12],"type":["int"],"align":["right"]},{"label":["RP1"],"name":[13],"type":["int"],"align":["right"]},{"label":["PP1"],"name":[14],"type":["int"],"align":["right"]},{"label":["KA1"],"name":[15],"type":["int"],"align":["right"]},{"label":["SC1"],"name":[16],"type":["int"],"align":["right"]},{"label":["TS1"],"name":[17],"type":["int"],"align":["right"]},{"label":["NV1"],"name":[18],"type":["int"],"align":["right"]},{"label":["MA1"],"name":[19],"type":["int"],"align":["right"]},{"label":["LB1"],"name":[20],"type":["int"],"align":["right"]},{"label":["AF1"],"name":[21],"type":["int"],"align":["right"]},{"label":["HU1"],"name":[22],"type":["int"],"align":["right"]},{"label":["Price1"],"name":[23],"type":["int"],"align":["right"]},{"label":["CC2"],"name":[24],"type":["int"],"align":["right"]},{"label":["GN2"],"name":[25],"type":["int"],"align":["right"]},{"label":["NS2"],"name":[26],"type":["int"],"align":["right"]},{"label":["BU2"],"name":[27],"type":["int"],"align":["right"]},{"label":["FA2"],"name":[28],"type":["int"],"align":["right"]},{"label":["LD2"],"name":[29],"type":["int"],"align":["right"]},{"label":["BZ2"],"name":[30],"type":["int"],"align":["right"]},{"label":["FC2"],"name":[31],"type":["int"],"align":["right"]},{"label":["FP2"],"name":[32],"type":["int"],"align":["right"]},{"label":["RP2"],"name":[33],"type":["int"],"align":["right"]},{"label":["PP2"],"name":[34],"type":["int"],"align":["right"]},{"label":["KA2"],"name":[35],"type":["int"],"align":["right"]},{"label":["SC2"],"name":[36],"type":["int"],"align":["right"]},{"label":["TS2"],"name":[37],"type":["int"],"align":["right"]},{"label":["NV2"],"name":[38],"type":["int"],"align":["right"]},{"label":["MA2"],"name":[39],"type":["int"],"align":["right"]},{"label":["LB2"],"name":[40],"type":["int"],"align":["right"]},{"label":["AF2"],"name":[41],"type":["int"],"align":["right"]},{"label":["HU2"],"name":[42],"type":["int"],"align":["right"]},{"label":["Price2"],"name":[43],"type":["int"],"align":["right"]},{"label":["CC3"],"name":[44],"type":["int"],"align":["right"]},{"label":["GN3"],"name":[45],"type":["int"],"align":["right"]},{"label":["NS3"],"name":[46],"type":["int"],"align":["right"]},{"label":["BU3"],"name":[47],"type":["int"],"align":["right"]},{"label":["FA3"],"name":[48],"type":["int"],"align":["right"]},{"label":["LD3"],"name":[49],"type":["int"],"align":["right"]},{"label":["BZ3"],"name":[50],"type":["int"],"align":["right"]},{"label":["FC3"],"name":[51],"type":["int"],"align":["right"]},{"label":["FP3"],"name":[52],"type":["int"],"align":["right"]},{"label":["RP3"],"name":[53],"type":["int"],"align":["right"]},{"label":["PP3"],"name":[54],"type":["int"],"align":["right"]},{"label":["KA3"],"name":[55],"type":["int"],"align":["right"]},{"label":["SC3"],"name":[56],"type":["int"],"align":["right"]},{"label":["TS3"],"name":[57],"type":["int"],"align":["right"]},{"label":["NV3"],"name":[58],"type":["int"],"align":["right"]},{"label":["MA3"],"name":[59],"type":["int"],"align":["right"]},{"label":["LB3"],"name":[60],"type":["int"],"align":["right"]},{"label":["AF3"],"name":[61],"type":["int"],"align":["right"]},{"label":["HU3"],"name":[62],"type":["int"],"align":["right"]},{"label":["Price3"],"name":[63],"type":["int"],"align":["right"]},{"label":["CC4"],"name":[64],"type":["int"],"align":["right"]},{"label":["GN4"],"name":[65],"type":["int"],"align":["right"]},{"label":["NS4"],"name":[66],"type":["int"],"align":["right"]},{"label":["BU4"],"name":[67],"type":["int"],"align":["right"]},{"label":["FA4"],"name":[68],"type":["int"],"align":["right"]},{"label":["LD4"],"name":[69],"type":["int"],"align":["right"]},{"label":["BZ4"],"name":[70],"type":["int"],"align":["right"]},{"label":["FC4"],"name":[71],"type":["int"],"align":["right"]},{"label":["FP4"],"name":[72],"type":["int"],"align":["right"]},{"label":["RP4"],"name":[73],"type":["int"],"align":["right"]},{"label":["PP4"],"name":[74],"type":["int"],"align":["right"]},{"label":["KA4"],"name":[75],"type":["int"],"align":["right"]},{"label":["SC4"],"name":[76],"type":["int"],"align":["right"]},{"label":["TS4"],"name":[77],"type":["int"],"align":["right"]},{"label":["NV4"],"name":[78],"type":["int"],"align":["right"]},{"label":["MA4"],"name":[79],"type":["int"],"align":["right"]},{"label":["LB4"],"name":[80],"type":["int"],"align":["right"]},{"label":["AF4"],"name":[81],"type":["int"],"align":["right"]},{"label":["HU4"],"name":[82],"type":["int"],"align":["right"]},{"label":["Price4"],"name":[83],"type":["int"],"align":["right"]},{"label":["segment"],"name":[84],"type":["fctr"],"align":["left"]},{"label":["year"],"name":[85],"type":["int"],"align":["right"]},{"label":["milesa"],"name":[86],"type":["int"],"align":["right"]},{"label":["nighta"],"name":[87],"type":["int"],"align":["right"]},{"label":["ppark"],"name":[88],"type":["fctr"],"align":["left"]},{"label":["gender"],"name":[89],"type":["fctr"],"align":["left"]},{"label":["agea"],"name":[90],"type":["int"],"align":["right"]},{"label":["educ"],"name":[91],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[92],"type":["fctr"],"align":["left"]},{"label":["Urb"],"name":[93],"type":["fctr"],"align":["left"]},{"label":["incomea"],"name":[94],"type":["int"],"align":["right"]},{"label":["Ch1"],"name":[95],"type":["int"],"align":["right"]},{"label":["Ch2"],"name":[96],"type":["int"],"align":["right"]},{"label":["Ch3"],"name":[97],"type":["int"],"align":["right"]},{"label":["Ch4"],"name":[98],"type":["int"],"align":["right"]},{"label":["Choice"],"name":[99],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"1","4":"0","5":"1","6":"4","7":"6","8":"0","9":"0","10":"0","11":"0","12":"3","13":"1","14":"1","15":"0","16":"0","17":"1","18":"1","19":"4","20":"0","21":"0","22":"0","23":"2","24":"0","25":"2","26":"1","27":"2","28":"0","29":"0","30":"0","31":"0","32":"2","33":"1","34":"1","35":"0","36":"0","37":"1","38":"1","39":"1","40":"0","41":"0","42":"0","43":"2","44":"0","45":"2","46":"4","47":"5","48":"0","49":"0","50":"0","51":"0","52":"3","53":"2","54":"3","55":"0","56":"0","57":"3","58":"1","59":"1","60":"0","61":"0","62":"0","63":"2","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"Midsize Car","85":"2000","86":"80","87":"30","88":"Daily","89":"Female","90":"53","91":"Some College (1-3 Years)","92":"NE","93":"Suburban","94":"44500","95":"0","96":"1","97":"0","98":"0","99":"2","_rn_":"1"},{"1":"1","2":"2","3":"2","4":"3","5":"0","6":"0","7":"0","8":"2","9":"2","10":"2","11":"1","12":"0","13":"0","14":"0","15":"1","16":"3","17":"0","18":"0","19":"0","20":"4","21":"2","22":"0","23":"8","24":"1","25":"0","26":"0","27":"0","28":"1","29":"3","30":"1","31":"2","32":"0","33":"0","34":"0","35":"2","36":"2","37":"0","38":"0","39":"0","40":"1","41":"3","42":"0","43":"7","44":"2","45":"0","46":"0","47":"0","48":"2","49":"1","50":"3","51":"2","52":"0","53":"0","54":"0","55":"2","56":"2","57":"0","58":"0","59":"0","60":"4","61":"3","62":"0","63":"12","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"Midsize Car","85":"2000","86":"80","87":"30","88":"Daily","89":"Female","90":"53","91":"Some College (1-3 Years)","92":"NE","93":"Suburban","94":"44500","95":"1","96":"0","97":"0","98":"0","99":"1","_rn_":"2"},{"1":"1","2":"3","3":"3","4":"1","5":"1","6":"5","7":"0","8":"2","9":"0","10":"3","11":"0","12":"1","13":"0","14":"0","15":"0","16":"1","17":"2","18":"0","19":"0","20":"0","21":"0","22":"2","23":"4","24":"2","25":"2","26":"5","27":"0","28":"1","29":"0","30":"1","31":"0","32":"4","33":"0","34":"0","35":"0","36":"4","37":"3","38":"0","39":"0","40":"0","41":"0","42":"2","43":"6","44":"3","45":"2","46":"5","47":"0","48":"2","49":"0","50":"2","51":"0","52":"1","53":"0","54":"0","55":"0","56":"3","57":"2","58":"0","59":"0","60":"0","61":"0","62":"1","63":"7","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"Midsize Car","85":"2000","86":"80","87":"30","88":"Daily","89":"Female","90":"53","91":"Some College (1-3 Years)","92":"NE","93":"Suburban","94":"44500","95":"0","96":"1","97":"0","98":"0","99":"2","_rn_":"3"},{"1":"1","2":"4","3":"4","4":"0","5":"0","6":"0","7":"2","8":"0","9":"3","10":"0","11":"2","12":"0","13":"1","14":"0","15":"0","16":"0","17":"0","18":"3","19":"4","20":"4","21":"2","22":"1","23":"3","24":"0","25":"0","26":"0","27":"4","28":"0","29":"2","30":"0","31":"2","32":"0","33":"2","34":"0","35":"0","36":"0","37":"0","38":"3","39":"4","40":"2","41":"2","42":"1","43":"7","44":"0","45":"0","46":"0","47":"5","48":"0","49":"2","50":"0","51":"2","52":"0","53":"1","54":"0","55":"0","56":"0","57":"0","58":"1","59":"4","60":"1","61":"1","62":"2","63":"10","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"Midsize Car","85":"2000","86":"80","87":"30","88":"Daily","89":"Female","90":"53","91":"Some College (1-3 Years)","92":"NE","93":"Suburban","94":"44500","95":"0","96":"1","97":"0","98":"0","99":"2","_rn_":"4"},{"1":"1","2":"5","3":"5","4":"0","5":"2","6":"2","7":"0","8":"1","9":"2","10":"0","11":"2","12":"0","13":"0","14":"2","15":"1","16":"0","17":"0","18":"3","19":"0","20":"3","21":"0","22":"0","23":"1","24":"0","25":"1","26":"1","27":"0","28":"1","29":"3","30":"0","31":"1","32":"0","33":"0","34":"2","35":"1","36":"0","37":"0","38":"1","39":"0","40":"2","41":"0","42":"0","43":"4","44":"0","45":"1","46":"4","47":"0","48":"2","49":"2","50":"0","51":"2","52":"0","53":"0","54":"1","55":"1","56":"0","57":"0","58":"1","59":"0","60":"1","61":"0","62":"0","63":"2","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"Midsize Car","85":"2000","86":"80","87":"30","88":"Daily","89":"Female","90":"53","91":"Some College (1-3 Years)","92":"NE","93":"Suburban","94":"44500","95":"0","96":"1","97":"0","98":"0","99":"2","_rn_":"5"},{"1":"1","2":"6","3":"6","4":"3","5":"0","6":"0","7":"5","8":"0","9":"0","10":"1","11":"0","12":"4","13":"0","14":"2","15":"2","16":"4","17":"1","18":"0","19":"0","20":"0","21":"1","22":"0","23":"1","24":"1","25":"0","26":"0","27":"1","28":"0","29":"0","30":"2","31":"0","32":"1","33":"0","34":"1","35":"2","36":"4","37":"2","38":"0","39":"0","40":"0","41":"3","42":"0","43":"7","44":"2","45":"0","46":"0","47":"5","48":"0","49":"0","50":"3","51":"0","52":"2","53":"0","54":"3","55":"2","56":"1","57":"1","58":"0","59":"0","60":"0","61":"2","62":"0","63":"11","64":"0","65":"0","66":"0","67":"0","68":"0","69":"0","70":"0","71":"0","72":"0","73":"0","74":"0","75":"0","76":"0","77":"0","78":"0","79":"0","80":"0","81":"0","82":"0","83":"0","84":"Midsize Car","85":"2000","86":"80","87":"30","88":"Daily","89":"Female","90":"53","91":"Some College (1-3 Years)","92":"NE","93":"Suburban","94":"44500","95":"0","96":"1","97":"0","98":"0","99":"2","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10],"total":[99]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
   </script>
 </div>
 <!-- rnb-frame-end -->
@@ -1908,17 +1944,455 @@ str(safety)</code></pre>
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
 <pre><code>[1] 4</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2hpY2goY29sbmFtZXMoc2FmZXR5KT09XCJwcGFya1llYXJseVwiKVxuYGBgIn0= -->
-<pre class="r"><code>which(colnames(safety)==&quot;pparkYearly&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2hpY2goY29sbmFtZXMoc2FmZXR5KT09XCJQcmljZTRcIilcbmBgYCJ9 -->
+<pre class="r"><code>which(colnames(safety)==&quot;Price4&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE1OFxuIn0= -->
-<pre><code>[1] 158</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDgzXG4ifQ== -->
+<pre><code>[1] 83</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
+<div id="split-train-test" class="section level2">
+<h2>Split train-test</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTcGxpdCBkYXRhIGludG8gcGFydGl0aW9uc1xuc2V0LnNlZWQoNDIpXG5pbmRzIDwtIHBhcnRpdGlvbihzYWZldHkkQ2hvaWNlLCBwID0gYyh0cmFpbiA9IDAuOCwgdGVzdCA9IDAuMikpXG5zdHIoaW5kcylcbmBgYCJ9 -->
+<pre class="r"><code># Split data into partitions
+set.seed(42)
+inds &lt;- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+str(inds)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTGlzdCBvZiAyXG4gJCB0cmFpbjogaW50IFsxOjE3MjUxXSAxIDIgMyA1IDYgNyA5IDEwIDExIDEyIC4uLlxuICQgdGVzdCA6IGludCBbMTo0MzE0XSA0IDggMTQgMTcgMTggMjAgMjEgMjIgMzUgMzggLi4uXG4ifQ== -->
+<pre><code>List of 2
+ $ train: int [1:17251] 1 2 3 5 6 7 9 10 11 12 ...
+ $ test : int [1:4314] 4 8 14 17 18 20 21 22 35 38 ...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJhaW5fc2V0IDwtIHNhZmV0eVtpbmRzJHRyYWluLCBdXG50ZXN0X3NldCA8LSBzYWZldHlbaW5kcyR0ZXN0LCBdXG50YWJsZSh0cmFpbl9zZXQkQ2hvaWNlKVxuYGBgIn0= -->
+<pre class="r"><code>train_set &lt;- safety[inds$train, ]
+test_set &lt;- safety[inds$test, ]
+table(train_set$Choice)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICAxICAgIDIgICAgMyAgICA0IFxuMzgwMyA0MzE1IDM5MTggNTIxNSBcbiJ9 -->
+<pre><code>
+   1    2    3    4 
+3803 4315 3918 5215 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUodGVzdF9zZXQkQ2hvaWNlKVxuYGBgIn0= -->
+<pre class="r"><code>table(test_set$Choice)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICAxICAgIDIgICAgMyAgICA0IFxuIDk1MSAxMDc5ICA5ODAgMTMwNCBcbiJ9 -->
+<pre><code>
+   1    2    3    4 
+ 951 1079  980 1304 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUzwtZGZpZHgodHJhaW5fc2V0LCBzaGFwZT1cIndpZGVcIiwgY2hvaWNlPVwiQ2hvaWNlXCIsIHZhcnlpbmcgPWMoNDo4MyksIHNlcD1cIlwiLGlkeCA9IGxpc3QoYyhcIk5vXCIsIFwiQ2FzZVwiKSkpXG4jIHNlZ21lbnQreWVhcittaWxlc2ErbmlnaHRhK3BwYXJrK2dlbmRlcithZ2VhK2VkdWMrcmVnaW9uK1VyYitpbmNvbWVhXG5gYGAifQ== -->
+<pre class="r"><code>S&lt;-dfidx(train_set, shape=&quot;wide&quot;, choice=&quot;Choice&quot;, varying =c(4:83), sep=&quot;&quot;,idx = list(c(&quot;No&quot;, &quot;Case&quot;)))
+# segment+year+milesa+nighta+ppark+gender+agea+educ+region+Urb+incomea</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTTEgPC0gbWxvZ2l0KENob2ljZX5DQytHTitOUytCVStGQStMRCtCWitGQytGUCtSUCtQUCtLQStTQytUUytOVitNQStMQitBRitIVStQcmljZS0xIHwgc2VnbWVudCtwcGFyaytnZW5kZXIrZWR1YytyZWdpb24rVXJiLCBkYXRhPVMsIHJwYXI9YyhDQz0nbicsIEdOPSduJywgTlM9J24nLCBCVT0nbicsRkE9J24nLExEPSduJyxCWj0nbicsRkM9J24nLEZQPSduJyxSUD0nbicsUFA9J24nLEtBPSduJyxTQz0nbicsVFM9J24nLE5WPSduJyxNQT0nbicsTEI9J24nLEFGPSduJyxIVT0nbicsUHJpY2U9J24nKSwgcGFuZWwgPSBUUlVFLCBwcmludC5sZXZlbD1UUlVFKVxuYGBgIn0= -->
+<pre class="r"><code>M1 &lt;- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1 | segment+ppark+gender+educ+region+Urb, data=S, rpar=c(CC=&#39;n&#39;, GN=&#39;n&#39;, NS=&#39;n&#39;, BU=&#39;n&#39;,FA=&#39;n&#39;,LD=&#39;n&#39;,BZ=&#39;n&#39;,FC=&#39;n&#39;,FP=&#39;n&#39;,RP=&#39;n&#39;,PP=&#39;n&#39;,KA=&#39;n&#39;,SC=&#39;n&#39;,TS=&#39;n&#39;,NV=&#39;n&#39;,MA=&#39;n&#39;,LB=&#39;n&#39;,AF=&#39;n&#39;,HU=&#39;n&#39;,Price=&#39;n&#39;), panel = TRUE, print.level=TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiSW5pdGlhbCB2YWx1ZSBvZiB0aGUgZnVuY3Rpb24gOiAxODM1MS45MDM3NzYxODU3IFxuaXRlcmF0aW9uIDEsIHN0ZXAgPSAxLCBsbkwgPSAxNzEwNS4yOTYzMDE1LCBjaGkyID0gMjk4MC42MjcxNTI0OFxuaXRlcmF0aW9uIDIsIHN0ZXAgPSAxLCBsbkwgPSAxNjg4Ny40MTA2ODQzMywgY2hpMiA9IDM2My45MTEzMjk2OFxuaXRlcmF0aW9uIDMsIHN0ZXAgPSAxLCBsbkwgPSAxNjc5OC4yMDA4NTMxNywgY2hpMiA9IDEyMi4xMjc1NDI0OVxuaXRlcmF0aW9uIDQsIHN0ZXAgPSAxLCBsbkwgPSAxNjc2NS42NDM0NTA1NSwgY2hpMiA9IDgwLjQ3MjcwODY5XG5pdGVyYXRpb24gNSwgc3RlcCA9IDEsIGxuTCA9IDE2NzQ0Ljg3ODkzMDk1LCBjaGkyID0gMzEuOTIyODkxMDFcbml0ZXJhdGlvbiA2LCBzdGVwID0gMSwgbG5MID0gMTY3MzIuNzc3OTE5NzQsIGNoaTIgPSAxNy44MTMxMTM3NlxuaXRlcmF0aW9uIDcsIHN0ZXAgPSAxLCBsbkwgPSAxNjcyNi4zMjg5NTM4NCwgY2hpMiA9IDkuMTgyMzYyODVcbml0ZXJhdGlvbiA4LCBzdGVwID0gMSwgbG5MID0gMTY3MjEuNjM5NzI2OTIsIGNoaTIgPSA2Ljg0ODgwNTc0XG5pdGVyYXRpb24gOSwgc3RlcCA9IDEsIGxuTCA9IDE2NzE5Ljk3NDE3MDE4LCBjaGkyID0gMy41NjU0MjQzOVxuaXRlcmF0aW9uIDEwLCBzdGVwID0gMSwgbG5MID0gMTY3MTguODU3NDY0OTIsIGNoaTIgPSAyLjA4NzMzMjQxXG5pdGVyYXRpb24gMTEsIHN0ZXAgPSAxLCBsbkwgPSAxNjcxOC40MTQ1MzIwNywgY2hpMiA9IDAuNTg5OTQwMzJcbml0ZXJhdGlvbiAxMiwgc3RlcCA9IDEsIGxuTCA9IDE2NzE4LjA3MzIyOTgsIGNoaTIgPSAwLjU0NDcxMTVcbml0ZXJhdGlvbiAxMywgc3RlcCA9IDEsIGxuTCA9IDE2NzE3Ljk0MjI4NjExLCBjaGkyID0gMC4xNzE0MzI2NVxuaXRlcmF0aW9uIDE0LCBzdGVwID0gMSwgbG5MID0gMTY3MTcuODA3MTM5NTIsIGNoaTIgPSAwLjIwNDMyNzQ1XG5pdGVyYXRpb24gMTUsIHN0ZXAgPSAxLCBsbkwgPSAxNjcxNy43NTI2MjgzNiwgY2hpMiA9IDAuMDgwMTAwNzlcbml0ZXJhdGlvbiAxNiwgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjczMjE2NjU1LCBjaGkyID0gMC4wMzI3MjM2N1xuaXRlcmF0aW9uIDE3LCBzdGVwID0gMSwgbG5MID0gMTY3MTcuNzI3NTUwODcsIGNoaTIgPSAwLjAwNjk1MzY4XG5pdGVyYXRpb24gMTgsIHN0ZXAgPSAxLCBsbkwgPSAxNjcxNy43MjU4MjMzOCwgY2hpMiA9IDAuMDAyNjA4NTlcbml0ZXJhdGlvbiAxOSwgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjcyNTExMjE2LCBjaGkyID0gMC4wMDEwMzQ1MVxuaXRlcmF0aW9uIDIwLCBzdGVwID0gMSwgbG5MID0gMTY3MTcuNzI0NzMxOTIsIGNoaTIgPSAwLjAwMDU1ODI4XG5pdGVyYXRpb24gMjEsIHN0ZXAgPSAxLCBsbkwgPSAxNjcxNy43MjQ1NDcyLCBjaGkyID0gMC4wMDAyNzU2NFxuaXRlcmF0aW9uIDIyLCBzdGVwID0gMSwgbG5MID0gMTY3MTcuNzI0NDczNzQsIGNoaTIgPSAwLjAwMDExMjY2XG5pdGVyYXRpb24gMjMsIHN0ZXAgPSAxLCBsbkwgPSAxNjcxNy43MjQ0NDk5MSwgY2hpMiA9IDMuNjE0ZS0wNVxuaXRlcmF0aW9uIDI0LCBzdGVwID0gMSwgbG5MID0gMTY3MTcuNzI0NDQwNjUsIGNoaTIgPSAxLjM0N2UtMDVcbml0ZXJhdGlvbiAyNSwgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjcyNDQzNTM4LCBjaGkyID0gNy40OWUtMDZcbml0ZXJhdGlvbiAyNiwgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjcyNDQzMTg0LCBjaGkyID0gNS4wOGUtMDZcbml0ZXJhdGlvbiAyNywgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjcyNDQyOTYyLCBjaGkyID0gMy4yMmUtMDZcbml0ZXJhdGlvbiAyOCwgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjcyNDQyODQ3LCBjaGkyID0gMS43MmUtMDZcbml0ZXJhdGlvbiAyOSwgc3RlcCA9IDEsIGxuTCA9IDE2NzE3LjcyNDQyOCwgY2hpMiA9IDcuMmUtMDdcbiJ9 -->
+<pre><code>Initial value of the function : 18351.9037761857 
+iteration 1, step = 1, lnL = 17105.2963015, chi2 = 2980.62715248
+iteration 2, step = 1, lnL = 16887.41068433, chi2 = 363.91132968
+iteration 3, step = 1, lnL = 16798.20085317, chi2 = 122.12754249
+iteration 4, step = 1, lnL = 16765.64345055, chi2 = 80.47270869
+iteration 5, step = 1, lnL = 16744.87893095, chi2 = 31.92289101
+iteration 6, step = 1, lnL = 16732.77791974, chi2 = 17.81311376
+iteration 7, step = 1, lnL = 16726.32895384, chi2 = 9.18236285
+iteration 8, step = 1, lnL = 16721.63972692, chi2 = 6.84880574
+iteration 9, step = 1, lnL = 16719.97417018, chi2 = 3.56542439
+iteration 10, step = 1, lnL = 16718.85746492, chi2 = 2.08733241
+iteration 11, step = 1, lnL = 16718.41453207, chi2 = 0.58994032
+iteration 12, step = 1, lnL = 16718.0732298, chi2 = 0.5447115
+iteration 13, step = 1, lnL = 16717.94228611, chi2 = 0.17143265
+iteration 14, step = 1, lnL = 16717.80713952, chi2 = 0.20432745
+iteration 15, step = 1, lnL = 16717.75262836, chi2 = 0.08010079
+iteration 16, step = 1, lnL = 16717.73216655, chi2 = 0.03272367
+iteration 17, step = 1, lnL = 16717.72755087, chi2 = 0.00695368
+iteration 18, step = 1, lnL = 16717.72582338, chi2 = 0.00260859
+iteration 19, step = 1, lnL = 16717.72511216, chi2 = 0.00103451
+iteration 20, step = 1, lnL = 16717.72473192, chi2 = 0.00055828
+iteration 21, step = 1, lnL = 16717.7245472, chi2 = 0.00027564
+iteration 22, step = 1, lnL = 16717.72447374, chi2 = 0.00011266
+iteration 23, step = 1, lnL = 16717.72444991, chi2 = 3.614e-05
+iteration 24, step = 1, lnL = 16717.72444065, chi2 = 1.347e-05
+iteration 25, step = 1, lnL = 16717.72443538, chi2 = 7.49e-06
+iteration 26, step = 1, lnL = 16717.72443184, chi2 = 5.08e-06
+iteration 27, step = 1, lnL = 16717.72442962, chi2 = 3.22e-06
+iteration 28, step = 1, lnL = 16717.72442847, chi2 = 1.72e-06
+iteration 29, step = 1, lnL = 16717.724428, chi2 = 7.2e-07</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShNMSlcbmBgYCJ9 -->
+<pre class="r"><code>summary(M1)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxubWxvZ2l0KGZvcm11bGEgPSBDaG9pY2UgfiBDQyArIEdOICsgTlMgKyBCVSArIEZBICsgTEQgKyBCWiArIFxuICAgIEZDICsgRlAgKyBSUCArIFBQICsgS0EgKyBTQyArIFRTICsgTlYgKyBNQSArIExCICsgQUYgKyBIVSArIFxuICAgIFByaWNlIC0gMSB8IHNlZ21lbnQgKyBwcGFyayArIGdlbmRlciArIGVkdWMgKyByZWdpb24gKyBVcmIsIFxuICAgIGRhdGEgPSBTLCBycGFyID0gYyhDQyA9IFwiblwiLCBHTiA9IFwiblwiLCBOUyA9IFwiblwiLCBCVSA9IFwiblwiLCBcbiAgICAgICAgRkEgPSBcIm5cIiwgTEQgPSBcIm5cIiwgQlogPSBcIm5cIiwgRkMgPSBcIm5cIiwgRlAgPSBcIm5cIiwgUlAgPSBcIm5cIiwgXG4gICAgICAgIFBQID0gXCJuXCIsIEtBID0gXCJuXCIsIFNDID0gXCJuXCIsIFRTID0gXCJuXCIsIE5WID0gXCJuXCIsIE1BID0gXCJuXCIsIFxuICAgICAgICBMQiA9IFwiblwiLCBBRiA9IFwiblwiLCBIVSA9IFwiblwiLCBQcmljZSA9IFwiblwiKSwgcGFuZWwgPSBUUlVFLCBcbiAgICBwcmludC5sZXZlbCA9IFRSVUUpXG5cbkZyZXF1ZW5jaWVzIG9mIGFsdGVybmF0aXZlczpjaG9pY2VcbiAgICAgIDEgICAgICAgMiAgICAgICAzICAgICAgIDQgXG4wLjIyMDQ1IDAuMjUwMTMgMC4yMjcxMiAwLjMwMjMwIFxuXG5iZmdzIG1ldGhvZFxuMjkgaXRlcmF0aW9ucywgMGg6MG06NDJzIFxuZycoLUgpXi0xZyA9IDcuMThFLTA3IFxuZ3JhZGllbnQgY2xvc2UgdG8gemVybyBcblxuQ29lZmZpY2llbnRzIDpcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciAgei12YWx1ZSAgUHIoPnx6fCkgICAgXG4oSW50ZXJjZXB0KToyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNDQxMTcxICAwLjEzNzc3NjYgICAwLjMyMDIgMC43NDg4MTA4ICAgIFxuKEludGVyY2VwdCk6MyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDk3ODk4MyAgMC4xNDE0NTI3ICAgMC42OTIxIDAuNDg4ODc5NCAgICBcbihJbnRlcmNlcHQpOjQgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC00LjU2NjQwNTcgIDAuMTgxNTc3NSAtMjUuMTQ4NSA8IDIuMmUtMTYgKioqXG5DQyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wMDI3NTcxICAwLjAxNzM1NzMgIC0wLjE1ODggMC44NzM3ODk2ICAgIFxuR04gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMTU5MjY0MyAgMC4wMjU0MTU0ICAtNi4yNjY1IDMuNjk0ZS0xMCAqKipcbk5TICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjAzNTgxMDcgIDAuMDEwMzcwNyAgLTMuNDUzMSAwLjAwMDU1NDMgKioqXG5CVSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wMjczODUzICAwLjAwODg0NzcgIC0zLjA5NTIgMC4wMDE5NjcwICoqIFxuRkEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMjAwMTM2MyAgMC4wMjQ5Mzg4ICAtOC4wMjUxIDEuMTEwZS0xNSAqKipcbkxEICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjEzNTc5MzggIDAuMDE3MzU4OCAgLTcuODIyOCA1LjEwN2UtMTUgKioqXG5CWiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4xMTk5MTI0ICAwLjAxNzY2NDIgIC02Ljc4ODUgMS4xMzNlLTExICoqKlxuRkMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMjMyMzI1MiAgMC4wMjU0OTEwICAtOS4xMTQwIDwgMi4yZS0xNiAqKipcbkZQICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA5MjE3MjIgIDAuMDEzMjg4NCAgLTYuOTM2MyA0LjAyNWUtMTIgKioqXG5SUCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4yMzU3MTM0ICAwLjAyNTE4MTggIC05LjM2MDUgPCAyLjJlLTE2ICoqKlxuUFAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMTM2MDc1MCAgMC4wMTcxMzI5ICAtNy45NDIzIDEuOTk4ZS0xNSAqKipcbktBICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjE3MTM2NzAgIDAuMDI1NjUwNyAgLTYuNjgwOCAyLjM3NmUtMTEgKioqXG5TQyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wODc3MjMxICAwLjAxMjY5MDAgIC02LjkxMjggNC43NTNlLTEyICoqKlxuVFMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMTE2ODA4NCAgMC4wMTc0NDE2ICAtNi42OTcxIDIuMTI2ZS0xMSAqKipcbk5WICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjE1NjY0OTAgIDAuMDE3NDExNiAgLTguOTk2OCA8IDIuMmUtMTYgKioqXG5NQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wNzY0ODQ2ICAwLjAxMzE4MTUgIC01LjgwMjQgNi41MzZlLTA5ICoqKlxuTEIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMDczMzU1MSAgMC4wMTMwNzM4ICAtNS42MTA5IDIuMDEzZS0wOCAqKipcbkFGICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjE1NDEzNzEgIDAuMDE3MzQxNiAgLTguODg4MyA8IDIuMmUtMTYgKioqXG5IVSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4yMzE5ODgxICAwLjAyNTY0ODEgIC05LjA0NTAgPCAyLjJlLTE2ICoqKlxuUHJpY2UgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuNTE1Njc1MCAgMC4wMDY5NDgxIC03NC4yMTgwIDwgMi4yZS0xNiAqKipcbnNlZ21lbnRNaWRzaXplIENhcjoyICAgICAgICAgICAgICAgICAgICAgICAwLjEzMDYxMTggIDAuMDk4MzE5MyAgIDEuMzI4NCAwLjE4NDAzMTAgICAgXG5zZWdtZW50TWlkc2l6ZSBDYXI6MyAgICAgICAgICAgICAgICAgICAgICAtMC4wOTkxMzYxICAwLjA5OTExMzggIC0xLjAwMDIgMC4zMTcyMDE3ICAgIFxuc2VnbWVudE1pZHNpemUgQ2FyOjQgICAgICAgICAgICAgICAgICAgICAgIDAuMTIxOTU5OCAgMC4xMDQ1Nzg4ICAgMS4xNjYyIDAuMjQzNTMzOCAgICBcbnNlZ21lbnRNaWRzaXplIEx1eHVyeSBVdGlsaXR5IHNlZ2VtZW50czoyICAwLjE3MjEzODMgIDAuMTQzNzg4NyAgIDEuMTk3MiAwLjIzMTI0MzYgICAgXG5zZWdtZW50TWlkc2l6ZSBMdXh1cnkgVXRpbGl0eSBzZWdlbWVudHM6MyAgMC4wMDgxNTU5ICAwLjE0NDMyNzYgICAwLjA1NjUgMC45NTQ5MzU3ICAgIFxuc2VnbWVudE1pZHNpemUgTHV4dXJ5IFV0aWxpdHkgc2VnZW1lbnRzOjQgLTAuMzYxMTM5MiAgMC4xODU3NDkzICAtMS45NDQyIDAuMDUxODY3OSAuICBcbnNlZ21lbnRNaWRzaXplIFV0aWxpdHk6MiAgICAgICAgICAgICAgICAgICAwLjIwNjg3ODggIDAuMTA2NjY5OCAgIDEuOTM5NCAwLjA1MjQ0ODggLiAgXG5zZWdtZW50TWlkc2l6ZSBVdGlsaXR5OjMgICAgICAgICAgICAgICAgICAtMC4xMzY4MjI0ICAwLjEwODg3MzkgIC0xLjI1NjcgMC4yMDg4NjA0ICAgIFxuc2VnbWVudE1pZHNpemUgVXRpbGl0eTo0ICAgICAgICAgICAgICAgICAgIDAuMjQ1NDQ1MiAgMC4xMTM0MDcxICAgMi4xNjQzIDAuMDMwNDQyNiAqICBcbnNlZ21lbnRQcmVzdGlnZSBMdXh1cnkgU2VkYW46MiAgICAgICAgICAgICAwLjA5NTU4MzIgIDAuMTQwMjEyMiAgIDAuNjgxNyAwLjQ5NTQyNjQgICAgXG5zZWdtZW50UHJlc3RpZ2UgTHV4dXJ5IFNlZGFuOjMgICAgICAgICAgICAtMC4xMDU4NDU1ICAwLjE0MjI0MjQgIC0wLjc0NDEgMC40NTY4MDMyICAgIFxuc2VnbWVudFByZXN0aWdlIEx1eHVyeSBTZWRhbjo0ICAgICAgICAgICAgLTAuMzIyMzQ2OCAgMC4xNzE4MzkyICAtMS44NzU5IDAuMDYwNjc0MiAuICBcbnNlZ21lbnRTbWFsbCBDYXI6MiAgICAgICAgICAgICAgICAgICAgICAgICAwLjE1NzY4NDIgIDAuMTAxNjc0NCAgIDEuNTUwOSAwLjEyMDkzMjAgICAgXG5zZWdtZW50U21hbGwgQ2FyOjMgICAgICAgICAgICAgICAgICAgICAgICAgMC4wMTE0MjExICAwLjEwMjkyMTkgICAwLjExMTAgMC45MTE2NDE0ICAgIFxuc2VnbWVudFNtYWxsIENhcjo0ICAgICAgICAgICAgICAgICAgICAgICAgIDAuMjQzMDk4NCAgMC4xMDk5OTI2ICAgMi4yMTAxIDAuMDI3MDk1OSAqICBcbnBwYXJrTW9udGhseToyICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjAzNDY4NzYgIDAuMDg0MDgyOSAgLTAuNDEyNSAwLjY3OTk0MzAgICAgXG5wcGFya01vbnRobHk6MyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4xMDQ4Njg5ICAwLjA4Njk4MTggICAxLjIwNTYgMC4yMjc5NTU4ICAgIFxucHBhcmtNb250aGx5OjQgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDUzODkyMiAgMC4wOTcxMzE4ICAgMC41NTQ4IDAuNTc5MDA2OSAgICBcbnBwYXJrTmV2ZXI6MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjE2NjE4ODcgIDAuMDkzMjc1MiAgLTEuNzgxNyAwLjA3NDc5NzcgLiAgXG5wcGFya05ldmVyOjMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wMzEzNzk4ICAwLjA5NTU5MjQgIC0wLjMyODMgMC43NDI3MDk3ICAgIFxucHBhcmtOZXZlcjo0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuNTUxODIwNSAgMC4xMDIxMDY5ICAgNS40MDQzIDYuNTA1ZS0wOCAqKipcbnBwYXJrV2Vla2x5OjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAyMDM2MDggIDAuMDc5NzQxMSAgIDAuMjU1MyAwLjc5ODQ2MzMgICAgXG5wcGFya1dlZWtseTozICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4xMDE1NDQwICAwLjA4Mjc1NTggICAxLjIyNzAgMC4yMTk4MTA3ICAgIFxucHBhcmtXZWVrbHk6NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMzI1MjEwMiAgMC4wOTY2Nzg5ICAgMy4zNjM4IDAuMDAwNzY4NyAqKipcbnBwYXJrWWVhcmx5OjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjE4MjA4NTcgIDAuMDk3MTIxMyAgLTEuODc0OCAwLjA2MDgxNjUgLiAgXG5wcGFya1llYXJseTozICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4xMzMzNzY1ICAwLjA5ODc1NzkgICAxLjM1MDUgMC4xNzY4NDI5ICAgIFxucHBhcmtZZWFybHk6NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMzgwNjEzNSAgMC4xMDYyMjkzICAgMy41ODI5IDAuMDAwMzM5NyAqKipcbmdlbmRlck1hbGU6MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjExMzE3NTEgIDAuMDU2MzM0OCAgIDIuMDA5MCAwLjA0NDUzOTkgKiAgXG5nZW5kZXJNYWxlOjMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNzYzNjgzICAwLjA1NzYyNjIgICAxLjMyNTIgMC4xODUwOTI4ICAgIFxuZ2VuZGVyTWFsZTo0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMjkxNzE5MCAgMC4wNjIyODM4ICAtNC42ODM3IDIuODE3ZS0wNiAqKipcbmVkdWNHcmFkZSBTY2hvb2w6MiAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA0NDM5NzQgIDAuMjk5MTExMSAgLTAuMTQ4NCAwLjg4MjAwMjcgICAgXG5lZHVjR3JhZGUgU2Nob29sOjMgICAgICAgICAgICAgICAgICAgICAgICAtMC4yMTQ0MzIwICAwLjMyMjQ5NTMgIC0wLjY2NDkgMC41MDYxMDQ4ICAgIFxuZWR1Y0dyYWRlIFNjaG9vbDo0ICAgICAgICAgICAgICAgICAgICAgICAgIDAuNTQyNzcyNCAgMC4zNzE0NzE1ICAgMS40NjExIDAuMTQzOTc2NiAgICBcbmVkdWNIaWdoIFNjaG9vbDoyICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA2NjI2MTMgIDAuMDg4MzE2MSAgLTAuNzUwMyAwLjQ1MzA4OTMgICAgXG5lZHVjSGlnaCBTY2hvb2w6MyAgICAgICAgICAgICAgICAgICAgICAgICAtMC4xMTgzMjAwICAwLjA4OTYyMzggIC0xLjMyMDIgMC4xODY3NzMzICAgIFxuZWR1Y0hpZ2ggU2Nob29sOjQgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMTE2MTg3MiAgMC4wOTYyNjAzICAgMS4yMDcwIDAuMjI3NDI4MCAgICBcbmVkdWNQb3N0Z3JhZHVhdGUgQ29sbGVnZToyICAgICAgICAgICAgICAgICAwLjA4NDg1NzggIDAuMDk4MzM2OCAgIDAuODYyOSAwLjM4ODE3NTkgICAgXG5lZHVjUG9zdGdyYWR1YXRlIENvbGxlZ2U6MyAgICAgICAgICAgICAgICAtMC4wMTc1NTA4ICAwLjEwMDY3MTggIC0wLjE3NDMgMC44NjE2MDEwICAgIFxuZWR1Y1Bvc3RncmFkdWF0ZSBDb2xsZWdlOjQgICAgICAgICAgICAgICAgIDAuMTU2Njg0MiAgMC4xMDkzMDYyICAgMS40MzM0IDAuMTUxNzMxMSAgICBcbmVkdWNTb21lIENvbGxlZ2UgKDEtMyBZZWFycyk6MiAgICAgICAgICAgICAwLjAzMzczNDggIDAuMDY2NTgzNSAgIDAuNTA2NyAwLjYxMjM5NzkgICAgXG5lZHVjU29tZSBDb2xsZWdlICgxLTMgWWVhcnMpOjMgICAgICAgICAgICAtMC4wNjk2MDQ2ICAwLjA2ODc4MDMgIC0xLjAxMjAgMC4zMTE1NDU4ICAgIFxuZWR1Y1NvbWUgQ29sbGVnZSAoMS0zIFllYXJzKTo0ICAgICAgICAgICAgIDAuMDgxODYxOSAgMC4wNzQxMTI5ICAgMS4xMDQ2IDAuMjY5MzUxNSAgICBcbmVkdWNUcmFkZS9Wb2NhdGlvbmFsIFNjaG9vbDoyICAgICAgICAgICAgIC0wLjE1NDI3MTkgIDAuMTQ2NzY1NSAgLTEuMDUxMSAwLjI5MzE5MTkgICAgXG5lZHVjVHJhZGUvVm9jYXRpb25hbCBTY2hvb2w6MyAgICAgICAgICAgICAgMC4wNDg0ODc5ICAwLjE0NjIxODIgICAwLjMzMTYgMC43NDAxODE0ICAgIFxuZWR1Y1RyYWRlL1ZvY2F0aW9uYWwgU2Nob29sOjQgICAgICAgICAgICAgIDAuMzQyNDc1NyAgMC4xNDE5MzU4ICAgMi40MTI5IDAuMDE1ODI2NSAqICBcbnJlZ2lvbk5FOjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA1OTQzNjQgIDAuMDc4NDM1MiAgIDAuNzU3OCAwLjQ0ODU4NDMgICAgXG5yZWdpb25ORTozICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4xMTY5MDQ0ICAwLjA4MDA3NTEgICAxLjQ1OTkgMC4xNDQzMDgyICAgIFxucmVnaW9uTkU6NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMTE5NTYzNSAgMC4wODM5NzM5ICAgMS40MjM4IDAuMTU0NDk5MiAgICBcbnJlZ2lvblNFOjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA0MTQ2NTUgIDAuMDc4MDcyNyAgIDAuNTMxMSAwLjU5NTMzOTcgICAgXG5yZWdpb25TRTozICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wNTA0MDAzICAwLjA4MDYyNjEgIC0wLjYyNTEgMC41MzE4OTgwICAgIFxucmVnaW9uU0U6NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMzgyNTMwMCAgMC4wODY5NDM5ICAtNC4zOTk3IDEuMDg0ZS0wNSAqKipcbnJlZ2lvblNXOjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAxMTgyMDYgIDAuMDk4MTUyMSAgIDAuMTIwNCAwLjkwNDE0MTQgICAgXG5yZWdpb25TVzozICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4xMzU0NjQwICAwLjEwMzAwMzggIC0xLjMxNTEgMC4xODg0NjQzICAgIFxucmVnaW9uU1c6NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMzY3NTcyNiAgMC4xMDY4OTMzICAtMy40Mzg3IDAuMDAwNTg0NSAqKipcbnJlZ2lvblc6MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA1OTMzMjkgIDAuMDg4ODQxNCAgLTAuNjY3OSAwLjUwNDIyODIgICAgXG5yZWdpb25XOjMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNTMwNzE1ICAwLjA4OTI5NTUgICAwLjU5NDMgMC41NTIyODc5ICAgIFxucmVnaW9uVzo0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMDEwOTk0NyAgMC4wOTkyMzE4ICAtMC4xMTA4IDAuOTExNzc2MyAgICBcblVyYlN1YnVyYmFuOjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA1ODgzNzQgIDAuMDc2NDkwMyAgLTAuNzY5MiAwLjQ0MTc2NjUgICAgXG5VcmJTdWJ1cmJhbjozICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wNjkyMjQ1ICAwLjA3ODUzMDQgIC0wLjg4MTUgMC4zNzgwNDc1ICAgIFxuVXJiU3VidXJiYW46NCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMzY3NDIzOSAgMC4wNzk3NjAwICAtNC42MDY2IDQuMDkzZS0wNiAqKipcblVyYlVyYmFuL0NpdHk6MiAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA5NTY2ODMgIDAuMDgxODcxNyAgLTEuMTY4NSAwLjI0MjU5OTAgICAgXG5VcmJVcmJhbi9DaXR5OjMgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wNTQ2MDc3ICAwLjA4NDI3MjAgIC0wLjY0ODAgMC41MTY5ODkwICAgIFxuVXJiVXJiYW4vQ2l0eTo0ICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMzM2NDkyMyAgMC4wODgzNTE1ICAtMy44MDg2IDAuMDAwMTM5OCAqKipcbnNkLkNDICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjMyNjk5NDkgIDAuMDIyNzk3MCAgMTQuMzQzOCA8IDIuMmUtMTYgKioqXG5zZC5HTiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4yODEyNjg3ICAwLjAzNDY5MTkgIC04LjEwNzYgNC40NDFlLTE2ICoqKlxuc2QuTlMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMDUyNjIxOCAgMC4wMTY1MTI4ICAtMy4xODY3IDAuMDAxNDM4OSAqKiBcbnNkLkJVICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjAzMzg3MTQgIDAuMDE0NTYxMyAgIDIuMzI2MSAwLjAyMDAxMTggKiAgXG5zZC5GQSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNzQ2ODg1ICAwLjAzODY3OTIgICAxLjkzMTAgMC4wNTM0ODY4IC4gIFxuc2QuTEQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLTAuMTcwMjYwNiAgMC4wMjU1MTU3ICAtNi42NzI4IDIuNTEwZS0xMSAqKipcbnNkLkJaICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjE1OTkyMTIgIDAuMDI1NzA4MiAgIDYuMjIwNiA0Ljk1MmUtMTAgKioqXG5zZC5GQyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4xODQ3MTc2ICAwLjAzNjg1ODggICA1LjAxMTUgNS40MDFlLTA3ICoqKlxuc2QuRlAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMTMzMDY4NyAgMC4wMTg2MTA2ICAgNy4xNTAyIDguNjY5ZS0xMyAqKipcbnNkLlJQICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjA4OTQ0NTQgIDAuMDM3Mzk2MiAgIDIuMzkxOCAwLjAxNjc2NDYgKiAgXG5zZC5QUCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wNzU2MjM4ICAwLjAyNzAyMzAgIC0yLjc5ODUgMC4wMDUxMzQxICoqIFxuc2QuS0EgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMzIzMTIxMCAgMC4wMzU0MDE5ICAgOS4xMjcyIDwgMi4yZS0xNiAqKipcbnNkLlNDICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC0wLjA0MjE4ODEgIDAuMDIxNDg1MyAgLTEuOTYzNiAwLjA0OTU3ODQgKiAgXG5zZC5UUyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC4wNTc2OTU1ICAwLjAyNzAxNjkgICAyLjEzNTUgMC4wMzI3MTc2ICogIFxuc2QuTlYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDE4NTIyNyAgMC4wMjg2NzIwICAgMC42NDYwIDAuNTE4MjY1NSAgICBcbnNkLk1BICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjExNDMwNDYgIDAuMDIwNDQ2NiAgIDUuNTkwNCAyLjI2NmUtMDggKioqXG5zZC5MQiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtMC4wMDE4MjUxICAwLjAyMDgyNTYgIC0wLjA4NzYgMC45MzAxNjM2ICAgIFxuc2QuQUYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDAuMDU5MDM4NSAgMC4wMjc2NDkxICAgMi4xMzUzIDAuMDMyNzM4MSAqICBcbnNkLkhVICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwLjI2Mzc1MDggIDAuMDM2NTM4OCAgIDcuMjE4NCA1LjI2MmUtMTMgKioqXG5zZC5QcmljZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMC40OTI1MzAxICAwLjAwNzk3MjggIDYxLjc3NjMgPCAyLjJlLTE2ICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cbkxvZy1MaWtlbGlob29kOiAtMTY3MThcbk1jRmFkZGVuIFJeMjogIDAuMjk2ODggXG5MaWtlbGlob29kIHJhdGlvIHRlc3QgOiBjaGlzcSA9IDE0MTE4IChwLnZhbHVlID0gPCAyLjIyZS0xNilcblxucmFuZG9tIGNvZWZmaWNpZW50c1xuICAgICAgTWluLiAgICAgMXN0IFF1LiAgICAgICBNZWRpYW4gICAgICAgICBNZWFuICAgICAgIDNyZCBRdS4gTWF4LlxuQ0MgICAgLUluZiAtMC4yMjMzMTE4NCAtMC4wMDI3NTcxNDcgLTAuMDAyNzU3MTQ3ICAwLjIxNzc5NzU0NjggIEluZlxuR04gICAgLUluZiAtMC4zNDg5NzcxMyAtMC4xNTkyNjQyNjggLTAuMTU5MjY0MjY4ICAwLjAzMDQ0ODU5OTIgIEluZlxuTlMgICAgLUluZiAtMC4wNzEzMDM1NCAtMC4wMzU4MTA2NzEgLTAuMDM1ODEwNjcxIC0wLjAwMDMxNzgwNTggIEluZlxuQlUgICAgLUluZiAtMC4wNTAyMzExNyAtMC4wMjczODUyNzggLTAuMDI3Mzg1Mjc4IC0wLjAwNDUzOTM4NTEgIEluZlxuRkEgICAgLUluZiAtMC4yNTA1MTI5MSAtMC4yMDAxMzYzMDQgLTAuMjAwMTM2MzA0IC0wLjE0OTc1OTcwMjcgIEluZlxuTEQgICAgLUluZiAtMC4yNTA2MzI4MiAtMC4xMzU3OTM3OTIgLTAuMTM1NzkzNzkyIC0wLjAyMDk1NDc2NjIgIEluZlxuQlogICAgLUluZiAtMC4yMjc3Nzc1OCAtMC4xMTk5MTIzOTggLTAuMTE5OTEyMzk4IC0wLjAxMjA0NzIxODMgIEluZlxuRkMgICAgLUluZiAtMC4zNTY5MTUzNyAtMC4yMzIzMjUyNDEgLTAuMjMyMzI1MjQxIC0wLjEwNzczNTEwNjAgIEluZlxuRlAgICAgLUluZiAtMC4xODE5MjU2OSAtMC4wOTIxNzIyMjcgLTAuMDkyMTcyMjI3IC0wLjAwMjQxODc2NzUgIEluZlxuUlAgICAgLUluZiAtMC4yOTYwNDMzNyAtMC4yMzU3MTMzNTMgLTAuMjM1NzEzMzUzIC0wLjE3NTM4MzMzOTMgIEluZlxuUFAgICAgLUluZiAtMC4xODcwODI1MCAtMC4xMzYwNzQ5OTIgLTAuMTM2MDc0OTkyIC0wLjA4NTA2NzQ4ODYgIEluZlxuS0EgICAgLUluZiAtMC4zODkzMDg4NSAtMC4xNzEzNjcwMjAgLTAuMTcxMzY3MDIwICAwLjA0NjU3NDgwODIgIEluZlxuU0MgICAgLUluZiAtMC4xMTYxNzg1NCAtMC4wODc3MjMwNjkgLTAuMDg3NzIzMDY5IC0wLjA1OTI2NzYwMTEgIEluZlxuVFMgICAgLUluZiAtMC4xNTU3MjM0OCAtMC4xMTY4MDg0MjkgLTAuMTE2ODA4NDI5IC0wLjA3Nzg5MzM4MDQgIEluZlxuTlYgICAgLUluZiAtMC4xNjkxNDIzMiAtMC4xNTY2NDg5NTQgLTAuMTU2NjQ4OTU0IC0wLjE0NDE1NTU4NTEgIEluZlxuTUEgICAgLUluZiAtMC4xNTM1ODE4OSAtMC4wNzY0ODQ2MTMgLTAuMDc2NDg0NjEzICAwLjAwMDYxMjY2NjIgIEluZlxuTEIgICAgLUluZiAtMC4wNzQ1ODYxMyAtMC4wNzMzNTUwOTEgLTAuMDczMzU1MDkxIC0wLjA3MjEyNDA1NzAgIEluZlxuQUYgICAgLUluZiAtMC4xOTM5NTc5NyAtMC4xNTQxMzcwODUgLTAuMTU0MTM3MDg1IC0wLjExNDMxNjIwMTMgIEluZlxuSFUgICAgLUluZiAtMC40MDk4ODUzOCAtMC4yMzE5ODgxNDkgLTAuMjMxOTg4MTQ5IC0wLjA1NDA5MDkyMzUgIEluZlxuUHJpY2UgLUluZiAtMC44NDc4ODE1NiAtMC41MTU2NzUwNDMgLTAuNTE1Njc1MDQzIC0wLjE4MzQ2ODUyNDUgIEluZlxuIn0= -->
+<pre><code>
+Call:
+mlogit(formula = Choice ~ CC + GN + NS + BU + FA + LD + BZ + 
+    FC + FP + RP + PP + KA + SC + TS + NV + MA + LB + AF + HU + 
+    Price - 1 | segment + ppark + gender + educ + region + Urb, 
+    data = S, rpar = c(CC = &quot;n&quot;, GN = &quot;n&quot;, NS = &quot;n&quot;, BU = &quot;n&quot;, 
+        FA = &quot;n&quot;, LD = &quot;n&quot;, BZ = &quot;n&quot;, FC = &quot;n&quot;, FP = &quot;n&quot;, RP = &quot;n&quot;, 
+        PP = &quot;n&quot;, KA = &quot;n&quot;, SC = &quot;n&quot;, TS = &quot;n&quot;, NV = &quot;n&quot;, MA = &quot;n&quot;, 
+        LB = &quot;n&quot;, AF = &quot;n&quot;, HU = &quot;n&quot;, Price = &quot;n&quot;), panel = TRUE, 
+    print.level = TRUE)
+
+Frequencies of alternatives:choice
+      1       2       3       4 
+0.22045 0.25013 0.22712 0.30230 
+
+bfgs method
+29 iterations, 0h:0m:42s 
+g&#39;(-H)^-1g = 7.18E-07 
+gradient close to zero 
+
+Coefficients :
+                                            Estimate Std. Error  z-value  Pr(&gt;|z|)    
+(Intercept):2                              0.0441171  0.1377766   0.3202 0.7488108    
+(Intercept):3                              0.0978983  0.1414527   0.6921 0.4888794    
+(Intercept):4                             -4.5664057  0.1815775 -25.1485 &lt; 2.2e-16 ***
+CC                                        -0.0027571  0.0173573  -0.1588 0.8737896    
+GN                                        -0.1592643  0.0254154  -6.2665 3.694e-10 ***
+NS                                        -0.0358107  0.0103707  -3.4531 0.0005543 ***
+BU                                        -0.0273853  0.0088477  -3.0952 0.0019670 ** 
+FA                                        -0.2001363  0.0249388  -8.0251 1.110e-15 ***
+LD                                        -0.1357938  0.0173588  -7.8228 5.107e-15 ***
+BZ                                        -0.1199124  0.0176642  -6.7885 1.133e-11 ***
+FC                                        -0.2323252  0.0254910  -9.1140 &lt; 2.2e-16 ***
+FP                                        -0.0921722  0.0132884  -6.9363 4.025e-12 ***
+RP                                        -0.2357134  0.0251818  -9.3605 &lt; 2.2e-16 ***
+PP                                        -0.1360750  0.0171329  -7.9423 1.998e-15 ***
+KA                                        -0.1713670  0.0256507  -6.6808 2.376e-11 ***
+SC                                        -0.0877231  0.0126900  -6.9128 4.753e-12 ***
+TS                                        -0.1168084  0.0174416  -6.6971 2.126e-11 ***
+NV                                        -0.1566490  0.0174116  -8.9968 &lt; 2.2e-16 ***
+MA                                        -0.0764846  0.0131815  -5.8024 6.536e-09 ***
+LB                                        -0.0733551  0.0130738  -5.6109 2.013e-08 ***
+AF                                        -0.1541371  0.0173416  -8.8883 &lt; 2.2e-16 ***
+HU                                        -0.2319881  0.0256481  -9.0450 &lt; 2.2e-16 ***
+Price                                     -0.5156750  0.0069481 -74.2180 &lt; 2.2e-16 ***
+segmentMidsize Car:2                       0.1306118  0.0983193   1.3284 0.1840310    
+segmentMidsize Car:3                      -0.0991361  0.0991138  -1.0002 0.3172017    
+segmentMidsize Car:4                       0.1219598  0.1045788   1.1662 0.2435338    
+segmentMidsize Luxury Utility segements:2  0.1721383  0.1437887   1.1972 0.2312436    
+segmentMidsize Luxury Utility segements:3  0.0081559  0.1443276   0.0565 0.9549357    
+segmentMidsize Luxury Utility segements:4 -0.3611392  0.1857493  -1.9442 0.0518679 .  
+segmentMidsize Utility:2                   0.2068788  0.1066698   1.9394 0.0524488 .  
+segmentMidsize Utility:3                  -0.1368224  0.1088739  -1.2567 0.2088604    
+segmentMidsize Utility:4                   0.2454452  0.1134071   2.1643 0.0304426 *  
+segmentPrestige Luxury Sedan:2             0.0955832  0.1402122   0.6817 0.4954264    
+segmentPrestige Luxury Sedan:3            -0.1058455  0.1422424  -0.7441 0.4568032    
+segmentPrestige Luxury Sedan:4            -0.3223468  0.1718392  -1.8759 0.0606742 .  
+segmentSmall Car:2                         0.1576842  0.1016744   1.5509 0.1209320    
+segmentSmall Car:3                         0.0114211  0.1029219   0.1110 0.9116414    
+segmentSmall Car:4                         0.2430984  0.1099926   2.2101 0.0270959 *  
+pparkMonthly:2                            -0.0346876  0.0840829  -0.4125 0.6799430    
+pparkMonthly:3                             0.1048689  0.0869818   1.2056 0.2279558    
+pparkMonthly:4                             0.0538922  0.0971318   0.5548 0.5790069    
+pparkNever:2                              -0.1661887  0.0932752  -1.7817 0.0747977 .  
+pparkNever:3                              -0.0313798  0.0955924  -0.3283 0.7427097    
+pparkNever:4                               0.5518205  0.1021069   5.4043 6.505e-08 ***
+pparkWeekly:2                              0.0203608  0.0797411   0.2553 0.7984633    
+pparkWeekly:3                              0.1015440  0.0827558   1.2270 0.2198107    
+pparkWeekly:4                              0.3252102  0.0966789   3.3638 0.0007687 ***
+pparkYearly:2                             -0.1820857  0.0971213  -1.8748 0.0608165 .  
+pparkYearly:3                              0.1333765  0.0987579   1.3505 0.1768429    
+pparkYearly:4                              0.3806135  0.1062293   3.5829 0.0003397 ***
+genderMale:2                               0.1131751  0.0563348   2.0090 0.0445399 *  
+genderMale:3                               0.0763683  0.0576262   1.3252 0.1850928    
+genderMale:4                              -0.2917190  0.0622838  -4.6837 2.817e-06 ***
+educGrade School:2                        -0.0443974  0.2991111  -0.1484 0.8820027    
+educGrade School:3                        -0.2144320  0.3224953  -0.6649 0.5061048    
+educGrade School:4                         0.5427724  0.3714715   1.4611 0.1439766    
+educHigh School:2                         -0.0662613  0.0883161  -0.7503 0.4530893    
+educHigh School:3                         -0.1183200  0.0896238  -1.3202 0.1867733    
+educHigh School:4                          0.1161872  0.0962603   1.2070 0.2274280    
+educPostgraduate College:2                 0.0848578  0.0983368   0.8629 0.3881759    
+educPostgraduate College:3                -0.0175508  0.1006718  -0.1743 0.8616010    
+educPostgraduate College:4                 0.1566842  0.1093062   1.4334 0.1517311    
+educSome College (1-3 Years):2             0.0337348  0.0665835   0.5067 0.6123979    
+educSome College (1-3 Years):3            -0.0696046  0.0687803  -1.0120 0.3115458    
+educSome College (1-3 Years):4             0.0818619  0.0741129   1.1046 0.2693515    
+educTrade/Vocational School:2             -0.1542719  0.1467655  -1.0511 0.2931919    
+educTrade/Vocational School:3              0.0484879  0.1462182   0.3316 0.7401814    
+educTrade/Vocational School:4              0.3424757  0.1419358   2.4129 0.0158265 *  
+regionNE:2                                 0.0594364  0.0784352   0.7578 0.4485843    
+regionNE:3                                 0.1169044  0.0800751   1.4599 0.1443082    
+regionNE:4                                 0.1195635  0.0839739   1.4238 0.1544992    
+regionSE:2                                 0.0414655  0.0780727   0.5311 0.5953397    
+regionSE:3                                -0.0504003  0.0806261  -0.6251 0.5318980    
+regionSE:4                                -0.3825300  0.0869439  -4.3997 1.084e-05 ***
+regionSW:2                                 0.0118206  0.0981521   0.1204 0.9041414    
+regionSW:3                                -0.1354640  0.1030038  -1.3151 0.1884643    
+regionSW:4                                -0.3675726  0.1068933  -3.4387 0.0005845 ***
+regionW:2                                 -0.0593329  0.0888414  -0.6679 0.5042282    
+regionW:3                                  0.0530715  0.0892955   0.5943 0.5522879    
+regionW:4                                 -0.0109947  0.0992318  -0.1108 0.9117763    
+UrbSuburban:2                             -0.0588374  0.0764903  -0.7692 0.4417665    
+UrbSuburban:3                             -0.0692245  0.0785304  -0.8815 0.3780475    
+UrbSuburban:4                             -0.3674239  0.0797600  -4.6066 4.093e-06 ***
+UrbUrban/City:2                           -0.0956683  0.0818717  -1.1685 0.2425990    
+UrbUrban/City:3                           -0.0546077  0.0842720  -0.6480 0.5169890    
+UrbUrban/City:4                           -0.3364923  0.0883515  -3.8086 0.0001398 ***
+sd.CC                                      0.3269949  0.0227970  14.3438 &lt; 2.2e-16 ***
+sd.GN                                     -0.2812687  0.0346919  -8.1076 4.441e-16 ***
+sd.NS                                     -0.0526218  0.0165128  -3.1867 0.0014389 ** 
+sd.BU                                      0.0338714  0.0145613   2.3261 0.0200118 *  
+sd.FA                                      0.0746885  0.0386792   1.9310 0.0534868 .  
+sd.LD                                     -0.1702606  0.0255157  -6.6728 2.510e-11 ***
+sd.BZ                                      0.1599212  0.0257082   6.2206 4.952e-10 ***
+sd.FC                                      0.1847176  0.0368588   5.0115 5.401e-07 ***
+sd.FP                                      0.1330687  0.0186106   7.1502 8.669e-13 ***
+sd.RP                                      0.0894454  0.0373962   2.3918 0.0167646 *  
+sd.PP                                     -0.0756238  0.0270230  -2.7985 0.0051341 ** 
+sd.KA                                      0.3231210  0.0354019   9.1272 &lt; 2.2e-16 ***
+sd.SC                                     -0.0421881  0.0214853  -1.9636 0.0495784 *  
+sd.TS                                      0.0576955  0.0270169   2.1355 0.0327176 *  
+sd.NV                                      0.0185227  0.0286720   0.6460 0.5182655    
+sd.MA                                      0.1143046  0.0204466   5.5904 2.266e-08 ***
+sd.LB                                     -0.0018251  0.0208256  -0.0876 0.9301636    
+sd.AF                                      0.0590385  0.0276491   2.1353 0.0327381 *  
+sd.HU                                      0.2637508  0.0365388   7.2184 5.262e-13 ***
+sd.Price                                   0.4925301  0.0079728  61.7763 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Log-Likelihood: -16718
+McFadden R^2:  0.29688 
+Likelihood ratio test : chisq = 14118 (p.value = &lt; 2.22e-16)
+
+random coefficients
+      Min.     1st Qu.       Median         Mean       3rd Qu. Max.
+CC    -Inf -0.22331184 -0.002757147 -0.002757147  0.2177975468  Inf
+GN    -Inf -0.34897713 -0.159264268 -0.159264268  0.0304485992  Inf
+NS    -Inf -0.07130354 -0.035810671 -0.035810671 -0.0003178058  Inf
+BU    -Inf -0.05023117 -0.027385278 -0.027385278 -0.0045393851  Inf
+FA    -Inf -0.25051291 -0.200136304 -0.200136304 -0.1497597027  Inf
+LD    -Inf -0.25063282 -0.135793792 -0.135793792 -0.0209547662  Inf
+BZ    -Inf -0.22777758 -0.119912398 -0.119912398 -0.0120472183  Inf
+FC    -Inf -0.35691537 -0.232325241 -0.232325241 -0.1077351060  Inf
+FP    -Inf -0.18192569 -0.092172227 -0.092172227 -0.0024187675  Inf
+RP    -Inf -0.29604337 -0.235713353 -0.235713353 -0.1753833393  Inf
+PP    -Inf -0.18708250 -0.136074992 -0.136074992 -0.0850674886  Inf
+KA    -Inf -0.38930885 -0.171367020 -0.171367020  0.0465748082  Inf
+SC    -Inf -0.11617854 -0.087723069 -0.087723069 -0.0592676011  Inf
+TS    -Inf -0.15572348 -0.116808429 -0.116808429 -0.0778933804  Inf
+NV    -Inf -0.16914232 -0.156648954 -0.156648954 -0.1441555851  Inf
+MA    -Inf -0.15358189 -0.076484613 -0.076484613  0.0006126662  Inf
+LB    -Inf -0.07458613 -0.073355091 -0.073355091 -0.0721240570  Inf
+AF    -Inf -0.19395797 -0.154137085 -0.154137085 -0.1143162013  Inf
+HU    -Inf -0.40988538 -0.231988149 -0.231988149 -0.0540909235  Inf
+Price -Inf -0.84788156 -0.515675043 -0.515675043 -0.1834685245  Inf</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTTFsb2dsaWs8LXJvdW5kKGFzLm51bWVyaWMoTTEkbG9nTGlrKSxkaWdpdHM9Milcbk0xbG9nbGlrXG5gYGAifQ== -->
+<pre class="r"><code>M1loglik&lt;-round(as.numeric(M1$logLik),digits=2)
+M1loglik</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIC0xNjcxNy43MlxuIn0= -->
+<pre><code>[1] -16717.72</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQUlDTTE8LSAtMipNMWxvZ2xpayArMio0MFxuQUlDTTFcbmBgYCJ9 -->
+<pre class="r"><code>AICM1&lt;- -2*M1loglik +2*40
+AICM1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMzNTE1LjQ0XG4ifQ== -->
+<pre><code>[1] 33515.44</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVGVzdCA8LSBkZmlkeCh0ZXN0X3NldCwgc2hhcGU9XCJ3aWRlXCIsIGNob2ljZT1cIkNob2ljZVwiLCB2YXJ5aW5nID0gYyg0OjgzKSwgc2VwPVwiXCIsaWR4ID0gbGlzdChjKFwiTm9cIiwgXCJDYXNlXCIpKSlcblRlc3RQcmVkaWN0MSA8LSBwcmVkaWN0KE0xLCBuZXdkYXRhPVRlc3QpXG5QcmVkaWN0ZWRDaG9pY2UxIDwtIGFwcGx5KFRlc3RQcmVkaWN0MSwxLHdoaWNoLm1heClcbkFjdHVhbENob2ljZTEgPC0gdGVzdF9zZXRbLFwiQ2hvaWNlXCJdXG5UYWJ0ZXN0bWl4ZWQ9IHRhYmxlKFByZWRpY3RlZENob2ljZTEsIEFjdHVhbENob2ljZTEpXG5UYWJ0ZXN0bWl4ZWRcbmBgYCJ9 -->
+<pre class="r"><code>Test &lt;- dfidx(test_set, shape=&quot;wide&quot;, choice=&quot;Choice&quot;, varying = c(4:83), sep=&quot;&quot;,idx = list(c(&quot;No&quot;, &quot;Case&quot;)))
+TestPredict1 &lt;- predict(M1, newdata=Test)
+PredictedChoice1 &lt;- apply(TestPredict1,1,which.max)
+ActualChoice1 &lt;- test_set[,&quot;Choice&quot;]
+Tabtestmixed= table(PredictedChoice1, ActualChoice1)
+Tabtestmixed</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgIEFjdHVhbENob2ljZTFcblByZWRpY3RlZENob2ljZTEgICAxICAgMiAgIDMgICA0XG4gICAgICAgICAgICAgICAxIDM5MiAxMDYgMTE0IDE2OVxuICAgICAgICAgICAgICAgMiAxMzEgNTI0IDEzMCAyMjRcbiAgICAgICAgICAgICAgIDMgMTE4IDEzOSA0NjAgMTY2XG4gICAgICAgICAgICAgICA0IDMxMCAzMTAgMjc2IDc0NVxuIn0= -->
+<pre><code>                ActualChoice1
+PredictedChoice1   1   2   3   4
+               1 392 106 114 169
+               2 131 524 130 224
+               3 118 139 460 166
+               4 310 310 276 745</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVzdHByZWRpY3RfZGYgPC0gYXMuZGF0YS5mcmFtZShUZXN0UHJlZGljdDEpXG5jb2xuYW1lcyh0ZXN0cHJlZGljdF9kZikgPC0gYyhcIkNoMVwiLCBcIkNoMlwiLCBcIkNoM1wiLCBcIkNoNFwiKVxuYGBgIn0= -->
+<pre class="r"><code>testpredict_df &lt;- as.data.frame(TestPredict1)
+colnames(testpredict_df) &lt;- c(&quot;Ch1&quot;, &quot;Ch2&quot;, &quot;Ch3&quot;, &quot;Ch4&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="calculate-loss" class="section level1">
+<h1>Calculate Loss</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9zcyA8LSAtMS9ucm93KHRlc3Rfc2V0KSAqIHN1bSh0ZXN0X3NldCRDaDEgKiBsb2codGVzdHByZWRpY3RfZGYkQ2gxKSArXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRlc3Rfc2V0JENoMiAqIGxvZyh0ZXN0cHJlZGljdF9kZiRDaDIpICtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGVzdF9zZXQkQ2gzICogbG9nKHRlc3RwcmVkaWN0X2RmJENoMykgK1xuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0ZXN0X3NldCRDaDQgKiBsb2codGVzdHByZWRpY3RfZGYkQ2g0KSlcbmxvc3NcbmBgYCJ9 -->
+<pre class="r"><code>loss &lt;- -1/nrow(test_set) * sum(test_set$Ch1 * log(testpredict_df$Ch1) +
+                                test_set$Ch2 * log(testpredict_df$Ch2) +
+                                test_set$Ch3 * log(testpredict_df$Ch3) +
+                                test_set$Ch4 * log(testpredict_df$Ch4))
+loss</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDEuMTk1MzUzXG4ifQ== -->
+<pre><code>[1] 1.195353</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="generate-predictions" class="section level1">
+<h1>Generate Predictions</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdF9kYXRhIDwtIHJlYWQuY3N2KFwiLi4vaW5wdXQvdGVzdDFfcHJlcHJvY2Vzc2VkLmNzdlwiKVxucHJlZGljdF9kYXRhJHNlZ21lbnQgPC0gYXMuZmFjdG9yKHByZWRpY3RfZGF0YSRzZWdtZW50KVxucHJlZGljdF9kYXRhJHBwYXJrIDwtIGFzLmZhY3RvcihwcmVkaWN0X2RhdGEkcHBhcmspXG5wcmVkaWN0X2RhdGEkZ2VuZGVyIDwtIGFzLmZhY3RvcihwcmVkaWN0X2RhdGEkZ2VuZGVyKVxucHJlZGljdF9kYXRhJGVkdWMgPC0gYXMuZmFjdG9yKHByZWRpY3RfZGF0YSRlZHVjKVxucHJlZGljdF9kYXRhJHJlZ2lvbiA8LSBhcy5mYWN0b3IocHJlZGljdF9kYXRhJHJlZ2lvbilcbnByZWRpY3RfZGF0YSRVcmIgPC0gYXMuZmFjdG9yKHByZWRpY3RfZGF0YSRVcmIpXG5cbndoaWNoKGNvbG5hbWVzKHNhZmV0eSk9PVwiQ0MxXCIpXG5gYGAifQ== -->
+<pre class="r"><code>predict_data &lt;- read.csv(&quot;../input/test1_preprocessed.csv&quot;)
+predict_data$segment &lt;- as.factor(predict_data$segment)
+predict_data$ppark &lt;- as.factor(predict_data$ppark)
+predict_data$gender &lt;- as.factor(predict_data$gender)
+predict_data$educ &lt;- as.factor(predict_data$educ)
+predict_data$region &lt;- as.factor(predict_data$region)
+predict_data$Urb &lt;- as.factor(predict_data$Urb)
+
+which(colnames(safety)==&quot;CC1&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
+<pre><code>[1] 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2hpY2goY29sbmFtZXMoc2FmZXR5KT09XCJQcmljZTRcIilcbmBgYCJ9 -->
+<pre class="r"><code>which(colnames(safety)==&quot;Price4&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDgzXG4ifQ== -->
+<pre><code>[1] 83</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdF9kYXRhIDwtIGRmaWR4KHByZWRpY3RfZGF0YSwgc2hhcGU9XCJ3aWRlXCIsIGNob2ljZT1cIkNob2ljZVwiLCB2YXJ5aW5nID0gYyg0OjgzKSwgc2VwPVwiXCIsaWR4ID0gbGlzdChjKFwiTm9cIiwgXCJDYXNlXCIpKSlcbnByZWRpY3Rpb24gPC0gcHJlZGljdChNMSwgbmV3ZGF0YT1wcmVkaWN0X2RhdGEpXG5gYGAifQ== -->
+<pre class="r"><code>predict_data &lt;- dfidx(predict_data, shape=&quot;wide&quot;, choice=&quot;Choice&quot;, varying = c(4:83), sep=&quot;&quot;,idx = list(c(&quot;No&quot;, &quot;Case&quot;)))
+prediction &lt;- predict(M1, newdata=predict_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gUGNoc1t0aGVSb3dzLCBdIDwtIHRjcm9zc3Byb2QoUGNoW3RoZVJvd3MsIF0sIHQoYiRiZXRhYS5zaWdtYVtpbmRleC5pLCAgOiBcbiAgbnVtYmVyIG9mIGl0ZW1zIHRvIHJlcGxhY2UgaXMgbm90IGEgbXVsdGlwbGUgb2YgcmVwbGFjZW1lbnQgbGVuZ3RoXG4ifQ== -->
+<pre><code>Error in Pchs[theRows, ] &lt;- tcrossprod(Pch[theRows, ], t(b$betaa.sigma[index.i,  : 
+  number of items to replace is not a multiple of replacement length</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdF9kYXRhXG5gYGAifQ== -->
+<pre class="r"><code>predict_data</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoifn5+fn5+flxuIGZpcnN0IDEwIG9ic2VydmF0aW9ucyBvdXQgb2YgMzU3OTYgXG5+fn5+fn5+XG4ifQ== -->
+<pre><code>~~~~~~~
+ first 10 observations out of 35796 
+~~~~~~~</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTAsIm5jb2wiOjM4LCJzdW1tYXJ5Ijp7IkRlc2NyaXB0aW9uIjpbImRmIFsxMCDDlyAzOF0iXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBODFYUzAvYlFCQjIvQXFZcDlSV1ZEMzVoT2doUVpBY2Vxakt3elFnbFVRUlNZRDJ0dGlMWThXeEl6OWFxSHJvait6UDZLRy9BTHFiZU5iMkNoT0RWS21XUnZubXNiT3pNMlB2NU96b3NxRmRhb0lnU0lJc2lvS2tFQ2dvZzM2cjlrNGdFc0pVQkZsWXBMODN4T2dGQVp1RVZnaHBVMldlUkk2a0dVbGdyNVNqM01hcWk3OWlOeVJvZmFxZFNkZGJzZXZXUXVjNzFydU9PWW9uaVh5cDdWaFRxWUdDUktTRDZEUytpWU5iZlJBNXJoUGQ2aUcyOFJoN1VaallyWUZkWXBDSVgzVURIRWFPemRiM3NJVThMa2pGZEZFSU1iTElyNUVaK1FGQmQybk9xci9LRWN1eFZaTEEvbjA1WWpXUnl4RTlybmpQVlVFNVFvNExpYXEyZlM4YU1sYnBrTHBCRGRRTGpFZE1wWDdHS0NEYzFLa0VUaDlNR3d1VGI2MEN5b1VwZ3NjV0hpTVhKNXpjcHJqRTNpeWxHK1ZJS25vdENpZ1hxNXBFOE1id1haZDBwbjRjSUN0R0VkYTNtanJOVi9nMnNWaW1HcXozektIdnU5RDJKNDQ5ekl0ZWR2MHdzc0ZKNGpYUnZlNzVZeWJUdDNacWpmd1dHMzI2eGZhNWI2TEk4VDNrZ3V0L1hURm9MTEY5QWFqekVWQXZSYUN0WER3cHBPY1VSa284cnB6RkFYSzNEVC8yb2dBNmVhRVhYOFhCRmZrZXpIaHRRSmx0ZzM0K250Qmh2MytVSTlhUlpaLy96VjU3cG4vb2wwcUJIWlZMajhTVDdibUgvUE9QSktRWFdsRThWSytVakwvc015OGVLY09MUXZuODhQN0w1RFBydjBoZnlmQ1ZKOWp6OGN4N2VQL1BQYTljMHI1b2Y0bVRaejhzMlhpZ1B0QS9NQXc5MXAveUkvWXlweStLYjE3L1pPdkY5MDlXWC9TQS9RS2haVUxWUkw2VWlWRklZNTBPakpsejlEOXd0TWZSL296QVhwNlVJNG12ZzVURVVNRG5QdkF5M0NVN0FIWUJOQUEweTN6Tjh4T2hoOFlZSmtLSlhXWStEQ0VHQ3VFMmxoeHJsMXROUkhUdEtvVjdmMlk1aGQ5OVZvM2Nrc1hBLzFhSFRXayt4Sjh6SzQyTFhVejN1SUZyeTBJUnFsOEhaSFY2RlBtZW1OSUZteEJ6SDRVakdQYkk5RXlIWjFEZFlqWnZxMlBIeFNFQ3ppT1RTUVNjTXBtZ0FIeW9OdllzTmlMS3lNWmdKbU1yTnNFcXdEYVpRU0JvY3NGQ0NJNW5rakVHMWtqR2NDZUZ1eWxzcExBSlBvMmg3NWlRZjlFd0FCMTNXS1Y2Z0E0SGdGb0hnRTZQbVBZTDB6SXZyUzZnTTRhNkRIMWlYbnBzUlovdDFqbG5JMUM2MnlHZ2d4YWdFNGhLNlFicFVhWTE1ZjQvbWJPemNvMmJaR0JxcTk3UGFSbFk5V0NmTUczVm45QnBrZlNmU045N2hWdGNDVGpCV3V6UmZyVnE1akQyUnJXbWtCL1NWcEpmTFlNM1dXdm01MFVWZTdialFSWVVGMTFobUlOWHlYc3hmUzNxazhCaERhc1JhVmlQL0FpQm5XYjZMa2htdzluZFg0Y1NNQ1lmRHdBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Task"],"name":[1],"type":["int"],"align":["right"]},{"label":["segment"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["milesa"],"name":[4],"type":["int"],"align":["right"]},{"label":["nighta"],"name":[5],"type":["int"],"align":["right"]},{"label":["ppark"],"name":[6],"type":["fctr"],"align":["left"]},{"label":["gender"],"name":[7],"type":["fctr"],"align":["left"]},{"label":["agea"],"name":[8],"type":["int"],"align":["right"]},{"label":["educ"],"name":[9],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[10],"type":["fctr"],"align":["left"]},{"label":["Urb"],"name":[11],"type":["fctr"],"align":["left"]},{"label":["incomea"],"name":[12],"type":["int"],"align":["right"]},{"label":["Ch1"],"name":[13],"type":["int"],"align":["right"]},{"label":["Ch2"],"name":[14],"type":["int"],"align":["right"]},{"label":["Ch3"],"name":[15],"type":["int"],"align":["right"]},{"label":["Ch4"],"name":[16],"type":["int"],"align":["right"]},{"label":["Choice"],"name":[17],"type":["lgl"],"align":["right"]},{"label":["CC"],"name":[18],"type":["int"],"align":["right"]},{"label":["GN"],"name":[19],"type":["int"],"align":["right"]},{"label":["NS"],"name":[20],"type":["int"],"align":["right"]},{"label":["BU"],"name":[21],"type":["int"],"align":["right"]},{"label":["FA"],"name":[22],"type":["int"],"align":["right"]},{"label":["LD"],"name":[23],"type":["int"],"align":["right"]},{"label":["BZ"],"name":[24],"type":["int"],"align":["right"]},{"label":["FC"],"name":[25],"type":["int"],"align":["right"]},{"label":["FP"],"name":[26],"type":["int"],"align":["right"]},{"label":["RP"],"name":[27],"type":["int"],"align":["right"]},{"label":["PP"],"name":[28],"type":["int"],"align":["right"]},{"label":["KA"],"name":[29],"type":["int"],"align":["right"]},{"label":["SC"],"name":[30],"type":["int"],"align":["right"]},{"label":["TS"],"name":[31],"type":["int"],"align":["right"]},{"label":["NV"],"name":[32],"type":["int"],"align":["right"]},{"label":["MA"],"name":[33],"type":["int"],"align":["right"]},{"label":["LB"],"name":[34],"type":["int"],"align":["right"]},{"label":["AF"],"name":[35],"type":["int"],"align":["right"]},{"label":["HU"],"name":[36],"type":["int"],"align":["right"]},{"label":["Price"],"name":[37],"type":["int"],"align":["right"]},{"label":["idx"],"name":[38],"type":["S3: idx"],"align":["right"]}],"data":[{"1":"1","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"2","19":"0","20":"0","21":"2","22":"0","23":"0","24":"2","25":"2","26":"0","27":"0","28":"0","29":"2","30":"2","31":"0","32":"1","33":"0","34":"4","35":"0","36":"2","37":"8","38":"<S3: idx>","_rn_":"1"},{"1":"1","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"2","19":"0","20":"0","21":"1","22":"0","23":"0","24":"2","25":"2","26":"0","27":"0","28":"0","29":"2","30":"2","31":"0","32":"2","33":"0","34":"4","35":"0","36":"1","37":"12","38":"<S3: idx>","_rn_":"2"},{"1":"1","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"1","19":"0","20":"0","21":"5","22":"0","23":"0","24":"1","25":"1","26":"0","27":"0","28":"0","29":"1","30":"4","31":"0","32":"1","33":"0","34":"2","35":"0","36":"1","37":"7","38":"<S3: idx>","_rn_":"3"},{"1":"1","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"0","22":"0","23":"0","24":"0","25":"0","26":"0","27":"0","28":"0","29":"0","30":"0","31":"0","32":"0","33":"0","34":"0","35":"0","36":"0","37":"0","38":"<S3: idx>","_rn_":"4"},{"1":"2","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"0","19":"2","20":"3","21":"0","22":"0","23":"3","24":"0","25":"0","26":"1","27":"1","28":"0","29":"0","30":"0","31":"1","32":"3","33":"2","34":"0","35":"3","36":"0","37":"11","38":"<S3: idx>","_rn_":"5"},{"1":"2","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"0","19":"2","20":"1","21":"0","22":"0","23":"1","24":"0","25":"0","26":"2","27":"2","28":"0","29":"0","30":"0","31":"1","32":"2","33":"4","34":"0","35":"1","36":"0","37":"4","38":"<S3: idx>","_rn_":"6"},{"1":"2","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"0","19":"2","20":"2","21":"0","22":"0","23":"3","24":"0","25":"0","26":"1","27":"1","28":"0","29":"0","30":"0","31":"3","32":"2","33":"2","34":"0","35":"1","36":"0","37":"4","38":"<S3: idx>","_rn_":"7"},{"1":"2","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"0","22":"0","23":"0","24":"0","25":"0","26":"0","27":"0","28":"0","29":"0","30":"0","31":"0","32":"0","33":"0","34":"0","35":"0","36":"0","37":"0","38":"<S3: idx>","_rn_":"8"},{"1":"3","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"1","19":"0","20":"0","21":"0","22":"0","23":"3","24":"0","25":"1","26":"1","27":"0","28":"1","29":"0","30":"0","31":"0","32":"2","33":"2","34":"1","35":"1","36":"0","37":"4","38":"<S3: idx>","_rn_":"9"},{"1":"3","2":"Prestige Luxury Sedan","3":"2004","4":"100","5":"60","6":"Weekly","7":"Male","8":"23","9":"College Graduate (4 Years)","10":"NE","11":"Rural/Country","12":"60540","13":"0","14":"0","15":"0","16":"0","17":"FALSE","18":"3","19":"0","20":"0","21":"0","22":"0","23":"2","24":"0","25":"2","26":"1","27":"0","28":"1","29":"0","30":"0","31":"0","32":"3","33":"3","34":"1","35":"2","36":"0","37":"2","38":"<S3: idx>","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10],"total":[38]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5+fn4gaW5kZXhlcyB+fn5+XG4ifQ== -->
+<pre><code>
+~~~ indexes ~~~~</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTAsIm5jb2wiOjMsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEwIMOXIDNdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTQxUlRVc0RNUkNkellmU0Jhdmc3K2lDYlErZWJFSHg2RUVxOUJwM1UxMk15YkticWtkL3NyK2dPdG5OaUEwS0JvYThlYnczSDhudDFYcVdyM01BNENBWUF5NFJncnhiWFUvT0FSbE1NaEF3Q3ZjYmlrNTdKY0FSQnJwV0Ywa3NrbGdPUVhyUi9DOTQxR056QUJaN2lyL3p2VUVQakg3UnBrTjAwcXZpK0djRXBnUm1CT1pKQlZrYTFWR0I3N0liVlhyWEl0cWxjcXVlTmNsNUpObU5pMGhjcWs1SHpPdHFtcmlSQ3Q1eGdJc1A2QS9kUzZDelp4bTE3cldncHVHcDJQdWd5Z2NoLzB4bXp5dmxWYkZwMGZMTC9JZXU4Yld6V0l5Ri81V0pPV3NUNG5oclEvTnFVajV1N2ROay91T3ZzamhRRmpuQ2ZHZ3BhREJKajZydFEyM3BkYVJSOTlyRVpJeEw5anNXVFZ0YlQ1c2cyeFhlZVVXNnZIU0dtSDQzMkgwQldjbmFJOVlDQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["No"],"name":[1],"type":["int"],"align":["right"]},{"label":["Case"],"name":[2],"type":["int"],"align":["right"]},{"label":["id2"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"21566","2":"1136","3":"1","_rn_":"1"},{"1":"21566","2":"1136","3":"2","_rn_":"2"},{"1":"21566","2":"1136","3":"3","_rn_":"3"},{"1":"21566","2":"1136","3":"4","_rn_":"4"},{"1":"21567","2":"1136","3":"1","_rn_":"5"},{"1":"21567","2":"1136","3":"2","_rn_":"6"},{"1":"21567","2":"1136","3":"3","_rn_":"7"},{"1":"21567","2":"1136","3":"4","_rn_":"8"},{"1":"21568","2":"1136","3":"1","_rn_":"9"},{"1":"21568","2":"1136","3":"2","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW5kZXhlczogIDEsIDEsIDIgXG4ifQ== -->
+<pre><code>indexes:  1, 1, 2 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuVGVzdFxuYGBgIn0= -->
+<pre class="r"><code>Test</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoifn5+fn5+flxuIGZpcnN0IDEwIG9ic2VydmF0aW9ucyBvdXQgb2YgMTcyNTYgXG5+fn5+fn5+XG4ifQ== -->
+<pre><code>~~~~~~~
+ first 10 observations out of 17256 
+~~~~~~~</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTAsIm5jb2wiOjM4LCJzdW1tYXJ5Ijp7IkRlc2NyaXB0aW9uIjpbImRmIFsxMCDDlyAzOF0iXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBN1ZYVzA4VFFSU2U3cVdGSWtLaVJ1T0QyU2VDRDRWQUlmRk5ZYkdRU0p1R3RvQytEZHVoM1hTNjIreEZ3U2Yva1AvRkIzK0l2d0NjYWVmTVhtaHhLcnJKU2I4NXR6bHp6cG5kMDVPRDgycjV2SXdRMHBHaGFVZzNHVVJtcDEycnZFR013eFlGWktCRi9udkZsSjR3c01ab21SRzNNbkswa0tQSEU5SkJYMU9qek1aRlNqNFRHaksweWxlQ3UxcUxLYTJFN2xkaU5WMW5FSThFZjZudWRzZGNHd2VDWlFIck9MNktnMnVyRTduVWphNnRrUFRJa0hoUktQUldRRThvQ1BhelprREN5TzFKK3hicFlrOElGMXREVE9sNHMyelVwa054Q0VITG8xeGlKL0taS3JwSmtsajZvVVl5NlUxRkF2MVhhaVNMVkZBamZsenRWcHpRaEdNZllKZEM1a3AxMzR2NmNtazJXQ0doS01VelFnWlNWUHhJY01CV1k2YzZPSjJhdGdlRnFZSEhHbUYxSTJKbDFEbFcyRnVtZEZlTlpLeW1HbVZpaFU1L2FmdVVzbGExRGdQY2pYRkVyUFVkaStjcmZDMDBIbkVKc1ZwTzMvY3AzSU1qdDlmUHNwNDIvVERxZ1JQaFZjaGV0UHloNUZuclc1VnFkb3ZuYmI3RjVxbnY0TWoxUFV6QjlUd1ZtK1AyMzJrc3JYNEdxUEVlVUN0QklDMmMvZmVRZE9GeCtTUU9NTjIwL2RpTEF1amtoVlo4RVFjWDhnVlI3dkRGcHMzZkozTjAyUGVmYWlRN1V2V1o4L2I4dFgvVnA1elNMK1JrMDlhei9Pc29LZGhENHBtbFh4QjdHRFAwTlNFelovZ3RDSmxxUFBuODU4OEhXRmVNZjlZejdTSk1lelIwZi83aC9MUHlYMGo1UUNqYll5Z2wvNWYxZWtnL1FLMVY5ZlA1MFFYbGV6ai9USnVra0xBelV2YVEzN1MrTmtXdXAreDFkTGUrcXZGQWJkTDlkbCs5K0Y0bGxPU0t4N0lraUQvak41MllJTk54S1U2UTg3NjM5SHpmUVQxbnJETXZlQU8rSlZzQXRnRlVBZXlvdk0yekU2R0hod1FtUXZpR2FBMGZoaEFiaC9BMTF0M3VkczZhc1VLUkN2M3RyMGxPNGZlZHJGN0daREh3djJ6QXBqd2YycmVKVmprWHU1YnNjUVdmclM2TzhNWmx3S3lUb3hpM1RKVWJyRUhNYlJ3T1lOaGo0elNmcGtGMFRlUUFYaHk2bElRWVZoNmJUQ0pZbWFNUkRzQkhzVWU4cmh3UkRkd2pvR2FRYnV5QVZrQjZiQWFCb05rSEZrSndQWWVOTVdDajIvMnRCRzRuc0pyQUhmQnA5MzNYZ2Z4cnRnM29zQ0VyMVFLMDN3RlUyd04wZkNDbG42UlVlcWsxQVoxSTFKVG9nL1RTa2hadHVWdmpWSTVBeVc3N2dQWnFnSTRnS3JNWkpFY1oxelQzaDhxWm5EWFh1Q0lEWTkzaTdSOWFCcXltOW9tVWx2d1JueFpaLzJuODNwczU0MEtRWTZ6RUh1L1hic1hweDk2Z3NvdXlkMzVaL0paVGVFMjJablplTEJLdjUzcVFCWlBpQ3dKejhHTjJMOGJYWW1NVXVMSmh5NHdiYmtSK2hFR3Y3UGdVT0pQaDdPWTN6TnBjN1RBUEFBQT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Task"],"name":[1],"type":["int"],"align":["right"]},{"label":["segment"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["year"],"name":[3],"type":["int"],"align":["right"]},{"label":["milesa"],"name":[4],"type":["int"],"align":["right"]},{"label":["nighta"],"name":[5],"type":["int"],"align":["right"]},{"label":["ppark"],"name":[6],"type":["fctr"],"align":["left"]},{"label":["gender"],"name":[7],"type":["fctr"],"align":["left"]},{"label":["agea"],"name":[8],"type":["int"],"align":["right"]},{"label":["educ"],"name":[9],"type":["fctr"],"align":["left"]},{"label":["region"],"name":[10],"type":["fctr"],"align":["left"]},{"label":["Urb"],"name":[11],"type":["fctr"],"align":["left"]},{"label":["incomea"],"name":[12],"type":["int"],"align":["right"]},{"label":["Ch1"],"name":[13],"type":["int"],"align":["right"]},{"label":["Ch2"],"name":[14],"type":["int"],"align":["right"]},{"label":["Ch3"],"name":[15],"type":["int"],"align":["right"]},{"label":["Ch4"],"name":[16],"type":["int"],"align":["right"]},{"label":["Choice"],"name":[17],"type":["lgl"],"align":["right"]},{"label":["CC"],"name":[18],"type":["int"],"align":["right"]},{"label":["GN"],"name":[19],"type":["int"],"align":["right"]},{"label":["NS"],"name":[20],"type":["int"],"align":["right"]},{"label":["BU"],"name":[21],"type":["int"],"align":["right"]},{"label":["FA"],"name":[22],"type":["int"],"align":["right"]},{"label":["LD"],"name":[23],"type":["int"],"align":["right"]},{"label":["BZ"],"name":[24],"type":["int"],"align":["right"]},{"label":["FC"],"name":[25],"type":["int"],"align":["right"]},{"label":["FP"],"name":[26],"type":["int"],"align":["right"]},{"label":["RP"],"name":[27],"type":["int"],"align":["right"]},{"label":["PP"],"name":[28],"type":["int"],"align":["right"]},{"label":["KA"],"name":[29],"type":["int"],"align":["right"]},{"label":["SC"],"name":[30],"type":["int"],"align":["right"]},{"label":["TS"],"name":[31],"type":["int"],"align":["right"]},{"label":["NV"],"name":[32],"type":["int"],"align":["right"]},{"label":["MA"],"name":[33],"type":["int"],"align":["right"]},{"label":["LB"],"name":[34],"type":["int"],"align":["right"]},{"label":["AF"],"name":[35],"type":["int"],"align":["right"]},{"label":["HU"],"name":[36],"type":["int"],"align":["right"]},{"label":["Price"],"name":[37],"type":["int"],"align":["right"]},{"label":["idx"],"name":[38],"type":["S3: idx"],"align":["right"]}],"data":[{"1":"4","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"2","22":"0","23":"3","24":"0","25":"2","26":"0","27":"1","28":"0","29":"0","30":"0","31":"0","32":"3","33":"4","34":"4","35":"2","36":"1","37":"3","38":"<S3: idx>","_rn_":"1"},{"1":"4","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"TRUE","18":"0","19":"0","20":"0","21":"4","22":"0","23":"2","24":"0","25":"2","26":"0","27":"2","28":"0","29":"0","30":"0","31":"0","32":"3","33":"4","34":"2","35":"2","36":"1","37":"7","38":"<S3: idx>","_rn_":"2"},{"1":"4","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"5","22":"0","23":"2","24":"0","25":"2","26":"0","27":"1","28":"0","29":"0","30":"0","31":"0","32":"1","33":"4","34":"1","35":"1","36":"2","37":"10","38":"<S3: idx>","_rn_":"3"},{"1":"4","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"0","22":"0","23":"0","24":"0","25":"0","26":"0","27":"0","28":"0","29":"0","30":"0","31":"0","32":"0","33":"0","34":"0","35":"0","36":"0","37":"0","38":"<S3: idx>","_rn_":"4"},{"1":"8","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"3","19":"0","20":"1","21":"0","22":"0","23":"2","24":"0","25":"0","26":"2","27":"1","28":"0","29":"1","30":"0","31":"0","32":"0","33":"1","34":"2","35":"0","36":"2","37":"4","38":"<S3: idx>","_rn_":"5"},{"1":"8","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"TRUE","18":"2","19":"0","20":"3","21":"0","22":"0","23":"2","24":"0","25":"0","26":"4","27":"1","28":"0","29":"2","30":"0","31":"0","32":"0","33":"4","34":"4","35":"0","36":"1","37":"11","38":"<S3: idx>","_rn_":"6"},{"1":"8","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"2","19":"0","20":"4","21":"0","22":"0","23":"3","24":"0","25":"0","26":"2","27":"1","28":"0","29":"2","30":"0","31":"0","32":"0","33":"1","34":"3","35":"0","36":"1","37":"11","38":"<S3: idx>","_rn_":"7"},{"1":"8","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"0","22":"0","23":"0","24":"0","25":"0","26":"0","27":"0","28":"0","29":"0","30":"0","31":"0","32":"0","33":"0","34":"0","35":"0","36":"0","37":"0","38":"<S3: idx>","_rn_":"8"},{"1":"14","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"FALSE","18":"0","19":"0","20":"0","21":"1","22":"1","23":"0","24":"0","25":"2","26":"0","27":"1","28":"0","29":"0","30":"3","31":"2","32":"0","33":"2","34":"1","35":"0","36":"1","37":"9","38":"<S3: idx>","_rn_":"9"},{"1":"14","2":"Midsize Car","3":"2000","4":"80","5":"30","6":"Daily","7":"Female","8":"53","9":"Some College (1-3 Years)","10":"NE","11":"Suburban","12":"44500","13":"0","14":"1","15":"0","16":"0","17":"TRUE","18":"0","19":"0","20":"0","21":"5","22":"1","23":"0","24":"0","25":"1","26":"0","27":"2","28":"0","29":"0","30":"4","31":"1","32":"0","33":"4","34":"3","35":"0","36":"2","37":"6","38":"<S3: idx>","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10],"total":[38]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5+fn4gaW5kZXhlcyB+fn5+XG4ifQ== -->
+<pre><code>
+~~~ indexes ~~~~</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MTAsIm5jb2wiOjMsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEwIMOXIDNdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQTQxUjIwb0RNUkNkelVWdG9GWHdPM2JCVnNFM0JjVkhINlJDWCtOdXFvc3hLYnVwK3Vnbit3WFYyZDJNdEVIQndEQm5EbWV1dWJ0ZXpOUkNBUUFId1Jod2lSRGsvZndtUHdka01NaEF3S2p6N3lnNjdwVUFZN1F1U3lSMmtOZ2tHdW16L3huZjFyUFlVL3dkN3d5Nlo4MnJzUzJpbzE0Vnh6OGhNQ1V3STNDYVZKQ2wxUzBWK0NtNzFHWHdEYUpOS25mNnhaQ2NSNUxkK29qRWxXNU54THl1cGtrMlVtMjhFci80aFA2UnZ3UjZPeW1qeHI4VjFMUTdGZnNZVkdvUThxOWtkbFhwb0l0bGd5bS96TC92VjZIMkRvdXg3bjlsa3B3MUNYRzRkbDN6S2krZjF1NDVQMHYrZGh5OTJzSjhhQ2xvTUVsSE5lNnhkblFkYWZXRHNUR1k0Skw5anNXcXFWMmdUWkJ0aStDREpwMHF2U1dtM3cwMjN3QTFpaWZXQWdBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["No"],"name":[1],"type":["int"],"align":["right"]},{"label":["Case"],"name":[2],"type":["int"],"align":["right"]},{"label":["id2"],"name":[3],"type":["fctr"],"align":["left"]}],"data":[{"1":"4","2":"1","3":"1","_rn_":"1"},{"1":"4","2":"1","3":"2","_rn_":"2"},{"1":"4","2":"1","3":"3","_rn_":"3"},{"1":"4","2":"1","3":"4","_rn_":"4"},{"1":"8","2":"1","3":"1","_rn_":"5"},{"1":"8","2":"1","3":"2","_rn_":"6"},{"1":"8","2":"1","3":"3","_rn_":"7"},{"1":"8","2":"1","3":"4","_rn_":"8"},{"1":"14","2":"1","3":"1","_rn_":"9"},{"1":"14","2":"1","3":"2","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW5kZXhlczogIDEsIDEsIDIgXG4ifQ== -->
+<pre><code>indexes:  1, 1, 2 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDb252ZXJ0aW5nIHRoZSBwcmVkaWN0aW9uIG1hdHJpeCBpbnRvIGEgZGF0YSBmcmFtZVxucHJlZGljdGlvbl9kZiA8LSBhcy5kYXRhLmZyYW1lKHByZWRpY3Rpb24pXG4jIFJlbmFtaW5nIHRoZSBjb2x1bW5zIGFzIHBlciB5b3VyIHJlcXVpcmVtZW50XG5jb2xuYW1lcyhwcmVkaWN0aW9uX2RmKSA8LSBjKFwiQ2gxXCIsIFwiQ2gyXCIsIFwiQ2gzXCIsIFwiQ2g0XCIpXG4jIEFkZGluZyB0aGUgJ05vJyBjb2x1bW4gZnJvbSBvcmlnaW5hbCBkYXRhc2V0IHRvIHRoZSBwcmVkaWN0aW9uIGRhdGEgZnJhbWVcbnByZWRpY3Rpb25fZGYkTm8gPC0gcHJlZGljdF9kYXRhJE5vXG4jIFJlYXJyYW5naW5nIHRoZSBjb2x1bW5zXG5wcmVkaWN0aW9uX2RmIDwtIHByZWRpY3Rpb25fZGZbYyhcIk5vXCIsIFwiQ2gxXCIsIFwiQ2gyXCIsIFwiQ2gzXCIsIFwiQ2g0XCIpXVxuXG4jIFdyaXRpbmcgdGhlIG91dHB1dCB0byBhIGNzdiBmaWxlXG53cml0ZS5jc3YocHJlZGljdGlvbl9kZiwgZmlsZSA9IFwiLi4vb3V0cHV0L3N1Ym1pc3Npb24xLmNzdlwiLCByb3cubmFtZXMgPSBGQUxTRSlcbmBgYCJ9 -->
+<pre class="r"><code># Converting the prediction matrix into a data frame
+prediction_df &lt;- as.data.frame(prediction)
+# Renaming the columns as per your requirement
+colnames(prediction_df) &lt;- c(&quot;Ch1&quot;, &quot;Ch2&quot;, &quot;Ch3&quot;, &quot;Ch4&quot;)
+# Adding the &#39;No&#39; column from original dataset to the prediction data frame
+prediction_df$No &lt;- predict_data$No
+# Rearranging the columns
+prediction_df &lt;- prediction_df[c(&quot;No&quot;, &quot;Ch1&quot;, &quot;Ch2&quot;, &quot;Ch3&quot;, &quot;Ch4&quot;)]
+
+# Writing the output to a csv file
+write.csv(prediction_df, file = &quot;../output/submission1.csv&quot;, row.names = FALSE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBUcnlpbmcgU3R1ZmYKIyMgSW1wb3J0IExpYnJhcmllcwpgYGB7cn0Kcm0obGlzdD1scygpKQojIEV4ZWN1dGUgb3VyIGN1c3RvbSBzY3JpcHQgZm9yIGxvYWRpbmcgcGFja2FnZXMKc291cmNlKCJ1c2VQYWNrYWdlcy5SIikKIyBOYW1lIG9mIHRoZSBwYWNrYWdlcyAKcGtnbmFtZXMgPC0gYygibWxvZ2l0IiwiZHBseXIiKQojIFVzZSBvdXIgY3VzdG9tIGxvYWQgZnVuY3Rpb24KbG9hZFBrZ3MocGtnbmFtZXMpCmBgYAoKIyMgSW1wb3J0IERhdGEKYGBge3J9CnNhZmV0eSA8LSByZWFkLmNzdigiLi4vaW5wdXQvdHJhaW5fcHJlcHJvY2Vzc2VkLmNzdiIpCnN0cihzYWZldHkpCmhlYWQoc2FmZXR5KQpgYGAKIyMgR2V0dGluZyBjb2x1bW4gaWQncyBvZiBzdGFydCBhbmQgZW5kCmBgYHtyfQp3aGljaChjb2xuYW1lcyhzYWZldHkpPT0iQ0MxIikKd2hpY2goY29sbmFtZXMoc2FmZXR5KT09InBwYXJrWWVhcmx5IikKYGBgCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBUcnlpbmcgU3R1ZmYKIyMgSW1wb3J0IExpYnJhcmllcwpgYGB7cn0Kcm0obGlzdD1scygpKQojIEV4ZWN1dGUgb3VyIGN1c3RvbSBzY3JpcHQgZm9yIGxvYWRpbmcgcGFja2FnZXMKc291cmNlKCJ1c2VQYWNrYWdlcy5SIikKIyBOYW1lIG9mIHRoZSBwYWNrYWdlcyAKcGtnbmFtZXMgPC0gYygibWxvZ2l0IiwiZHBseXIiLCJzcGxpdFRvb2xzIikKIyBVc2Ugb3VyIGN1c3RvbSBsb2FkIGZ1bmN0aW9uCmxvYWRQa2dzKHBrZ25hbWVzKQpgYGAKCiMjIEltcG9ydCBEYXRhCmBgYHtyfQpzYWZldHkgPC0gcmVhZC5jc3YoIi4uL2lucHV0L3RyYWluMV9wcmVwcm9jZXNzZWQuY3N2IikKc2FmZXR5JHNlZ21lbnQgPC0gYXMuZmFjdG9yKHNhZmV0eSRzZWdtZW50KQpzYWZldHkkcHBhcmsgPC0gYXMuZmFjdG9yKHNhZmV0eSRwcGFyaykKc2FmZXR5JGdlbmRlciA8LSBhcy5mYWN0b3Ioc2FmZXR5JGdlbmRlcikKc2FmZXR5JGVkdWMgPC0gYXMuZmFjdG9yKHNhZmV0eSRlZHVjKQpzYWZldHkkcmVnaW9uIDwtIGFzLmZhY3RvcihzYWZldHkkcmVnaW9uKQpzYWZldHkkVXJiIDwtIGFzLmZhY3RvcihzYWZldHkkVXJiKQpzdHIoc2FmZXR5KQpoZWFkKHNhZmV0eSkKYGBgCiMjIEdldHRpbmcgY29sdW1uIGlkJ3Mgb2Ygc3RhcnQgYW5kIGVuZApgYGB7cn0Kd2hpY2goY29sbmFtZXMoc2FmZXR5KT09IkNDMSIpCndoaWNoKGNvbG5hbWVzKHNhZmV0eSk9PSJQcmljZTQiKQpgYGAKCiMjIFNwbGl0IHRyYWluLXRlc3QKYGBge3J9CiMgU3BsaXQgZGF0YSBpbnRvIHBhcnRpdGlvbnMKc2V0LnNlZWQoNDIpCmluZHMgPC0gcGFydGl0aW9uKHNhZmV0eSRDaG9pY2UsIHAgPSBjKHRyYWluID0gMC44LCB0ZXN0ID0gMC4yKSkKc3RyKGluZHMpCmBgYAoKYGBge3J9CnRyYWluX3NldCA8LSBzYWZldHlbaW5kcyR0cmFpbiwgXQp0ZXN0X3NldCA8LSBzYWZldHlbaW5kcyR0ZXN0LCBdCnRhYmxlKHRyYWluX3NldCRDaG9pY2UpCnRhYmxlKHRlc3Rfc2V0JENob2ljZSkKYGBgCgpgYGB7cn0KUzwtZGZpZHgodHJhaW5fc2V0LCBzaGFwZT0id2lkZSIsIGNob2ljZT0iQ2hvaWNlIiwgdmFyeWluZyA9Yyg0OjgzKSwgc2VwPSIiLGlkeCA9IGxpc3QoYygiTm8iLCAiQ2FzZSIpKSkKIyBzZWdtZW50K3llYXIrbWlsZXNhK25pZ2h0YStwcGFyaytnZW5kZXIrYWdlYStlZHVjK3JlZ2lvbitVcmIraW5jb21lYQpgYGAKCmBgYHtyfQpNMSA8LSBtbG9naXQoQ2hvaWNlfkNDK0dOK05TK0JVK0ZBK0xEK0JaK0ZDK0ZQK1JQK1BQK0tBK1NDK1RTK05WK01BK0xCK0FGK0hVK1ByaWNlLTEgfCBzZWdtZW50K3BwYXJrK2dlbmRlcitlZHVjK3JlZ2lvbitVcmIsIGRhdGE9UywgcnBhcj1jKENDPSduJywgR049J24nLCBOUz0nbicsIEJVPSduJyxGQT0nbicsTEQ9J24nLEJaPSduJyxGQz0nbicsRlA9J24nLFJQPSduJyxQUD0nbicsS0E9J24nLFNDPSduJyxUUz0nbicsTlY9J24nLE1BPSduJyxMQj0nbicsQUY9J24nLEhVPSduJyxQcmljZT0nbicpLCBwYW5lbCA9IFRSVUUsIHByaW50LmxldmVsPVRSVUUpCmBgYAoKYGBge3J9CnN1bW1hcnkoTTEpCmBgYAoKYGBge3J9Ck0xbG9nbGlrPC1yb3VuZChhcy5udW1lcmljKE0xJGxvZ0xpayksZGlnaXRzPTIpCk0xbG9nbGlrCkFJQ00xPC0gLTIqTTFsb2dsaWsgKzIqNDAKQUlDTTEKYGBgCgoKYGBge3J9ClRlc3QgPC0gZGZpZHgodGVzdF9zZXQsIHNoYXBlPSJ3aWRlIiwgY2hvaWNlPSJDaG9pY2UiLCB2YXJ5aW5nID0gYyg0OjgzKSwgc2VwPSIiLGlkeCA9IGxpc3QoYygiTm8iLCAiQ2FzZSIpKSkKVGVzdFByZWRpY3QxIDwtIHByZWRpY3QoTTEsIG5ld2RhdGE9VGVzdCkKUHJlZGljdGVkQ2hvaWNlMSA8LSBhcHBseShUZXN0UHJlZGljdDEsMSx3aGljaC5tYXgpCkFjdHVhbENob2ljZTEgPC0gdGVzdF9zZXRbLCJDaG9pY2UiXQpUYWJ0ZXN0bWl4ZWQ9IHRhYmxlKFByZWRpY3RlZENob2ljZTEsIEFjdHVhbENob2ljZTEpClRhYnRlc3RtaXhlZApgYGAKCmBgYHtyfQp0ZXN0cHJlZGljdF9kZiA8LSBhcy5kYXRhLmZyYW1lKFRlc3RQcmVkaWN0MSkKY29sbmFtZXModGVzdHByZWRpY3RfZGYpIDwtIGMoIkNoMSIsICJDaDIiLCAiQ2gzIiwgIkNoNCIpCmBgYAoKIyBDYWxjdWxhdGUgTG9zcwpgYGB7cn0KbG9zcyA8LSAtMS9ucm93KHRlc3Rfc2V0KSAqIHN1bSh0ZXN0X3NldCRDaDEgKiBsb2codGVzdHByZWRpY3RfZGYkQ2gxKSArCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGVzdF9zZXQkQ2gyICogbG9nKHRlc3RwcmVkaWN0X2RmJENoMikgKwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRlc3Rfc2V0JENoMyAqIGxvZyh0ZXN0cHJlZGljdF9kZiRDaDMpICsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0ZXN0X3NldCRDaDQgKiBsb2codGVzdHByZWRpY3RfZGYkQ2g0KSkKbG9zcwpgYGAKCiMgR2VuZXJhdGUgUHJlZGljdGlvbnMKYGBge3J9CnByZWRpY3RfZGF0YSA8LSByZWFkLmNzdigiLi4vaW5wdXQvdGVzdDFfcHJlcHJvY2Vzc2VkLmNzdiIpCnByZWRpY3RfZGF0YSRzZWdtZW50IDwtIGFzLmZhY3RvcihwcmVkaWN0X2RhdGEkc2VnbWVudCkKcHJlZGljdF9kYXRhJHBwYXJrIDwtIGFzLmZhY3RvcihwcmVkaWN0X2RhdGEkcHBhcmspCnByZWRpY3RfZGF0YSRnZW5kZXIgPC0gYXMuZmFjdG9yKHByZWRpY3RfZGF0YSRnZW5kZXIpCnByZWRpY3RfZGF0YSRlZHVjIDwtIGFzLmZhY3RvcihwcmVkaWN0X2RhdGEkZWR1YykKcHJlZGljdF9kYXRhJHJlZ2lvbiA8LSBhcy5mYWN0b3IocHJlZGljdF9kYXRhJHJlZ2lvbikKcHJlZGljdF9kYXRhJFVyYiA8LSBhcy5mYWN0b3IocHJlZGljdF9kYXRhJFVyYikKCndoaWNoKGNvbG5hbWVzKHNhZmV0eSk9PSJDQzEiKQp3aGljaChjb2xuYW1lcyhzYWZldHkpPT0iUHJpY2U0IikKYGBgCgoKYGBge3J9CnByZWRpY3RfZGF0YSA8LSBkZmlkeChwcmVkaWN0X2RhdGEsIHNoYXBlPSJ3aWRlIiwgY2hvaWNlPSJDaG9pY2UiLCB2YXJ5aW5nID0gYyg0OjgzKSwgc2VwPSIiLGlkeCA9IGxpc3QoYygiTm8iLCAiQ2FzZSIpKSkKcHJlZGljdGlvbiA8LSBwcmVkaWN0KE0xLCBuZXdkYXRhPXByZWRpY3RfZGF0YSkKYGBgCgpgYGB7cn0KcHJlZGljdF9kYXRhCmBgYApgYGB7cn0KVGVzdApgYGAKCmBgYHtyfQojIENvbnZlcnRpbmcgdGhlIHByZWRpY3Rpb24gbWF0cml4IGludG8gYSBkYXRhIGZyYW1lCnByZWRpY3Rpb25fZGYgPC0gYXMuZGF0YS5mcmFtZShwcmVkaWN0aW9uKQojIFJlbmFtaW5nIHRoZSBjb2x1bW5zIGFzIHBlciB5b3VyIHJlcXVpcmVtZW50CmNvbG5hbWVzKHByZWRpY3Rpb25fZGYpIDwtIGMoIkNoMSIsICJDaDIiLCAiQ2gzIiwgIkNoNCIpCiMgQWRkaW5nIHRoZSAnTm8nIGNvbHVtbiBmcm9tIG9yaWdpbmFsIGRhdGFzZXQgdG8gdGhlIHByZWRpY3Rpb24gZGF0YSBmcmFtZQpwcmVkaWN0aW9uX2RmJE5vIDwtIHByZWRpY3RfZGF0YSRObwojIFJlYXJyYW5naW5nIHRoZSBjb2x1bW5zCnByZWRpY3Rpb25fZGYgPC0gcHJlZGljdGlvbl9kZltjKCJObyIsICJDaDEiLCAiQ2gyIiwgIkNoMyIsICJDaDQiKV0KCiMgV3JpdGluZyB0aGUgb3V0cHV0IHRvIGEgY3N2IGZpbGUKd3JpdGUuY3N2KHByZWRpY3Rpb25fZGYsIGZpbGUgPSAiLi4vb3V0cHV0L3N1Ym1pc3Npb24xLmNzdiIsIHJvdy5uYW1lcyA9IEZBTFNFKQpgYGAKCgo=</div>
 
 
 

@@ -10,19 +10,127 @@ rm(list=ls())
 # Execute our custom script for loading packages
 source("usePackages.R")
 # Name of the packages 
-pkgnames <- c("mlogit","dplyr")
+pkgnames <- c("mlogit","dplyr","splitTools")
 # Use our custom load function
 loadPkgs(pkgnames)
 ```
 
 ## Import Data
 ```{r}
-safety <- read.csv("../input/train_preprocessed.csv")
+safety <- read.csv("../input/train1_preprocessed.csv")
+safety$segment <- as.factor(safety$segment)
+safety$ppark <- as.factor(safety$ppark)
+safety$gender <- as.factor(safety$gender)
+safety$educ <- as.factor(safety$educ)
+safety$region <- as.factor(safety$region)
+safety$Urb <- as.factor(safety$Urb)
 str(safety)
 head(safety)
 ```
 ## Getting column id's of start and end
 ```{r}
 which(colnames(safety)=="CC1")
-which(colnames(safety)=="pparkYearly")
+which(colnames(safety)=="Price4")
 ```
+
+## Split train-test
+```{r}
+# Split data into partitions
+set.seed(42)
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+str(inds)
+```
+
+```{r}
+train_set <- safety[inds$train, ]
+test_set <- safety[inds$test, ]
+table(train_set$Choice)
+table(test_set$Choice)
+```
+
+```{r}
+S<-dfidx(train_set, shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
+# segment+year+milesa+nighta+ppark+gender+agea+educ+region+Urb+incomea
+```
+
+```{r}
+M1 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1 | segment+ppark+gender+educ+region+Urb, data=S, rpar=c(CC='n', GN='n', NS='n', BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
+```
+
+```{r}
+summary(M1)
+```
+
+```{r}
+M1loglik<-round(as.numeric(M1$logLik),digits=2)
+M1loglik
+AICM1<- -2*M1loglik +2*40
+AICM1
+```
+
+
+```{r}
+Test <- dfidx(test_set, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+TestPredict1 <- predict(M1, newdata=Test)
+PredictedChoice1 <- apply(TestPredict1,1,which.max)
+ActualChoice1 <- test_set[,"Choice"]
+Tabtestmixed= table(PredictedChoice1, ActualChoice1)
+Tabtestmixed
+```
+
+```{r}
+testpredict_df <- as.data.frame(TestPredict1)
+colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+```
+
+# Calculate Loss
+```{r}
+loss <- -1/nrow(test_set) * sum(test_set$Ch1 * log(testpredict_df$Ch1) +
+                                test_set$Ch2 * log(testpredict_df$Ch2) +
+                                test_set$Ch3 * log(testpredict_df$Ch3) +
+                                test_set$Ch4 * log(testpredict_df$Ch4))
+loss
+```
+
+# Generate Predictions
+```{r}
+predict_data <- read.csv("../input/test1_preprocessed.csv")
+predict_data$segment <- as.factor(predict_data$segment)
+predict_data$ppark <- as.factor(predict_data$ppark)
+predict_data$gender <- as.factor(predict_data$gender)
+predict_data$educ <- as.factor(predict_data$educ)
+predict_data$region <- as.factor(predict_data$region)
+predict_data$Urb <- as.factor(predict_data$Urb)
+
+which(colnames(safety)=="CC1")
+which(colnames(safety)=="Price4")
+```
+
+
+```{r}
+predict_data <- dfidx(predict_data, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+prediction <- predict(M1, newdata=predict_data)
+```
+
+```{r}
+predict_data
+```
+```{r}
+Test
+```
+
+```{r}
+# Converting the prediction matrix into a data frame
+prediction_df <- as.data.frame(prediction)
+# Renaming the columns as per your requirement
+colnames(prediction_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+# Adding the 'No' column from original dataset to the prediction data frame
+prediction_df$No <- predict_data$No
+# Rearranging the columns
+prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+
+# Writing the output to a csv file
+write.csv(prediction_df, file = "../output/submission1.csv", row.names = FALSE)
+```
+
+

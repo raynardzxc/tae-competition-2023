@@ -11,21 +11,21 @@ rm(list=ls())
 # Execute our custom script for loading packages
 source("usePackages.R")
 # Name of the packages 
-pkgnames <- c("mlogit","dplyr")
+pkgnames <- c("mlogit","dplyr","splitTools")
 # Use our custom load function
 loadPkgs(pkgnames)
 ```
 
 # Import Data
 ```{r}
-safety <- read.csv("../input/train.csv")
+safety <- read.csv("../input/train1_preprocessed.csv")
 str(safety)
 head(safety)
 ```
-There are a total of 14250 observations on 98 variables. Each customer performs 19 different choice tasks and there are a total of 750 customers.
+There are a total of 21565 observations on 113 variables. Each customer performs 19 different choice tasks and there are a total of 1135 customers.
 
-Case: Customer number (1 to 750)
-No: Observation number (1 to 14250)
+Case: Customer number (1 to 1135)
+No: Observation number (1 to 21565)
 Task: Task number for a customer (1 to 19)
 
 Each customer has to make a choice among four packages in each task. For example customer 1 in the first choice task chooses Ch2. In this choice situations, the attributes were:
@@ -97,8 +97,6 @@ Urb = resident of  Rural, Suburban, Urban
 
 income = income
 
-ppark = parking frequency?
-
 Ch1 = 1 if package 1 is chosen, 0 otherwise
 
 Ch2 = 1 if package 2 is chosen, 0 otherwise
@@ -109,14 +107,6 @@ Ch4 = 1 if package 4 is chosen, 0 otherwise
 
 Choice = Ch1 or Ch2 or Ch3 or Ch4 (depending on which option is chosen)
 
-```{r}
-safety$Choice <- ifelse(safety$Ch1 == 1, 1,
-                        ifelse(safety$Ch2 == 1, 2,
-                               ifelse(safety$Ch3 == 1, 3,
-                                      ifelse(safety$Ch4 == 1, 4, NA))))
-table(safety$Choice)
-```
-
 ## Getting column id's of start and end
 ```{r}
 which(colnames(safety)=="CC1")
@@ -125,14 +115,27 @@ which(colnames(safety)=="Price4")
 
 Columns 4 to 83 of the safety data frame contains the attribute levels for each of the 4 alternatives (choices) indexed by 1,2,3 and 4 respectively.
 
+## Split train-test
 ```{r}
-# S<-dfidx(subset(safety, Task<=15), shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
-
-S<-dfidx(safety, shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
+# Split data into partitions
+set.seed(42)
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+str(inds)
 ```
 
 ```{r}
-M1 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1, data=S, rpar=c(CC='n', GN='n', NS='n', BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
+train_set <- safety[inds$train, ]
+test_set <- safety[inds$test, ]
+table(train_set$Choice)
+table(test_set$Choice)
+```
+
+```{r}
+train<-dfidx(train_set, shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
+```
+
+```{r}
+M1 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1, data=train, rpar=c(CC='n', GN='n', NS='n', BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
 ```
 Note that the four alternatives (choice observations) are not comparable, so we do not introduce alternate specific estimates.
 
@@ -148,23 +151,37 @@ AICM1
 ```
 
 ```{r}
-P1 <- predict(M1, newdata=S)
+P1 <- predict(M1, newdata=train)
 PredictedChoice1 <- apply(P1, 1, which.max)
-ActualChoice <- subset(safety, Task<=15)[,"Choice"]
+ActualChoice <- train_set[,"Choice"]
 Tabtrainmixed <- table(PredictedChoice1, ActualChoice)
 Tabtrainmixed
 ```
 ```{r}
-Test <- dfidx(subset(safety, Task>15), shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+Test <- dfidx(test_set, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
 TestPredict1 <- predict(M1, newdata=Test)
 PredictedChoice1 <- apply(TestPredict1,1,which.max)
-ActualChoice1 <- subset(safety, Task>15)[,"Choice"]
+ActualChoice1 <- test_set[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
 ```
+```{r}
+testpredict_df <- as.data.frame(TestPredict1)
+colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+```
+
+# Calculate Loss
+```{r}
+loss <- -1/nrow(test_set) * sum(test_set$Ch1 * log(testpredict_df$Ch1) +
+                                test_set$Ch2 * log(testpredict_df$Ch2) +
+                                test_set$Ch3 * log(testpredict_df$Ch3) +
+                                test_set$Ch4 * log(testpredict_df$Ch4))
+loss
+```
+
 # Generate Predictions
 ```{r}
-predict_data <- read.csv("../input/test.csv")
+predict_data <- read.csv("../input/test1.csv")
 predict_data$Choice <- 0
 which(colnames(safety)=="CC1")
 which(colnames(safety)=="Price4")
@@ -184,14 +201,4 @@ prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
 
 # Writing the output to a csv file
 write.csv(prediction_df, file = "../output/submission1.csv", row.names = FALSE)
-```
-
-# Calculate Loss
-```{r}
-solution <- read.csv("../output/solution.csv")
-loss <- -1/nrow(solution) * sum(solution$Ch1 * log(prediction_df$Ch1) +
-                                solution$Ch2 * log(prediction_df$Ch2) +
-                                solution$Ch3 * log(prediction_df$Ch3) +
-                                solution$Ch4 * log(prediction_df$Ch4))
-loss
 ```
