@@ -104,8 +104,36 @@ predict_data$Urb <- as.factor(predict_data$Urb)
 
 which(colnames(predict_data)=="CC1")
 which(colnames(predict_data)=="Price4")
-str(predict_data)
-str(test_set)
+
+# Compare names and class of each column
+identical(names(predict_data), names(test_set)) & identical(sapply(predict_data, class), sapply(test_set, class))
+```
+
+```{r}
+# The factor variables
+factor_vars <- c("segment", "ppark", "gender", "educ", "region", "Urb")
+
+# Convert the variables to factor in predict_data
+predict_data[factor_vars] <- lapply(predict_data[factor_vars], as.factor)
+
+# Convert the variables to factor in test_set
+test_set[factor_vars] <- lapply(test_set[factor_vars], as.factor)
+
+# Check if there are new levels in predict_data
+for (var in factor_vars) {
+  print(paste("Checking variable:", var))
+  
+  test_levels <- levels(test_set[[var]])
+  predict_levels <- levels(predict_data[[var]])
+  
+  new_levels <- setdiff(predict_levels, test_levels)
+  
+  if (length(new_levels) > 0) {
+    print(paste("Variable", var, "has new levels in predict_data:", paste(new_levels, collapse = ", ")))
+  } else {
+    print(paste("No new levels in variable", var))
+  }
+}
 ```
 
 
