@@ -1,0 +1,174 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Trying Stuff
+## Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("dplyr","caret","splitTools")
+# "tensorflow","tfdatasets","keras"
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+# Process
+## Import Data
+```{r}
+safety <- read.csv("../input/train1.csv")
+str(safety)
+head(safety)
+```
+## Add Choice
+```{r}
+safety$Choice <- ifelse(safety$Ch1 == 1, 1,
+                        ifelse(safety$Ch2 == 1, 2,
+                               ifelse(safety$Ch3 == 1, 3,
+                                      ifelse(safety$Ch4 == 1, 4, NA))))
+table(safety$Choice)
+```
+
+## Drop Columns
+```{r}
+# drop unused columns
+df <- subset(safety, select = -c(Case,Task,segmentind,yearind,milesa,milesind,nighta,nightind,pparkind,genderind,agea,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+head(df)
+```
+
+```{r}
+dummy <- dummyVars(" ~ .", data=df)
+newdata <- data.frame(predict(dummy, newdata = df)) 
+head(newdata)
+```
+
+## Drop Columns
+```{r}
+# Multicollinearity
+# segmentSmall.Car, milesUnder.50.Miles, nightUnder.10., pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban
+df_train_final <- subset(newdata, select = -c(segmentSmall.Car,milesUnder.50.Miles,nightUnder.10.,pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban))
+head(df_train_final)
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df_train_final, file = "../input/train1_onehot.csv", row.names = FALSE)
+```
+
+## Import Test Data
+```{r}
+safety <- read.csv("../input/test1.csv")
+str(safety)
+head(safety)
+```
+## Add Choice
+```{r}
+safety$Choice <- 0
+```
+
+## Drop Columns
+```{r}
+# drop unused columns
+df <- subset(safety, select = -c(Case,Task,segmentind,yearind,milesa,milesind,nighta,nightind,pparkind,genderind,agea,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+head(df)
+```
+
+```{r}
+dummy <- dummyVars(" ~ .", data=df)
+newdata <- data.frame(predict(dummy, newdata = df)) 
+head(newdata)
+```
+
+## Drop Columns
+```{r}
+# Multicollinearity
+# segmentSmall.Car, milesUnder.50.Miles, nightUnder.10., pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban, incomeUnder..29.999
+df_test_final <- subset(newdata, select = -c(milesUnder.50.Miles,nightUnder.10.,pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban))
+
+# Find columns missing in df_test_final
+missing_columns_in_df2 <- setdiff(names(df_train_final), names(df_test_final))
+if(length(missing_columns_in_df2) > 0){
+    print(paste("Columns missing from test: ", toString(missing_columns_in_df2)))
+} else {
+    print("No columns from train are missing in test")
+}
+
+# Find columns missing in df_train_final
+missing_columns_in_df1 <- setdiff(names(df_test_final), names(df_train_final))
+if(length(missing_columns_in_df1) > 0){
+    print(paste("Columns missing from train.: ", toString(missing_columns_in_df1)))
+} else {
+    print("No columns from test are missing in train.")
+}
+
+head(df_test_final)
+```
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df_test_final, file = "../input/test1_onehot.csv", row.names = FALSE)
+```
+
+
+# Training
+```{r}
+library(tensorflow)
+library(keras)
+```
+
+```{r}
+# GPU can be added if available
+physical_devices <- tf$config$list_physical_devices("GPU")
+tf$config$experimental$set_memory_growth(physical_devices[[1]],TRUE)
+# End of GPU optimisation
+
+tf$keras$backend$set_floatx('float32')
+```
+
+```{r}
+safety <- read.csv("../input/train1_onehot.csv")
+# Split data into partitions
+set.seed(42)
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+train_set <- safety[inds$train, ]
+test_set <- safety[inds$test, ]
+```
+
+```{r}
+# Prepare data
+x_train <- as.matrix(train_set[, -which(names(train_set) == "Choice")])
+y_train <- train_set$Choice - 1
+y_train <- to_categorical(y_train, num_classes = 4)
+
+x_test <- as.matrix(test_set[, -which(names(test_set) == "Choice")])
+y_test <- test_set$Choice - 1
+y_test <- to_categorical(y_test, num_classes = 4)
+
+# Define model
+model <- keras_model_sequential() %>%
+  layer_dense(units = 32, activation = 'relu', input_shape = ncol(x_train)) %>%
+  layer_dense(units = 16, activation = 'relu') %>%
+  layer_dense(units = 4, activation = 'softmax')
+
+# Compile model
+model %>% compile(
+  loss = 'categorical_crossentropy', #this is already logloss
+  optimizer = 'adam',
+  metrics = c('accuracy')
+)
+
+# Fit model
+history <- model %>% fit(
+  x_train, y_train, 
+  epochs = 2, batch_size = 32, 
+  validation_split = 0.1
+)
+
+# Evaluate on test data
+score <- model %>% evaluate(x_test, y_test)
+print(score)
+```
+
