@@ -53,11 +53,11 @@ S<-dfidx(train_set, shape="wide", choice="Choice", varying =c(4:83), sep="",idx 
 # segment+year+milesa+nighta+ppark+gender+agea+educ+region+Urb+incomea
 # | segment+ppark+gender+educ+region+Urb
 # | year+milesa+nighta+agea+incomea
-# year doesnt work
 ```
 
 ```{r}
-M1 <- mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price-1| milesa+nighta+agea+incomea, data=S, rpar=c(CC='n', GN='n', NS='n', BU='n',FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
+M1 <- mlogit(Choice~CC+GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price | year+ppark+Urb+region+educ+gender+milesa+nighta+agea+incomea+0, data=S, rpar=c(CC='n', FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
+# segment doesnt work
 ```
 
 ```{r}
@@ -67,8 +67,6 @@ summary(M1)
 ```{r}
 M1loglik<-round(as.numeric(M1$logLik),digits=2)
 M1loglik
-AICM1<- -2*M1loglik +2*40
-AICM1
 ```
 
 
@@ -79,11 +77,10 @@ PredictedChoice1 <- apply(TestPredict1,1,which.max)
 ActualChoice1 <- test_set[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
-```
-# Calculate Loss
-```{r}
+#loss
 testpredict_df <- as.data.frame(TestPredict1)
 colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+
 loss <- -1/nrow(test_set) * sum(test_set$Ch1 * log(testpredict_df$Ch1) +
                                 test_set$Ch2 * log(testpredict_df$Ch2) +
                                 test_set$Ch3 * log(testpredict_df$Ch3) +
@@ -105,7 +102,7 @@ which(colnames(predict_data)=="CC1")
 which(colnames(predict_data)=="Price4")
 
 # Compare names and class of each column
-identical(names(predict_data), names(test_set)) & identical(sapply(predict_data, class), sapply(test_set, class))
+# identical(names(predict_data), names(test_set)) & identical(sapply(predict_data, class), sapply(test_set, class))
 ```
 
 ```{r}
@@ -135,15 +132,15 @@ for (var in factor_vars) {
 }
 ```
 
+```{r}
+levels(test_set$segment)
+levels(predict_data$segment)
+```
+
 
 ```{r}
 predict_set <- dfidx(predict_data, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
 prediction <- predict(M1, newdata=predict_set)
-```
-
-```{r}
-predict_set
-Test
 ```
 
 ```{r}
