@@ -1,0 +1,53 @@
+---
+title: "xgboost"
+output: html_notebook
+---
+
+```{r}
+# load libraries
+library(xgboost)
+library(caret)
+library(dplyr)
+```
+
+```{r}
+# read csv
+safety <- read.csv("train1.csv")
+summary(safety)
+```
+
+```{r}
+# Convert categorical variables to dummy variables
+safety <- dummyVars("~ .", data = data)
+data <- predict(data, newdata = data)
+
+# Normalize the data
+preProc <- preProcess(data, method = c("center", "scale"))
+data <- predict(preProc, newdata = data)
+
+# Convert the target variable into a single column
+data$Chosen <- ifelse(data$Ch1 == 1, 1,
+                      ifelse(data$Ch2 == 1, 2,
+                             ifelse(data$Ch3 == 1, 3,
+                                    ifelse(data$Ch4 == 1, 4, NA))))
+```
+
+
+```{r}
+# Split data into partitions 
+set.seed(42) 
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2)) 
+str(inds)
+train_set <- safety[inds$train, ] test_set <- safety[inds$test, ] 
+table(train_set$Choice) 
+table(test_set$Choice)
+```
+
+
+
+
+
+
+
+
+

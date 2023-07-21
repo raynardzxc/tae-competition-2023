@@ -1,0 +1,306 @@
+---
+title: "xgboost"
+output: html_notebook
+---
+```{r}
+rm(list=ls())
+```
+
+```{r}
+# load libraries
+library(xgboost)
+library(caret)
+library(dplyr)
+library(splitTools)
+```
+
+```{r}
+# read csv
+safety <- read.csv("train1_preprocessed.csv")
+```
+
+
+## Without dropping variables (logloss = 1.55)
+https://www.projectpro.io/recipes/apply-xgboost-for-classification-r
+```{r}
+# Split data into partitions
+set.seed(42)
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+str(inds)
+
+train_set <- safety[inds$train, ]
+train_set$Choice <- train_set$Choice - 1
+test_set <- safety[inds$test, ]
+test_set$Choice <- test_set$Choice - 1
+table(train_set$Choice)
+table(test_set$Choice)
+```
+
+```{r}
+X_train = data.matrix(train_set[,-92]) # independent variables for train
+y_train = train_set[,92] # dependent variables for train
+
+X_test = data.matrix(test_set[,-92]) # independent variables for test
+y_test = test_set[,92] # dependent variables for test
+
+# convert the train and test data into xgboost matrix type.
+xgboost_train = xgb.DMatrix(data=X_train, label=y_train)
+xgboost_test = xgb.DMatrix(data=X_test, label=y_test)
+```
+
+
+```{r}
+# train a model using our training data
+model <- xgboost(data = xgboost_train,  # the data   
+                 max.depth = 3, # max depth 
+                 nrounds = 100, # max number of boosting iterations
+                 objective = "multi:softprob", 
+                 num_class = 4)
+
+summary(model)
+```
+
+```{r}
+#use model to make predictions on test data
+pred_test = predict(model, xgboost_test)
+
+pred_test
+```
+
+```{r}
+test_set$ch1 <- ifelse(test_set$Choice == 0, 1, 0)
+test_set$ch2 <- ifelse(test_set$Choice == 1, 1, 0)
+test_set$ch3 <- ifelse(test_set$Choice == 2, 1, 0)
+test_set$ch4 <- ifelse(test_set$Choice == 3, 1, 0)
+```
+
+```{r}
+logloss <- -mean(log(pred_test[cbind(1:nrow(test_set), test_set$Choice + 1)]))
+logloss
+```
+```{r}
+# Extract feature importance
+importance_matrix <- xgb.importance(feature_names = colnames(X_train), model = model)
+
+# Print the feature importance matrix
+print(importance_matrix)
+
+# note: i think the model auto dropped the variables that are all 0
+```
+
+```{r}
+# Plot feature importance
+xgb.plot.importance(importance_matrix)
+```
+
+## Find important variables
+```{r}
+# Define a threshold for the importance score
+threshold <- 0.01
+
+# Extract the names of the important features
+important_features <- importance_matrix$Feature[importance_matrix$Gain > threshold]
+
+# Print the important features
+print(important_features)
+```
+
+# model_1: use only the above important variables 
+
+```{r}
+# Split data into partitions
+set.seed(42)
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+str(inds)
+
+train_set <- safety[inds$train, ]
+train_set$Choice <- train_set$Choice - 1
+test_set <- safety[inds$test, ]
+test_set$Choice <- test_set$Choice - 1
+table(train_set$Choice)
+table(test_set$Choice)
+```
+
+```{r}
+train_set_1 <- subset(train_set, select = c(Price2,Price3,Price1,incomeind,nightind,ageind,pparkind,milesind,yearind,segmentind,regionind,educind,Urbind,NV1,Choice))
+test_set_1 <- subset(test_set, select = c(Price2,Price3,Price1,incomeind,nightind,ageind,pparkind,milesind,yearind,segmentind,regionind,educind,Urbind,NV1,Choice))
+```
+
+```{r}
+which(colnames(train_set_1)=="Price2")
+choicecol<-which(colnames(train_set_1)=="NV1")+1
+choicecol
+```
+
+
+```{r}
+X_train_1 = data.matrix(train_set_1[,-choicecol]) # independent variables for train
+y_train_1 = train_set_1[,choicecol] # dependent variables for train
+
+X_test_1 = data.matrix(test_set_1[,-choicecol]) # independent variables for test
+y_test_1 = test_set_1[,choicecol] # dependent variables for test
+
+# convert the train and test data into xgboost matrix type.
+xgboost_train_1 = xgb.DMatrix(data=X_train_1, label=y_train_1)
+xgboost_test_1 = xgb.DMatrix(data=X_test_1, label=y_test_1)
+```
+
+
+```{r}
+# train a model using our training data
+model_1 <- xgboost(data = xgboost_train_1,  # the data   
+                 max.depth = 3, # max depth 
+                 nrounds = 100, # max number of boosting iterations
+                 objective = "multi:softprob", 
+                 num_class = 4)
+
+summary(model_1)
+```
+
+```{r}
+#use model to make predictions on test data
+pred_test_1 = predict(model_1, xgboost_test_1)
+
+pred_test_1
+```
+```{r}
+test_set_1$Choice
+```
+
+
+```{r}
+test_set_1$ch1 <- ifelse(test_set_1$Choice == 0, 1, 0)
+test_set_1$ch2 <- ifelse(test_set_1$Choice == 1, 1, 0)
+test_set_1$ch3 <- ifelse(test_set_1$Choice == 2, 1, 0)
+test_set_1$ch4 <- ifelse(test_set_1$Choice == 3, 1, 0)
+```
+
+```{r}
+logloss <- -mean(log(pred_test_1[cbind(1:nrow(test_set_1), test_set_1$Choice + 1)]))
+logloss
+```
+*note: the logloss increased to 1.58
+
+
+# Using model 0 + grid to fine tune
+
+```{r}
+rm(list=ls())
+```
+
+```{r}
+# load libraries
+library(xgboost)
+library(caret)
+library(dplyr)
+library(splitTools)
+```
+
+```{r}
+# read csv
+safety <- read.csv("train1_preprocessed.csv")
+```
+
+```{r}
+# Split data into partitions
+set.seed(42)
+inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
+str(inds)
+
+train_set <- safety[inds$train, ]
+train_set$Choice <- train_set$Choice - 1
+test_set <- safety[inds$test, ]
+test_set$Choice <- test_set$Choice - 1
+table(train_set$Choice)
+table(test_set$Choice)
+```
+
+```{r}
+X_train = data.matrix(train_set[,-92]) # independent variables for train
+y_train = train_set[,92] # dependent variables for train
+
+X_test = data.matrix(test_set[,-92]) # independent variables for test
+y_test = test_set[,92] # dependent variables for test
+
+# convert the train and test data into xgboost matrix type.
+xgboost_train = xgb.DMatrix(data=X_train, label=y_train)
+xgboost_test = xgb.DMatrix(data=X_test, label=y_test)
+```
+
+
+```{r}
+# train a model using our training data
+model_2 <- xgboost(data = xgboost_train,  # the data   
+                 max.depth = 3, # max depth 
+                 nrounds = 100, # max number of boosting iterations
+                 objective = "multi:softprob", 
+                 num_class = 4)
+
+summary(model_2)
+```
+
+```{r}
+#use model to make predictions on test data
+pred_test = predict(model_2, xgboost_test)
+
+pred_test
+```
+
+```{r}
+test_set$ch1 <- ifelse(test_set$Choice == 0, 1, 0)
+test_set$ch2 <- ifelse(test_set$Choice == 1, 1, 0)
+test_set$ch3 <- ifelse(test_set$Choice == 2, 1, 0)
+test_set$ch4 <- ifelse(test_set$Choice == 3, 1, 0)
+```
+
+```{r}
+logloss <- -mean(log(pred_test[cbind(1:nrow(test_set), test_set$Choice + 1)]))
+logloss
+```
+
+```{r}
+# Fine tuning
+
+# Using caret's train function to perform grid search
+ctrl <- trainControl(method = "cv", number = 5)
+paramGrid <- expand.grid(nrounds = c(50, 100, 150), # number of boosting rounds
+                         max_depth = c(3, 5, 7, 9), # maximum depth of each tree
+                         eta = c(0.01, 0.1, 0.3), # learning rate
+                         gamma = 0, # minimum loss reduction required to make a split
+                         colsample_bytree = c(0.6, 0.8, 1), # subsample ratio of columns for each tree
+                         min_child_weight = 1, # minimum sum of instance weight needed in a child
+                         subsample = c(0.6, 0.8, 1) # subsample ratio of the training instances
+)
+xgb_tuned <- train(Choice ~ ., 
+                   data = train_set, 
+                   method = "xgbTree", 
+                   trControl = ctrl,
+                   tuneGrid = paramGrid)
+print(xgb_tuned)
+```
+ 
+
+Other possible paramgrid to try:
+paramGrid <- expand.grid(
+  nrounds = c(50, 100, 150),
+  max_depth = c(3, 5, 7, 9),
+  eta = c(0.01, 0.1, 0.3),
+  gamma = c(0, 0.1, 0.2), # now we are tuning the gamma parameter
+  colsample_bytree = c(0.6, 0.8, 1),
+  min_child_weight = 1,
+  subsample = c(0.6, 0.8, 1),
+  alpha = c(0, 0.1, 1), # L1 regularization term on weight (analogous to Lasso regression)
+  lambda = c(0, 0.1, 1) # L2 regularization term on weight (analogous to Ridge regression)
+)
+
+
+
+
+
+
+
+
+
+
+
+
