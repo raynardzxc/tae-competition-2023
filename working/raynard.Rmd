@@ -77,15 +77,26 @@ PredictedChoice1 <- apply(TestPredict1,1,which.max)
 ActualChoice1 <- test_set[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
-#loss
-testpredict_df <- as.data.frame(TestPredict1)
-colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 
-loss <- -1/nrow(test_set) * sum(test_set$Ch1 * log(testpredict_df$Ch1) +
-                                test_set$Ch2 * log(testpredict_df$Ch2) +
-                                test_set$Ch3 * log(testpredict_df$Ch3) +
-                                test_set$Ch4 * log(testpredict_df$Ch4))
-loss
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1) +
+                                    Ch2 * log(testpredict_df$Ch2) +
+                                    Ch3 * log(testpredict_df$Ch3) +
+                                    Ch4 * log(testpredict_df$Ch4))
+  return(result)
+}
+
+# Calculate logloss
+logloss_value <- logloss(test_set, testpredict_df)
+print(paste0("Test LogLoss: ", logloss_value))
+
 ```
 
 # Generate Predictions
