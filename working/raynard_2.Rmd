@@ -115,20 +115,31 @@ write.csv(df_test_final, file = "../input/test1_onehot.csv", row.names = FALSE)
 
 # Training
 ```{r}
+# reticulate::install_miniconda()
+# tensorflow::install_tensorflow()
+# install.packages("remotes")
+# remotes::install_github(paste0("rstudio/", c("reticulate", "tensorflow", "keras")))
+# # reticulate::install_miniconda() # skip this if you want to self-install conda or use venv
+# keras::install_keras()
+rm(list=ls())
+library(reticulate)
+use_python("/Users/raynard/Library/r-miniconda-arm64/envs/r-reticulate/bin/python")
 library(tensorflow)
 library(keras)
+library(splitTools)
+library(dplyr)
 # Clear the memory
 keras::k_clear_session()
 ```
 
 ```{r}
 # GPU can be added if available
-#physical_devices <- tf$config$list_physical_devices("GPU")
-#print(physical_devices)
-#tf$config$experimental$set_memory_growth(physical_devices[[1]],TRUE)
+physical_devices <- tf$config$list_physical_devices("GPU")
+print(physical_devices)
+tf$config$experimental$set_memory_growth(physical_devices[[1]],TRUE)
 # End of GPU optimisation
 
-#tf$keras$backend$set_floatx('float32')
+tf$keras$backend$set_floatx('float32')
 ```
 
 ```{r}
@@ -139,11 +150,19 @@ inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
 train_set <- safety[inds$train, ]
 test_set <- safety[inds$test, ]
 ```
+
 ```{r}
-table(test_set$Choice)
+custom_logloss <- function(y_true, y_pred) {
+  k <- backend()
+  y_true <- k$cast(y_true, y_pred$dtype)
+  loss <- -k$mean(y_true * k$log(y_pred + k$epsilon()), axis = as.integer(-1))
+  return(loss)
+}
 ```
 
 ```{r}
+# Clear the memory
+keras::k_clear_session()
 # Prepare data
 x_train <- as.matrix(train_set[, -which(names(train_set) == "Choice")])
 y_train <- train_set$Choice - 1
@@ -153,32 +172,38 @@ x_test <- as.matrix(test_set[, -which(names(test_set) == "Choice")])
 y_test <- test_set$Choice - 1
 y_test <- to_categorical(y_test, num_classes = 4)
 
+# # Define model
+# model <- keras_model_sequential() %>%
+#   layer_dense(units = 128, activation = 'relu', input_shape = ncol(x_train)) %>%
+#   layer_dropout(rate = 0.5) %>%
+#   layer_dense(units = 64, activation = 'relu') %>%
+#   layer_dropout(rate = 0.5) %>%
+#   layer_dense(units = 32, activation = 'relu') %>%
+#   layer_dropout(rate = 0.5) %>%
+#   layer_dense(units = 16, activation = 'relu') %>%
+#   layer_dropout(rate = 0.5) %>%
+#   layer_dense(units = 4, activation = 'softmax')
+
 # Define model
 model <- keras_model_sequential() %>%
-  layer_dense(units = 128, activation = 'relu', input_shape = ncol(x_train)) %>%
-  layer_dropout(rate = 0.5) %>%
-  layer_dense(units = 64, activation = 'relu') %>%
-  layer_dropout(rate = 0.5) %>%
-  layer_dense(units = 32, activation = 'relu') %>%
-  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 32, activation = 'relu', input_shape = ncol(x_train)) %>%
   layer_dense(units = 16, activation = 'relu') %>%
-  layer_dropout(rate = 0.5) %>%
   layer_dense(units = 4, activation = 'softmax')
 
 # Compile model
 model %>% compile(
-  loss = 'categorical_crossentropy', #this is already logloss
+  loss = custom_logloss, #this is already logloss
   optimizer = 'adam',
   metrics = c('accuracy')
 )
 
 history <- model %>% fit(
   x_train, y_train, 
-  epochs = 50, # Increased number of epochs
+  epochs = 2, # Increased number of epochs
   batch_size = 32, 
   validation_split = 0.2,
   steps_per_epoch = 539, # steps_per_epoch for train
-  validation_steps = 108 # steps_per_epoch for validation
+  validation_steps = 108, # steps_per_epoch for validation
   # callbacks = list(callback_early_stopping(patience = 5)) # Add early stopping
 )
 
@@ -189,7 +214,7 @@ print(score)
 
 ```{r}
 result <- predict(model, x_test)
-print(result)
+result
 ```
 # Submission
 ```{r}
