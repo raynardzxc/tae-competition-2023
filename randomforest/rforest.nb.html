@@ -1756,62 +1756,123 @@ display: none;
 <h2>Import libraries</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm0obGlzdD1scygpKVxubGlicmFyeShyYW5kb21Gb3Jlc3QpXG5gYGAifQ== -->
-<pre class="r"><code>rm(list=ls())
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucm0obGlzdD1scygpKVxubGlicmFyeShyYW5kb21Gb3Jlc3QpXG5gYGBcbmBgYCJ9 -->
+<pre class="r"><code>```r
+rm(list=ls())
 library(randomForest)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhyYW5kb21Gb3Jlc3TigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjIuM3JhbmRvbUZvcmVzdCA0LjctMS4xXG5UeXBlIHJmTmV3cygpIHRvIHNlZSBuZXcgZmVhdHVyZXMvY2hhbmdlcy9idWcgZml4ZXMuXG4ifQ== -->
-<pre><code>Warning: package ‘randomForest’ was built under R version 4.2.3randomForest 4.7-1.1
-Type rfNews() to see new features/changes/bug fixes.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtbHRvb2xzKVxuYGBgIn0= -->
-<pre class="r"><code>library(mltools)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhtbHRvb2xz4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC4yLjNSZWdpc3RlcmVkIFMzIG1ldGhvZCBvdmVyd3JpdHRlbiBieSAnZGF0YS50YWJsZSc6XG4gIG1ldGhvZCAgICAgICAgICAgZnJvbVxuICBwcmludC5kYXRhLnRhYmxlICAgICBcbiJ9 -->
-<pre><code>Warning: package ‘mltools’ was built under R version 4.2.3Registered S3 method overwritten by &#39;data.table&#39;:
-  method           from
-  print.data.table     </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkYXRhLnRhYmxlKVxuYGBgIn0= -->
-<pre class="r"><code>library(data.table)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhkYXRhLnRhYmxl4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC4yLjNkYXRhLnRhYmxlIDEuMTQuOCB1c2luZyA2IHRocmVhZHMgKHNlZSA/Z2V0RFR0aHJlYWRzKS4gIExhdGVzdCBuZXdzOiByLWRhdGF0YWJsZS5jb21cbiJ9 -->
-<pre><code>Warning: package ‘data.table’ was built under R version 4.2.3data.table 1.14.8 using 6 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkZmlkeClcbmBgYCJ9 -->
-<pre class="r"><code>library(dfidx)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhkZmlkeOKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuMi4zXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZGZpZHjigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpzdGF0c+KAmTpcblxuICAgIGZpbHRlclxuIn0= -->
-<pre><code>Warning: package ‘dfidx’ was built under R version 4.2.3
-Attaching package: ‘dfidx’
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
 
-The following object is masked from ‘package:stats’:
+&lt;!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhyYW5kb21Gb3Jlc3TigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjIuM3JhbmRvbUZvcmVzdCA0LjctMS4xXG5UeXBlIHJmTmV3cygpIHRvIHNlZSBuZXcgZmVhdHVyZXMvY2hhbmdlcy9idWcgZml4ZXMuXG4ifQ== --&gt;
+</code></pre>
+<p>Warning: package ‘randomForest’ was built under R version
+4.2.3randomForest 4.7-1.1 Type rfNews() to see new features/changes/bug
+fixes.</p>
+<pre><code>
 
-    filter</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="loading-data" class="section level2">
-<h2>Loading data</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudG90cmFpbjwtIHJlYWQuY3N2KFwidHJhaW4xX3Jmb3Jlc3RfcHJlcHJvY2Vzc2VkLmNzdlwiKVxudG9wcmVkaWN0IDwtIHJlYWQuY3N2KFwidGVzdDFfcmZvcmVzdF9wcmVwcm9jZXNzZWQuY3N2XCIpXG5gYGAifQ== -->
-<pre class="r"><code>totrain&lt;- read.csv(&quot;train1_rforest_preprocessed.csv&quot;)
-topredict &lt;- read.csv(&quot;test1_rforest_preprocessed.csv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="processing-data-to-train-model" class="section level2">
-<h2>Processing data to train model</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIyBTcGxpdCB0byB0cmFpbiBhbmQgdGVzdCBieSBDYXNlIC0+IHNvIHdlIGFyZSB0cmFpbmluZyBhbmQgdGVzdGluZyBvbiB0aGUgc2FtZSBwZXJzb25cbnRyYWluIDwtIGRmaWR4KHN1YnNldCh0b3RyYWluLCBUYXNrPD0xMiksIHNoYXBlPVwid2lkZVwiLCBjaG9pY2U9XCJDaG9pY2VcIiwgc2VwPVwiXCIsIHZhcnlpbmcgPSBjKDQ6ODMpLCBpZHggPSBjKFwiTm9cIiwgXCJDYXNlXCIpKVxudGVzdCA8LSBkZmlkeChzdWJzZXQodG90cmFpbiwgVGFzaz4xMiksIHNoYXBlPVwid2lkZVwiLCBjaG9pY2U9XCJDaG9pY2VcIiwgc2VwPVwiXCIsIHZhcnlpbmcgPSBjKDQ6ODMpLCBpZHggPSBjKFwiTm9cIiwgXCJDYXNlXCIpKVxuXG4jIyBDb252ZXJ0IGJhY2sgdG8gZGF0YWZyYW1lXG50cmFpbiA8LSBhcy5kYXRhLmZyYW1lKHRyYWluKVxudGVzdCA8LSBhcy5kYXRhLmZyYW1lKHRlc3QpXG5cbiMjIGRyb3AgVGFza1xudHJhaW4gPC0gc3Vic2V0KHRyYWluLCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpXG50ZXN0IDwtIHN1YnNldCh0ZXN0LCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpXG5cbiMgdHJhaW4kQ2hvaWNlIDwtIGFzLmludGVnZXIodHJhaW4kQ2hvaWNlKVxuIyB0ZXN0JENob2ljZSA8LSBhcy5pbnRlZ2VyKHRlc3QkQ2hvaWNlKVxuIyBcbiMgIyMgc3BsaXQgdG8geCBhbmQgeSBiZWNhdXNlIGlkayB3aHkgdGhlIGZvcm11bGEgb25lIGRvZXNudCB3b3JrXG4jIHRyYWluX3ggPC0gc3Vic2V0KHRyYWluLCBzZWxlY3QgPSAtYyhDaG9pY2UpKVxuIyB0cmFpbl95IDwtIHN1YnNldCh0cmFpbiwgc2VsZWN0ID0gYyhDaG9pY2UpKVxuIyB0ZXN0X3ggPC0gc3Vic2V0KHRlc3QsIHNlbGVjdCA9IC1jKENob2ljZSkpXG4jIHRlc3RfeSA8LSBzdWJzZXQodGVzdCwgc2VsZWN0ID0gYyhDaG9pY2UpKVxuIyBcbiMgdHJhaW5feSRDaG9pY2UgPC0gYXMuZmFjdG9yKHRyYWluX3kkQ2hvaWNlKVxuIyB0ZXN0X3kkQ2hvaWNlIDwtIGFzLmZhY3Rvcih0ZXN0X3kkQ2hvaWNlKVxuXG5gYGAifQ== -->
-<pre class="r"><code>
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShtbHRvb2xzKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+library(mltools)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhtbHRvb2xz4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC4yLjNSZWdpc3RlcmVkIFMzIG1ldGhvZCBvdmVyd3JpdHRlbiBieSAnZGF0YS50YWJsZSc6XG4gIG1ldGhvZCAgICAgICAgICAgZnJvbVxuICBwcmludC5kYXRhLnRhYmxlICAgICBcbiJ9 --&gt;
+</code></pre>
+<p>Warning: package ‘mltools’ was built under R version 4.2.3Registered
+S3 method overwritten by ‘data.table’: method from print.data.table</p>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShkYXRhLnRhYmxlKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+library(data.table)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhkYXRhLnRhYmxl4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC4yLjNkYXRhLnRhYmxlIDEuMTQuOCB1c2luZyA2IHRocmVhZHMgKHNlZSA/Z2V0RFR0aHJlYWRzKS4gIExhdGVzdCBuZXdzOiByLWRhdGF0YWJsZS5jb21cbiJ9 --&gt;
+</code></pre>
+<p>Warning: package ‘data.table’ was built under R version
+4.2.3data.table 1.14.8 using 6 threads (see ?getDTthreads). Latest news:
+r-datatable.com</p>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeShkZmlkeClcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+library(dfidx)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhkZmlkeOKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuMi4zXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZGZpZHjigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpzdGF0c+KAmTpcblxuICAgIGZpbHRlclxuIn0= --&gt;
+</code></pre>
+<p>Warning: package ‘dfidx’ was built under R version 4.2.3 Attaching
+package: ‘dfidx’</p>
+<p>The following object is masked from ‘package:stats’:</p>
+<pre><code>filter</code></pre>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Loading data
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudG90cmFpbjwtIHJlYWQuY3N2KFxcdHJhaW4xX3Jmb3Jlc3RfcHJlcHJvY2Vzc2VkLmNzdlxcKVxudG9wcmVkaWN0IDwtIHJlYWQuY3N2KFxcdGVzdDFfcmZvcmVzdF9wcmVwcm9jZXNzZWQuY3N2XFwpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+totrain&lt;- read.csv(\train1_rforest_preprocessed.csv\)
+topredict &lt;- read.csv(\test1_rforest_preprocessed.csv\)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+## Processing data to train model
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG4jIyBTcGxpdCB0byB0cmFpbiBhbmQgdGVzdCBieSBDYXNlIC0+IHNvIHdlIGFyZSB0cmFpbmluZyBhbmQgdGVzdGluZyBvbiB0aGUgc2FtZSBwZXJzb25cbnRyYWluIDwtIGRmaWR4KHN1YnNldCh0b3RyYWluLCBUYXNrPD0xMiksIHNoYXBlPVxcd2lkZVxcLCBjaG9pY2U9XFxDaG9pY2VcXCwgc2VwPVxcXFwsIHZhcnlpbmcgPSBjKDQ6ODMpLCBpZHggPSBjKFxcTm9cXCwgXFxDYXNlXFwpKVxudGVzdCA8LSBkZmlkeChzdWJzZXQodG90cmFpbiwgVGFzaz4xMiksIHNoYXBlPVxcd2lkZVxcLCBjaG9pY2U9XFxDaG9pY2VcXCwgc2VwPVxcXFwsIHZhcnlpbmcgPSBjKDQ6ODMpLCBpZHggPSBjKFxcTm9cXCwgXFxDYXNlXFwpKVxuXG4jIyBDb252ZXJ0IGJhY2sgdG8gZGF0YWZyYW1lXG50cmFpbiA8LSBhcy5kYXRhLmZyYW1lKHRyYWluKVxudGVzdCA8LSBhcy5kYXRhLmZyYW1lKHRlc3QpXG5cbiMjIGRyb3AgVGFza1xudHJhaW4gPC0gc3Vic2V0KHRyYWluLCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpXG50ZXN0IDwtIHN1YnNldCh0ZXN0LCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpXG5cbiMgdHJhaW4kQ2hvaWNlIDwtIGFzLmludGVnZXIodHJhaW4kQ2hvaWNlKVxuIyB0ZXN0JENob2ljZSA8LSBhcy5pbnRlZ2VyKHRlc3QkQ2hvaWNlKVxuIyBcbiMgIyMgc3BsaXQgdG8geCBhbmQgeSBiZWNhdXNlIGlkayB3aHkgdGhlIGZvcm11bGEgb25lIGRvZXNudCB3b3JrXG4jIHRyYWluX3ggPC0gc3Vic2V0KHRyYWluLCBzZWxlY3QgPSAtYyhDaG9pY2UpKVxuIyB0cmFpbl95IDwtIHN1YnNldCh0cmFpbiwgc2VsZWN0ID0gYyhDaG9pY2UpKVxuIyB0ZXN0X3ggPC0gc3Vic2V0KHRlc3QsIHNlbGVjdCA9IC1jKENob2ljZSkpXG4jIHRlc3RfeSA8LSBzdWJzZXQodGVzdCwgc2VsZWN0ID0gYyhDaG9pY2UpKVxuIyBcbiMgdHJhaW5feSRDaG9pY2UgPC0gYXMuZmFjdG9yKHRyYWluX3kkQ2hvaWNlKVxuIyB0ZXN0X3kkQ2hvaWNlIDwtIGFzLmZhY3Rvcih0ZXN0X3kkQ2hvaWNlKVxuXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+
 ## Split to train and test by Case -&gt; so we are training and testing on the same person
-train &lt;- dfidx(subset(totrain, Task&lt;=12), shape=&quot;wide&quot;, choice=&quot;Choice&quot;, sep=&quot;&quot;, varying = c(4:83), idx = c(&quot;No&quot;, &quot;Case&quot;))
-test &lt;- dfidx(subset(totrain, Task&gt;12), shape=&quot;wide&quot;, choice=&quot;Choice&quot;, sep=&quot;&quot;, varying = c(4:83), idx = c(&quot;No&quot;, &quot;Case&quot;))
+train &lt;- dfidx(subset(totrain, Task&lt;=12), shape=\wide\, choice=\Choice\, sep=\\, varying = c(4:83), idx = c(\No\, \Case\))
+test &lt;- dfidx(subset(totrain, Task&gt;12), shape=\wide\, choice=\Choice\, sep=\\, varying = c(4:83), idx = c(\No\, \Case\))
 
 ## Convert back to dataframe
 train &lt;- as.data.frame(train)
@@ -1833,49 +1894,53 @@ test &lt;- subset(test, select = -c(Task,idx))
 # train_y$Choice &lt;- as.factor(train_y$Choice)
 # test_y$Choice &lt;- as.factor(test_y$Choice)
 </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="preparing-topredict-for-later" class="section level2">
-<h2>Preparing topredict for later</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdF9zZXQgPC0gZGZpZHgoc3Vic2V0KHRvcHJlZGljdCwgVGFzazw9MTkpLCBzaGFwZT1cIndpZGVcIiwgY2hvaWNlPVwiQ2hvaWNlXCIsIHNlcD1cIlwiLCB2YXJ5aW5nID0gYyg0OjgzKSwgaWR4ID0gYyhcIk5vXCIsIFwiQ2FzZVwiKSlcblxucHJlZGljdF9zZXQgPC0gYXMuZGF0YS5mcmFtZShwcmVkaWN0X3NldClcbnByZWRpY3Rfc2V0IDwtIHN1YnNldChwcmVkaWN0X3NldCwgc2VsZWN0ID0gLWMoVGFzayxpZHgpKVxuYGBgIn0= -->
-<pre class="r"><code>predict_set &lt;- dfidx(subset(topredict, Task&lt;=19), shape=&quot;wide&quot;, choice=&quot;Choice&quot;, sep=&quot;&quot;, varying = c(4:83), idx = c(&quot;No&quot;, &quot;Case&quot;))
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Preparing topredict for later
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucHJlZGljdF9zZXQgPC0gZGZpZHgoc3Vic2V0KHRvcHJlZGljdCwgVGFzazw9MTkpLCBzaGFwZT1cXHdpZGVcXCwgY2hvaWNlPVxcQ2hvaWNlXFwsIHNlcD1cXFxcLCB2YXJ5aW5nID0gYyg0OjgzKSwgaWR4ID0gYyhcXE5vXFwsIFxcQ2FzZVxcKSlcblxucHJlZGljdF9zZXQgPC0gYXMuZGF0YS5mcmFtZShwcmVkaWN0X3NldClcbnByZWRpY3Rfc2V0IDwtIHN1YnNldChwcmVkaWN0X3NldCwgc2VsZWN0ID0gLWMoVGFzayxpZHgpKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+predict_set &lt;- dfidx(subset(topredict, Task&lt;=19), shape=\wide\, choice=\Choice\, sep=\\, varying = c(4:83), idx = c(\No\, \Case\))
 
 predict_set &lt;- as.data.frame(predict_set)
 predict_set &lt;- subset(predict_set, select = -c(Task,idx))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="idk-how-to-fix-error-when-trying-to-do-as.factorchoice.-so-this-is-my-work-around" class="section level2">
-<h2>Idk how to fix error when trying to do as.factor(Choice)~. so this
-is my work around</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBuYW1lcyA8LSBjb2xuYW1lcyh0cmFpbilcbiMgIyBuYW1lc1xuIyAjIGxlbmd0aChuYW1lcylcbiMgdGVtcCA9IFwiXCJcbiMgZm9yIChpIGluIDE6bGVuZ3RoKG5hbWVzKSl7XG4jICAgaWYgKG5hbWVzW2ldIT1cIkNob2ljZVwiKXtcbiMgICAgIHRlbXAgPC0gcGFzdGUodGVtcCwgbmFtZXNbaV0sIHNlcCA9IFwiYCt0cmFpbiRgXCIpXG4jICAgfVxuIyB9XG4jIHRlbXBcbmBgYCJ9 -->
-<pre class="r"><code># names &lt;- colnames(train)
-# # names
-# # length(names)
-# temp = &quot;&quot;
-# for (i in 1:length(names)){
-#   if (names[i]!=&quot;Choice&quot;){
-#     temp &lt;- paste(temp, names[i], sep = &quot;`+train$`&quot;)
-#   }
-# }
-# temp</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="creating-model" class="section level2">
-<h2>Creating model</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMgcGxhbnRpbmcgbXkgdHJlZXNcbnNldC5zZWVkKDEwMClcbm0xPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3RvcihDaG9pY2Upfi4sZGF0YSA9IHRyYWluKVxuI20xIDwtIHJhbmRvbUZvcmVzdChhcy5mYWN0b3IodHJhaW4kQ2hvaWNlKX50cmFpbiRgc2VnbWVudF9GdWxsLXNpemUgUGlja3VwYCt0cmFpbiRgc2VnbWVudF9NaWRzaXplIENhcmApXG4jbTEgPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3Rvcih0cmFpbiRDaG9pY2UpfnRyYWluJGBzZWdtZW50X0Z1bGwtc2l6ZSBQaWNrdXBgK3RyYWluJGBzZWdtZW50X01pZHNpemUgQ2FyYCt0cmFpbiRgc2VnbWVudF9NaWRzaXplIEx1eHVyeSBVdGlsaXR5IHNlZ2VtZW50c2ArdHJhaW4kYHNlZ21lbnRfTWlkc2l6ZSBVdGlsaXR5YCt0cmFpbiRgc2VnbWVudF9QcmVzdGlnZSBMdXh1cnkgU2VkYW5gK3RyYWluJGBzZWdtZW50X1NtYWxsIENhcmArdHJhaW4kYHllYXJpbmRgK3RyYWluJGBtaWxlc2FgK3RyYWluJGBuaWdodGFgK3RyYWluJGBwcGFya19EYWlseWArdHJhaW4kYHBwYXJrX01vbnRobHlgK3RyYWluJGBwcGFya19OZXZlcmArdHJhaW4kYHBwYXJrX1dlZWtseWArdHJhaW4kYHBwYXJrX1llYXJseWArdHJhaW4kYGdlbmRlcl9GZW1hbGVgK3RyYWluJGBnZW5kZXJfTWFsZWArdHJhaW4kYGFnZWFgK3RyYWluJGBlZHVjX0NvbGxlZ2UgR3JhZHVhdGUgKDQgWWVhcnMpYCt0cmFpbiRgZWR1Y19HcmFkZSBTY2hvb2xgK3RyYWluJGBlZHVjX0hpZ2ggU2Nob29sYCt0cmFpbiRgZWR1Y19Qb3N0Z3JhZHVhdGUgQ29sbGVnZWArdHJhaW4kYGVkdWNfU29tZSBDb2xsZWdlICgxLTMgWWVhcnMpYCt0cmFpbiRgZWR1Y19UcmFkZS9Wb2NhdGlvbmFsIFNjaG9vbGArdHJhaW4kYHJlZ2lvbl9NV2ArdHJhaW4kYHJlZ2lvbl9ORWArdHJhaW4kYHJlZ2lvbl9TRWArdHJhaW4kYHJlZ2lvbl9TV2ArdHJhaW4kYHJlZ2lvbl9XYCt0cmFpbiRgVXJiaW5kYCt0cmFpbiRgaW5jb21lYWArdHJhaW4kYENDYCt0cmFpbiRgR05gK3RyYWluJGBOU2ArdHJhaW4kYEJVYCt0cmFpbiRgRkFgK3RyYWluJGBMRGArdHJhaW4kYEJaYCt0cmFpbiRgRkNgK3RyYWluJGBGUGArdHJhaW4kYFJQYCt0cmFpbiRgUFBgK3RyYWluJGBLQWArdHJhaW4kYFNDYCt0cmFpbiRgVFNgK3RyYWluJGBOVmArdHJhaW4kYE1BYCt0cmFpbiRgTEJgK3RyYWluJGBBRmArdHJhaW4kYEhVYCt0cmFpbiRgUHJpY2VgKVxuXG4jbTIgPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3RvcihDaG9pY2Upfm1pbGVzYSthZ2VhK2luY29tZWErUHJpY2UrbmlnaHRhK3llYXJpbmQsIGRhdGEgPSB0cmFpbilcbiMgbTEgPC0gcmFuZG9tRm9yZXN0KHRyYWluX3gsdHJhaW5feSx0ZXN0X3gsdGVzdF95KVxuI3N1bW1hcnkobTEpXG4jaW1wb3J0YW5jZShtMSlcbmBgYCJ9 -->
-<pre class="r"><code>## planting my trees
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Creating model
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyMgcGxhbnRpbmcgbXkgdHJlZXNcbnNldC5zZWVkKDEwMClcbm0xPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3RvcihDaG9pY2Upfi4sZGF0YSA9IHRyYWluKVxuI20xIDwtIHJhbmRvbUZvcmVzdChhcy5mYWN0b3IodHJhaW4kQ2hvaWNlKX50cmFpbiRgc2VnbWVudF9GdWxsLXNpemUgUGlja3VwYCt0cmFpbiRgc2VnbWVudF9NaWRzaXplIENhcmApXG4jbTEgPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3Rvcih0cmFpbiRDaG9pY2UpfnRyYWluJGBzZWdtZW50X0Z1bGwtc2l6ZSBQaWNrdXBgK3RyYWluJGBzZWdtZW50X01pZHNpemUgQ2FyYCt0cmFpbiRgc2VnbWVudF9NaWRzaXplIEx1eHVyeSBVdGlsaXR5IHNlZ2VtZW50c2ArdHJhaW4kYHNlZ21lbnRfTWlkc2l6ZSBVdGlsaXR5YCt0cmFpbiRgc2VnbWVudF9QcmVzdGlnZSBMdXh1cnkgU2VkYW5gK3RyYWluJGBzZWdtZW50X1NtYWxsIENhcmArdHJhaW4kYHllYXJpbmRgK3RyYWluJGBtaWxlc2FgK3RyYWluJGBuaWdodGFgK3RyYWluJGBwcGFya19EYWlseWArdHJhaW4kYHBwYXJrX01vbnRobHlgK3RyYWluJGBwcGFya19OZXZlcmArdHJhaW4kYHBwYXJrX1dlZWtseWArdHJhaW4kYHBwYXJrX1llYXJseWArdHJhaW4kYGdlbmRlcl9GZW1hbGVgK3RyYWluJGBnZW5kZXJfTWFsZWArdHJhaW4kYGFnZWFgK3RyYWluJGBlZHVjX0NvbGxlZ2UgR3JhZHVhdGUgKDQgWWVhcnMpYCt0cmFpbiRgZWR1Y19HcmFkZSBTY2hvb2xgK3RyYWluJGBlZHVjX0hpZ2ggU2Nob29sYCt0cmFpbiRgZWR1Y19Qb3N0Z3JhZHVhdGUgQ29sbGVnZWArdHJhaW4kYGVkdWNfU29tZSBDb2xsZWdlICgxLTMgWWVhcnMpYCt0cmFpbiRgZWR1Y19UcmFkZS9Wb2NhdGlvbmFsIFNjaG9vbGArdHJhaW4kYHJlZ2lvbl9NV2ArdHJhaW4kYHJlZ2lvbl9ORWArdHJhaW4kYHJlZ2lvbl9TRWArdHJhaW4kYHJlZ2lvbl9TV2ArdHJhaW4kYHJlZ2lvbl9XYCt0cmFpbiRgVXJiaW5kYCt0cmFpbiRgaW5jb21lYWArdHJhaW4kYENDYCt0cmFpbiRgR05gK3RyYWluJGBOU2ArdHJhaW4kYEJVYCt0cmFpbiRgRkFgK3RyYWluJGBMRGArdHJhaW4kYEJaYCt0cmFpbiRgRkNgK3RyYWluJGBGUGArdHJhaW4kYFJQYCt0cmFpbiRgUFBgK3RyYWluJGBLQWArdHJhaW4kYFNDYCt0cmFpbiRgVFNgK3RyYWluJGBOVmArdHJhaW4kYE1BYCt0cmFpbiRgTEJgK3RyYWluJGBBRmArdHJhaW4kYEhVYCt0cmFpbiRgUHJpY2VgKVxuXG4jbTIgPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3RvcihDaG9pY2Upfm1pbGVzYSthZ2VhK2luY29tZWErUHJpY2UrbmlnaHRhK3llYXJpbmQsIGRhdGEgPSB0cmFpbilcbiMgbTEgPC0gcmFuZG9tRm9yZXN0KHRyYWluX3gsdHJhaW5feSx0ZXN0X3gsdGVzdF95KVxuI3N1bW1hcnkobTEpXG4jaW1wb3J0YW5jZShtMSlcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+## planting my trees
 set.seed(100)
 m1&lt;- randomForest(as.factor(Choice)~.,data = train)
 #m1 &lt;- randomForest(as.factor(train$Choice)~train$`segment_Full-size Pickup`+train$`segment_Midsize Car`)
@@ -1885,77 +1950,141 @@ m1&lt;- randomForest(as.factor(Choice)~.,data = train)
 # m1 &lt;- randomForest(train_x,train_y,test_x,test_y)
 #summary(m1)
 #importance(m1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="testing-model" class="section level2">
-<h2>Testing model</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdGZvcmVzdDEgPC0gcHJlZGljdChtMSxuZXdkYXRhPXRlc3QpXG5hY2MgPC0gdGFibGUodGVzdCRDaG9pY2UscHJlZGljdGZvcmVzdDEpXG5hY2MgPC0gc3VtKGRpYWcoYWNjKSkvc3VtKGFjYylcbmFjYyAjMC43NzkxMzc4XG5gYGAifQ== -->
-<pre class="r"><code>predictforest1 &lt;- predict(m1,newdata=test)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Testing model
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucHJlZGljdGZvcmVzdDEgPC0gcHJlZGljdChtMSxuZXdkYXRhPXRlc3QpXG5hY2MgPC0gdGFibGUodGVzdCRDaG9pY2UscHJlZGljdGZvcmVzdDEpXG5hY2MgPC0gc3VtKGRpYWcoYWNjKSkvc3VtKGFjYylcbmFjYyAjMC43NzkxMzc4XG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+predictforest1 &lt;- predict(m1,newdata=test)
 acc &lt;- table(test$Choice,predictforest1)
 acc &lt;- sum(diag(acc))/sum(acc)
 acc #0.7791378</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="checking-area-for-improvement" class="section level2">
-<h2>Checking area for improvement</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShtMSlcbmltcG9ydGFuY2UobTEpXG52YXJJbXBQbG90KG0xKVxuYGBgIn0= -->
-<pre class="r"><code>summary(m1)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Checking area for improvement
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc3VtbWFyeShtMSlcbmltcG9ydGFuY2UobTEpXG52YXJJbXBQbG90KG0xKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+summary(m1)
 importance(m1)
 varImpPlot(m1)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="better-model-meandecreasegini-800" class="section level2">
-<h2>Better model (MeanDecreaseGini &gt;800)</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMTAwKVxubTI8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKENob2ljZSl+IG1pbGVzYStuaWdodGErYWdlYStpbmNvbWVhK1ByaWNlLGRhdGEgPSB0cmFpbiwgbnRyZWUgPSA1MDApXG5gYGAifQ== -->
-<pre class="r"><code>set.seed(100)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+## Better model (MeanDecreaseGini &gt;800)
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc2V0LnNlZWQoMTAwKVxubTI8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKENob2ljZSl+IG1pbGVzYStuaWdodGErYWdlYStpbmNvbWVhK1ByaWNlLGRhdGEgPSB0cmFpbiwgbnRyZWUgPSA1MDApXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+set.seed(100)
 m2&lt;- randomForest(as.factor(Choice)~ milesa+nighta+agea+incomea+Price,data = train, ntree = 500)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="testing-better-model" class="section level2">
-<h2>Testing better model</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdGZvcmVzdDIgPC0gcHJlZGljdChtMixuZXdkYXRhPXRlc3QpXG5hY2MyIDwtIHRhYmxlKHRlc3QkQ2hvaWNlLHByZWRpY3Rmb3Jlc3QyKVxuYWNjMiA8LSBzdW0oZGlhZyhhY2MyKSkvc3VtKGFjYzIpXG5hY2MyICMwLjc4MDE0NDdcbmBgYCJ9 -->
-<pre class="r"><code>predictforest2 &lt;- predict(m2,newdata=test)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Testing better model
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucHJlZGljdGZvcmVzdDIgPC0gcHJlZGljdChtMixuZXdkYXRhPXRlc3QpXG5hY2MyIDwtIHRhYmxlKHRlc3QkQ2hvaWNlLHByZWRpY3Rmb3Jlc3QyKVxuYWNjMiA8LSBzdW0oZGlhZyhhY2MyKSkvc3VtKGFjYzIpXG5hY2MyICMwLjc4MDE0NDdcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+predictforest2 &lt;- predict(m2,newdata=test)
 acc2 &lt;- table(test$Choice,predictforest2)
 acc2 &lt;- sum(diag(acc2))/sum(acc2)
 acc2 #0.7801447</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNzgwMTQ0N1xuIn0= -->
-<pre><code>[1] 0.7801447</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="getting-final-prediction" class="section level2">
-<h2>Getting final prediction</h2>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlZGljdGlvbiA8LSBwcmVkaWN0KG0yLG5ld2RhdGE9cHJlZGljdF9zZXQpXG5wcmVkaWN0aW9uX2RmIDwtIGFzLmRhdGEuZnJhbWUocHJlZGljdGlvbilcbiNjb2xuYW1lcyhwcmVkaWN0aW9uX2RmKSA8LSBjKFwiQ2gxXCIsIFwiQ2gyXCIsIFwiQ2gzXCIsIFwiQ2g0XCIpXG5gYGAifQ== -->
-<pre class="r"><code>prediction &lt;- predict(m2,newdata=predict_set)
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNzgwMTQ0N1xuIn0= --&gt;
+</code></pre>
+<p>[1] 0.7801447</p>
+<pre><code>
+
+
+&lt;!-- rnb-output-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+## Getting final prediction
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucHJlZGljdGlvbiA8LSBwcmVkaWN0KG0yLG5ld2RhdGE9cHJlZGljdF9zZXQpXG5wcmVkaWN0aW9uX2RmIDwtIGFzLmRhdGEuZnJhbWUocHJlZGljdGlvbilcbiNjb2xuYW1lcyhwcmVkaWN0aW9uX2RmKSA8LSBjKFxcQ2gxXFwsIFxcQ2gyXFwsIFxcQ2gzXFwsIFxcQ2g0XFwpXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+prediction &lt;- predict(m2,newdata=predict_set)
 prediction_df &lt;- as.data.frame(prediction)
-#colnames(prediction_df) &lt;- c(&quot;Ch1&quot;, &quot;Ch2&quot;, &quot;Ch3&quot;, &quot;Ch4&quot;)</code></pre>
+#colnames(prediction_df) &lt;- c(\Ch1\, \Ch2\, \Ch3\, \Ch4\)</code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJhbmRvbSBGb3Jlc3QiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIyBJbXBvcnQgbGlicmFyaWVzDQpgYGB7cn0NCnJtKGxpc3Q9bHMoKSkNCmxpYnJhcnkocmFuZG9tRm9yZXN0KQ0KbGlicmFyeShtbHRvb2xzKQ0KbGlicmFyeShkYXRhLnRhYmxlKQ0KbGlicmFyeShkZmlkeCkNCmBgYA0KDQojIyBMb2FkaW5nIGRhdGENCmBgYHtyfQ0KdG90cmFpbjwtIHJlYWQuY3N2KCJ0cmFpbjFfcmZvcmVzdF9wcmVwcm9jZXNzZWQuY3N2IikNCnRvcHJlZGljdCA8LSByZWFkLmNzdigidGVzdDFfcmZvcmVzdF9wcmVwcm9jZXNzZWQuY3N2IikNCmBgYA0KDQoNCiMjIFByb2Nlc3NpbmcgZGF0YSB0byB0cmFpbiBtb2RlbA0KYGBge3J9DQoNCiMjIFNwbGl0IHRvIHRyYWluIGFuZCB0ZXN0IGJ5IENhc2UgLT4gc28gd2UgYXJlIHRyYWluaW5nIGFuZCB0ZXN0aW5nIG9uIHRoZSBzYW1lIHBlcnNvbg0KdHJhaW4gPC0gZGZpZHgoc3Vic2V0KHRvdHJhaW4sIFRhc2s8PTEyKSwgc2hhcGU9IndpZGUiLCBjaG9pY2U9IkNob2ljZSIsIHNlcD0iIiwgdmFyeWluZyA9IGMoNDo4MyksIGlkeCA9IGMoIk5vIiwgIkNhc2UiKSkNCnRlc3QgPC0gZGZpZHgoc3Vic2V0KHRvdHJhaW4sIFRhc2s+MTIpLCBzaGFwZT0id2lkZSIsIGNob2ljZT0iQ2hvaWNlIiwgc2VwPSIiLCB2YXJ5aW5nID0gYyg0OjgzKSwgaWR4ID0gYygiTm8iLCAiQ2FzZSIpKQ0KDQojIyBDb252ZXJ0IGJhY2sgdG8gZGF0YWZyYW1lDQp0cmFpbiA8LSBhcy5kYXRhLmZyYW1lKHRyYWluKQ0KdGVzdCA8LSBhcy5kYXRhLmZyYW1lKHRlc3QpDQoNCiMjIGRyb3AgVGFzaw0KdHJhaW4gPC0gc3Vic2V0KHRyYWluLCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpDQp0ZXN0IDwtIHN1YnNldCh0ZXN0LCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpDQoNCiMgdHJhaW4kQ2hvaWNlIDwtIGFzLmludGVnZXIodHJhaW4kQ2hvaWNlKQ0KIyB0ZXN0JENob2ljZSA8LSBhcy5pbnRlZ2VyKHRlc3QkQ2hvaWNlKQ0KIyANCiMgIyMgc3BsaXQgdG8geCBhbmQgeSBiZWNhdXNlIGlkayB3aHkgdGhlIGZvcm11bGEgb25lIGRvZXNudCB3b3JrDQojIHRyYWluX3ggPC0gc3Vic2V0KHRyYWluLCBzZWxlY3QgPSAtYyhDaG9pY2UpKQ0KIyB0cmFpbl95IDwtIHN1YnNldCh0cmFpbiwgc2VsZWN0ID0gYyhDaG9pY2UpKQ0KIyB0ZXN0X3ggPC0gc3Vic2V0KHRlc3QsIHNlbGVjdCA9IC1jKENob2ljZSkpDQojIHRlc3RfeSA8LSBzdWJzZXQodGVzdCwgc2VsZWN0ID0gYyhDaG9pY2UpKQ0KIyANCiMgdHJhaW5feSRDaG9pY2UgPC0gYXMuZmFjdG9yKHRyYWluX3kkQ2hvaWNlKQ0KIyB0ZXN0X3kkQ2hvaWNlIDwtIGFzLmZhY3Rvcih0ZXN0X3kkQ2hvaWNlKQ0KDQpgYGANCg0KIyMgUHJlcGFyaW5nIHRvcHJlZGljdCBmb3IgbGF0ZXINCmBgYHtyfQ0KcHJlZGljdF9zZXQgPC0gZGZpZHgoc3Vic2V0KHRvcHJlZGljdCwgVGFzazw9MTkpLCBzaGFwZT0id2lkZSIsIGNob2ljZT0iQ2hvaWNlIiwgc2VwPSIiLCB2YXJ5aW5nID0gYyg0OjgzKSwgaWR4ID0gYygiTm8iLCAiQ2FzZSIpKQ0KDQpwcmVkaWN0X3NldCA8LSBhcy5kYXRhLmZyYW1lKHByZWRpY3Rfc2V0KQ0KcHJlZGljdF9zZXQgPC0gc3Vic2V0KHByZWRpY3Rfc2V0LCBzZWxlY3QgPSAtYyhUYXNrLGlkeCkpDQpgYGANCg0KDQoNCiMjIElkayBob3cgdG8gZml4IGVycm9yIHdoZW4gdHJ5aW5nIHRvIGRvIGFzLmZhY3RvcihDaG9pY2Upfi4gc28gdGhpcyBpcyBteSB3b3JrIGFyb3VuZA0KYGBge3J9DQojIG5hbWVzIDwtIGNvbG5hbWVzKHRyYWluKQ0KIyAjIG5hbWVzDQojICMgbGVuZ3RoKG5hbWVzKQ0KIyB0ZW1wID0gIiINCiMgZm9yIChpIGluIDE6bGVuZ3RoKG5hbWVzKSl7DQojICAgaWYgKG5hbWVzW2ldIT0iQ2hvaWNlIil7DQojICAgICB0ZW1wIDwtIHBhc3RlKHRlbXAsIG5hbWVzW2ldLCBzZXAgPSAiYCt0cmFpbiRgIikNCiMgICB9DQojIH0NCiMgdGVtcA0KYGBgDQoNCg0KDQojIyBDcmVhdGluZyBtb2RlbA0KYGBge3J9DQojIyBwbGFudGluZyBteSB0cmVlcw0Kc2V0LnNlZWQoMTAwKQ0KbTE8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKENob2ljZSl+LixkYXRhID0gdHJhaW4pDQojbTEgPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3Rvcih0cmFpbiRDaG9pY2UpfnRyYWluJGBzZWdtZW50X0Z1bGwtc2l6ZSBQaWNrdXBgK3RyYWluJGBzZWdtZW50X01pZHNpemUgQ2FyYCkNCiNtMSA8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKHRyYWluJENob2ljZSl+dHJhaW4kYHNlZ21lbnRfRnVsbC1zaXplIFBpY2t1cGArdHJhaW4kYHNlZ21lbnRfTWlkc2l6ZSBDYXJgK3RyYWluJGBzZWdtZW50X01pZHNpemUgTHV4dXJ5IFV0aWxpdHkgc2VnZW1lbnRzYCt0cmFpbiRgc2VnbWVudF9NaWRzaXplIFV0aWxpdHlgK3RyYWluJGBzZWdtZW50X1ByZXN0aWdlIEx1eHVyeSBTZWRhbmArdHJhaW4kYHNlZ21lbnRfU21hbGwgQ2FyYCt0cmFpbiRgeWVhcmluZGArdHJhaW4kYG1pbGVzYWArdHJhaW4kYG5pZ2h0YWArdHJhaW4kYHBwYXJrX0RhaWx5YCt0cmFpbiRgcHBhcmtfTW9udGhseWArdHJhaW4kYHBwYXJrX05ldmVyYCt0cmFpbiRgcHBhcmtfV2Vla2x5YCt0cmFpbiRgcHBhcmtfWWVhcmx5YCt0cmFpbiRgZ2VuZGVyX0ZlbWFsZWArdHJhaW4kYGdlbmRlcl9NYWxlYCt0cmFpbiRgYWdlYWArdHJhaW4kYGVkdWNfQ29sbGVnZSBHcmFkdWF0ZSAoNCBZZWFycylgK3RyYWluJGBlZHVjX0dyYWRlIFNjaG9vbGArdHJhaW4kYGVkdWNfSGlnaCBTY2hvb2xgK3RyYWluJGBlZHVjX1Bvc3RncmFkdWF0ZSBDb2xsZWdlYCt0cmFpbiRgZWR1Y19Tb21lIENvbGxlZ2UgKDEtMyBZZWFycylgK3RyYWluJGBlZHVjX1RyYWRlL1ZvY2F0aW9uYWwgU2Nob29sYCt0cmFpbiRgcmVnaW9uX01XYCt0cmFpbiRgcmVnaW9uX05FYCt0cmFpbiRgcmVnaW9uX1NFYCt0cmFpbiRgcmVnaW9uX1NXYCt0cmFpbiRgcmVnaW9uX1dgK3RyYWluJGBVcmJpbmRgK3RyYWluJGBpbmNvbWVhYCt0cmFpbiRgQ0NgK3RyYWluJGBHTmArdHJhaW4kYE5TYCt0cmFpbiRgQlVgK3RyYWluJGBGQWArdHJhaW4kYExEYCt0cmFpbiRgQlpgK3RyYWluJGBGQ2ArdHJhaW4kYEZQYCt0cmFpbiRgUlBgK3RyYWluJGBQUGArdHJhaW4kYEtBYCt0cmFpbiRgU0NgK3RyYWluJGBUU2ArdHJhaW4kYE5WYCt0cmFpbiRgTUFgK3RyYWluJGBMQmArdHJhaW4kYEFGYCt0cmFpbiRgSFVgK3RyYWluJGBQcmljZWApDQoNCiNtMiA8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKENob2ljZSl+bWlsZXNhK2FnZWEraW5jb21lYStQcmljZStuaWdodGEreWVhcmluZCwgZGF0YSA9IHRyYWluKQ0KIyBtMSA8LSByYW5kb21Gb3Jlc3QodHJhaW5feCx0cmFpbl95LHRlc3RfeCx0ZXN0X3kpDQojc3VtbWFyeShtMSkNCiNpbXBvcnRhbmNlKG0xKQ0KYGBgDQoNCiMjIFRlc3RpbmcgbW9kZWwNCmBgYHtyfQ0KcHJlZGljdGZvcmVzdDEgPC0gcHJlZGljdChtMSxuZXdkYXRhPXRlc3QpDQphY2MgPC0gdGFibGUodGVzdCRDaG9pY2UscHJlZGljdGZvcmVzdDEpDQphY2MgPC0gc3VtKGRpYWcoYWNjKSkvc3VtKGFjYykNCmFjYyAjMC43NzkxMzc4DQpgYGANCg0KIyMgQ2hlY2tpbmcgYXJlYSBmb3IgaW1wcm92ZW1lbnQNCmBgYHtyfQ0Kc3VtbWFyeShtMSkNCmltcG9ydGFuY2UobTEpDQp2YXJJbXBQbG90KG0xKQ0KYGBgDQojIyBCZXR0ZXIgbW9kZWwgKE1lYW5EZWNyZWFzZUdpbmkgPjgwMCkNCmBgYHtyfQ0Kc2V0LnNlZWQoMTAwKQ0KbTI8LSByYW5kb21Gb3Jlc3QoYXMuZmFjdG9yKENob2ljZSl+IG1pbGVzYStuaWdodGErYWdlYStpbmNvbWVhK1ByaWNlLGRhdGEgPSB0cmFpbiwgbnRyZWUgPSA1MDApDQpgYGANCg0KIyMgVGVzdGluZyBiZXR0ZXIgbW9kZWwNCmBgYHtyfQ0KcHJlZGljdGZvcmVzdDIgPC0gcHJlZGljdChtMixuZXdkYXRhPXRlc3QpDQphY2MyIDwtIHRhYmxlKHRlc3QkQ2hvaWNlLHByZWRpY3Rmb3Jlc3QyKQ0KYWNjMiA8LSBzdW0oZGlhZyhhY2MyKSkvc3VtKGFjYzIpDQphY2MyICMwLjc4MDE0NDcNCmBgYA0KIyMgR2V0dGluZyBmaW5hbCBwcmVkaWN0aW9uDQpgYGB7cn0NCnByZWRpY3Rpb24gPC0gcHJlZGljdChtMixuZXdkYXRhPXByZWRpY3Rfc2V0KQ0KcHJlZGljdGlvbl9kZiA8LSBhcy5kYXRhLmZyYW1lKHByZWRpY3Rpb24pDQojY29sbmFtZXMocHJlZGljdGlvbl9kZikgPC0gYygiQ2gxIiwgIkNoMiIsICJDaDMiLCAiQ2g0IikNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlJhbmRvbSBGb3Jlc3QiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIyBJbXBvcnQgbGlicmFyaWVzDQpgYGB7cn0NCnJtKGxpc3Q9bHMoKSkNCmxpYnJhcnkocmFuZG9tRm9yZXN0KQ0KbGlicmFyeShtbHRvb2xzKQ0KbGlicmFyeShkYXRhLnRhYmxlKQ0KbGlicmFyeShkZmlkeCkNCmBgYA0KDQojIyBMb2FkaW5nIGRhdGENCmBgYHtyfQ0KdG90cmFpbjwtIHJlYWQuY3N2KCJ0cmFpbjFfcmZvcmVzdF9wcmVwcm9jZXNzZWQuY3N2IikNCnRvcHJlZGljdCA8LSByZWFkLmNzdigidGVzdDFfcmZvcmVzdF9wcmVwcm9jZXNzZWQuY3N2IikNCmBgYA0KDQoNCiMjIFByb2Nlc3NpbmcgZGF0YSB0byB0cmFpbiBtb2RlbA0KYGBge3J9DQojIyBTcGxpdCB0byB0cmFpbiBhbmQgdGVzdCBieSBDYXNlIC0+IHNvIHdlIGFyZSB0cmFpbmluZyBhbmQgdGVzdGluZyBvbiB0aGUgc2FtZSBwZXJzb24NCnRyYWluIDwtIGRmaWR4KHN1YnNldCh0b3RyYWluLCBUYXNrPD0xMiksIHNoYXBlPSJ3aWRlIiwgY2hvaWNlPSJDaG9pY2UiLCBzZXA9IiIsIHZhcnlpbmcgPSBjKDQ6ODMpLCBpZHggPSBjKCJObyIsICJDYXNlIikpDQp0ZXN0IDwtIGRmaWR4KHN1YnNldCh0b3RyYWluLCBUYXNrPjEyKSwgc2hhcGU9IndpZGUiLCBjaG9pY2U9IkNob2ljZSIsIHNlcD0iIiwgdmFyeWluZyA9IGMoNDo4MyksIGlkeCA9IGMoIk5vIiwgIkNhc2UiKSkNCg0KIyMgQ29udmVydCBiYWNrIHRvIGRhdGFmcmFtZQ0KdHJhaW4gPC0gYXMuZGF0YS5mcmFtZSh0cmFpbikNCnRlc3QgPC0gYXMuZGF0YS5mcmFtZSh0ZXN0KQ0KDQojIyBkcm9wIFRhc2sNCnRyYWluIDwtIHN1YnNldCh0cmFpbiwgc2VsZWN0ID0gLWMoVGFzayxpZHgpKQ0KdGVzdCA8LSBzdWJzZXQodGVzdCwgc2VsZWN0ID0gLWMoVGFzayxpZHgpKQ0KYGBgDQoNCiMjIFByZXBhcmluZyB0b3ByZWRpY3QgZm9yIGxhdGVyDQpgYGB7cn0NCnByZWRpY3Rfc2V0IDwtIGRmaWR4KHN1YnNldCh0b3ByZWRpY3QsIFRhc2s8PTE5KSwgc2hhcGU9IndpZGUiLCBjaG9pY2U9IkNob2ljZSIsIHNlcD0iIiwgdmFyeWluZyA9IGMoNDo4MyksIGlkeCA9IGMoIk5vIiwgIkNhc2UiKSkNCg0KcHJlZGljdF9zZXQgPC0gYXMuZGF0YS5mcmFtZShwcmVkaWN0X3NldCkNCnByZWRpY3Rfc2V0IDwtIHN1YnNldChwcmVkaWN0X3NldCwgc2VsZWN0ID0gLWMoVGFzayxpZHgpKQ0KYGBgDQoNCiMjIENyZWF0aW5nIG1vZGVsDQpgYGB7cn0NCiMjIHBsYW50aW5nIG15IHRyZWVzDQpzZXQuc2VlZCgxMDApDQptMTwtIHJhbmRvbUZvcmVzdChhcy5mYWN0b3IoQ2hvaWNlKX4uLGRhdGEgPSB0cmFpbikNCmBgYA0KDQojIyBUZXN0aW5nIG1vZGVsDQpgYGB7cn0NCnByZWRpY3Rmb3Jlc3QxIDwtIHByZWRpY3QobTEsbmV3ZGF0YT10ZXN0KQ0KYWNjIDwtIHRhYmxlKHRlc3QkQ2hvaWNlLHByZWRpY3Rmb3Jlc3QxKQ0KYWNjIDwtIHN1bShkaWFnKGFjYykpL3N1bShhY2MpDQphY2MgIzAuNzc5MTM3OA0KYGBgDQoNCiMjIENoZWNraW5nIGFyZWEgZm9yIGltcHJvdmVtZW50DQpgYGB7cn0NCnN1bW1hcnkobTEpDQppbXBvcnRhbmNlKG0xKQ0KdmFySW1wUGxvdChtMSkNCmBgYA0KIyMgQmV0dGVyIG1vZGVsIChNZWFuRGVjcmVhc2VHaW5pID44MDApDQpgYGB7cn0NCnNldC5zZWVkKDEwMCkNCm0yPC0gcmFuZG9tRm9yZXN0KGFzLmZhY3RvcihDaG9pY2UpfiBtaWxlc2ErbmlnaHRhK2FnZWEraW5jb21lYStQcmljZSxkYXRhID0gdHJhaW4sIG50cmVlID0gNTAwKQ0KYGBgDQoNCiMjIFRlc3RpbmcgYmV0dGVyIG1vZGVsDQpgYGB7cn0NCnByZWRpY3Rmb3Jlc3QyIDwtIHByZWRpY3QobTIsbmV3ZGF0YT10ZXN0KQ0KYWNjMiA8LSB0YWJsZSh0ZXN0JENob2ljZSxwcmVkaWN0Zm9yZXN0MikNCmFjYzIgPC0gc3VtKGRpYWcoYWNjMikpL3N1bShhY2MyKQ0KYWNjMiAjMC43ODAxNDQ3DQpgYGANCiMjIEdldHRpbmcgZmluYWwgcHJlZGljdGlvbg0KYGBge3J9DQpwcmVkaWN0aW9uIDwtIHByZWRpY3QobTIsbmV3ZGF0YT1wcmVkaWN0X3NldCkNCnByZWRpY3Rpb25fZGYgPC0gYXMuZGF0YS5mcmFtZShwcmVkaWN0aW9uKQ0KI2NvbG5hbWVzKHByZWRpY3Rpb25fZGYpIDwtIGMoIkNoMSIsICJDaDIiLCAiQ2gzIiwgIkNoNCIpDQpgYGANCg0K</div>
 
 
 
