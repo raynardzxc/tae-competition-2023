@@ -178,7 +178,8 @@ history <- model %>% fit(
   batch_size = 32, 
   validation_split = 0.2,
   steps_per_epoch = 539, # steps_per_epoch for train
-  validation_steps = 108, # steps_per_epoch for validation
+  validation_steps = 108 # steps_per_epoch for validation
+  # callbacks = list(callback_early_stopping(patience = 5)) # Add early stopping
 )
 
 # Evaluate on test data
