@@ -20,7 +20,7 @@ loadPkgs(pkgnames)
 ```{r}
 safety <- read.csv("../input/train1.csv")
 str(safety)
-head(safety)
+nrow(safety)
 ```
 ## Add Choice
 ```{r}
@@ -153,8 +153,14 @@ y_test <- to_categorical(y_test, num_classes = 4)
 
 # Define model
 model <- keras_model_sequential() %>%
-  layer_dense(units = 32, activation = 'relu', input_shape = ncol(x_train)) %>%
+  layer_dense(units = 128, activation = 'relu', input_shape = ncol(x_train)) %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 64, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 32, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
   layer_dense(units = 16, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
   layer_dense(units = 4, activation = 'softmax')
 
 # Compile model
@@ -164,11 +170,14 @@ model %>% compile(
   metrics = c('accuracy')
 )
 
-# Fit model
 history <- model %>% fit(
   x_train, y_train, 
-  epochs = 2, batch_size = 32, 
-  validation_split = 0.1
+  epochs = 50, # Increased number of epochs
+  batch_size = 32, 
+  validation_split = 0.2,
+  steps_per_epoch = 539, # steps_per_epoch for train
+  validation_steps = 108, # steps_per_epoch for validation
+  callbacks = list(callback_early_stopping(patience = 5)) # Add early stopping
 )
 
 # Evaluate on test data
@@ -179,5 +188,38 @@ print(score)
 ```{r}
 result <- predict(model, x_test)
 print(result)
+```
+# Submission
+```{r}
+submission <- read.csv("../input/test1_onehot.csv")
+x <- as.matrix(submission[, -which(names(test_set) == "Choice")])
+result <- predict(model, x)
+# Converting the prediction matrix into a data frame
+prediction_df <- as.data.frame(result)
+# Renaming the columns as per your requirement
+colnames(prediction_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+# Adding the 'No' column from original dataset to the prediction data frame
+prediction_df$No <- submission$No
+# Rearranging the columns
+prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+
+# Writing the output to a csv file
+write.csv(prediction_df, file = "../output/submission.csv", row.names = FALSE)
+```
+
+## Models
+```{r}
+## save weights and reload
+model %>% save_model_hdf5("../output/model_1.h5")
+model <- load_model_hdf5("../output/model_1.h5")
+```
+
+```{r}
+# diff optimizer
+model %>% compile(
+  loss = 'categorical_crossentropy',
+  optimizer = 'rmsprop',
+  metrics = c('accuracy')
+)
 ```
 
