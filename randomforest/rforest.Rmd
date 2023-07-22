@@ -21,10 +21,89 @@ topredict <- read.csv("test1_rforest_preprocessed.csv")
 
 ## Processing data to train model
 ```{r}
-## Split to train and test by Case -> so we are training and testing on the same person
-train <- dfidx(subset(totrain, Task<=12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
-test <- dfidx(subset(totrain, Task>12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+## Split to train and test by Case -> to ensure everyone is represented in a sense
+# train <- dfidx(subset(totrain, Task<=12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+# test <- dfidx(subset(totrain, Task>12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
 
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+train <- subset(totrain, Task<=15)
+train <- subset(train, select = -c(Case, No, Task))
+test <- subset(totrain, Task>15)
+test <- subset(test, select = -c(Case, No, Task))
+```
+
+
+```{r}
+set.seed(100)
+m1<- randomForest(as.factor(Choice)~.,data = train)
+summary(m1)
+importance(m1)
+varImpPlot(m1)
+predicted <- predict(m1, newdata=test, type = "prob")
+actual <- test
+colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+
+logloss_value <- logloss(actual, as.data.frame(predicted))
+print(paste0("Test LogLoss: ", logloss_value))
+```
+
+
+```{r}
+set.seed(100)
+m2<- randomForest(as.factor(Choice)~ Price1+Price2+Price3+yearind+milesa+nighta+agea+incomea, data = train, ntree = 500)
+predicted <- predict(m2, newdata=test, type = "prob")
+actual <- test
+colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+
+logloss_value <- logloss(actual, as.data.frame(predicted))
+print(paste0("Test LogLoss: ", logloss_value))
+```
+## For loop to lower LogLoss
+```{r}
+actual <- test
+for (i in seq(500, 10000, by = 200)){
+  m3 <- randomForest(as.factor(Choice)~ Price1+Price2+Price3+yearind+milesa+nighta+agea+incomea, data = train, ntree = i)
+  predicted <- predict(m3, newdata=test, type = "prob")
+  colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+  logloss_value <- logloss(actual, as.data.frame(predicted))
+  print(paste0("Test LogLoss: ", logloss_value))
+}
+# table(predict, actual)
+```
+
+## Export to submit
+```{r}
+predict_set <- subset(topredict, select = -c(Case, No, Task))
+prediction <- predict(m2, newdata=predict_set)
+
+# Converting the prediction matrix into a data frame
+prediction_df <- as.data.frame(prediction)
+# Adding the 'No' column from original dataset to the prediction data frame
+prediction_df$No <- topredict$No
+# Rearranging the columns
+prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+
+# Writing the output to a csv file
+write.csv(prediction_df, file = "../output/submission.csv", row.names = FALSE)
+```
+
+
+## TRASH BELOW, DO NOT LOOK AT MY SHAME
+
+```{r}
 ## Convert back to dataframe
 train <- as.data.frame(train)
 test <- as.data.frame(test)
@@ -63,15 +142,16 @@ summary(m1)
 importance(m1)
 varImpPlot(m1)
 ```
+
 ## Better model (MeanDecreaseGini >800)
 ```{r}
 set.seed(100)
-m2<- randomForest(as.factor(Choice)~ milesa+nighta+agea+incomea+Price,data = train, ntree = 500)
+m2<- randomForest(as.factor(Choice)~ milesa+nighta+agea+incomea+Price, data = train, ntree = 500)
 ```
 
 ## Testing better model
 ```{r}
-predictforest2 <- predict(m2,newdata=test)
+predictforest2 <- predict(m2,newdata=test, type = "prob")
 acc2 <- table(test$Choice,predictforest2)
 acc2 <- sum(diag(acc2))/sum(acc2)
 acc2 #0.7801447
