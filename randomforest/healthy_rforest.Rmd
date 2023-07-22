@@ -1,0 +1,88 @@
+---
+title: "Random Forest"
+output: html_notebook
+---
+
+## Import libraries
+```{r}
+rm(list=ls())
+library(randomForest)
+library(mltools)
+library(data.table)
+library(dfidx)
+```
+
+## Loading data
+```{r}
+totrain<- read.csv("train1_rforest_preprocessed.csv")
+topredict <- read.csv("test1_rforest_preprocessed.csv")
+```
+
+
+## Processing data to train model
+```{r}
+## Split to train and test by Case -> so we are training and testing on the same person
+train <- dfidx(subset(totrain, Task<=12), shape="wide", sep="", varying = c(4:83), idx = c("No", "Case"))
+test <- dfidx(subset(totrain, Task>12), shape="wide", sep="", varying = c(4:83), idx = c("No", "Case"))
+
+## Convert back to dataframe
+train <- as.data.frame(train)
+test <- as.data.frame(test)
+
+## drop Task
+train <- subset(train, select = -c(Task,idx))
+test <- subset(test, select = -c(Task,idx))
+
+# train$Choice <- as.integer(train$Choice)
+# test$Choice <- as.integer(test$Choice)
+```
+
+## Preparing topredict for later
+```{r}
+predict_set <- dfidx(subset(topredict, Task<=19), shape="wide", sep="", varying = c(4:83), idx = c("No", "Case"))
+
+predict_set <- as.data.frame(predict_set)
+predict_set <- subset(predict_set, select = -c(Task,idx))
+```
+
+## Creating model
+```{r}
+## planting my trees
+set.seed(100)
+m1<- randomForest(as.factor(Choice)~.,data = train)
+```
+
+## Testing model
+```{r}
+predictforest1 <- predict(m1,newdata=test, type = "prob")
+acc <- table(test$Choice,predictforest1)
+acc <- sum(diag(acc))/sum(acc)
+acc #0.7791378
+```
+
+## Checking area for improvement
+```{r}
+summary(m1)
+importance(m1)
+varImpPlot(m1)
+```
+## Better model (MeanDecreaseGini >800)
+```{r}
+set.seed(100)
+m2<- randomForest(as.factor(Choice)~ milesa+nighta+agea+incomea+Price,data = train, ntree = 500)
+```
+
+## Testing better model
+```{r}
+predictforest2 <- predict(m2,newdata=test)
+acc2 <- table(test$Choice,predictforest2)
+acc2 <- sum(diag(acc2))/sum(acc2)
+acc2 #0.7801447
+```
+## Getting final prediction
+```{r}
+prediction <- predict(m2,newdata=predict_set)
+prediction_df <- as.data.frame(prediction)
+#colnames(prediction_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+```
+
