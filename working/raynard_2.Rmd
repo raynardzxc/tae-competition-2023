@@ -34,7 +34,7 @@ table(safety$Choice)
 ## Drop Columns
 ```{r}
 # drop unused columns
-df <- subset(safety, select = -c(Case,Task,segmentind,yearind,milesa,milesind,nighta,nightind,pparkind,genderind,agea,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+df <- subset(safety, select = -c(segmentind,year,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
 head(df)
 ```
 
@@ -48,14 +48,15 @@ head(newdata)
 ```{r}
 # Multicollinearity
 # segmentSmall.Car, milesUnder.50.Miles, nightUnder.10., pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban
-df_train_final <- subset(newdata, select = -c(segmentSmall.Car,milesUnder.50.Miles,nightUnder.10.,pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban))
+# df_train_final <- subset(newdata, select = -c(segmentSmall.Car,milesUnder.50.Miles,nightUnder.10.,pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban))
+df_train_final <- subset(newdata, select = -c(segmentSmall.Car,pparkNever, genderFemale, educTrade.Vocational.School, regionW, UrbSuburban))
 head(df_train_final)
 ```
 
 ## Export
 ```{r}
 # Writing the output to a csv file
-write.csv(df_train_final, file = "../input/train1_onehot.csv", row.names = FALSE)
+write.csv(df_train_final, file = "../input/train1_onehot2.csv", row.names = FALSE)
 ```
 
 ## Import Test Data
@@ -72,7 +73,8 @@ safety$Choice <- 0
 ## Drop Columns
 ```{r}
 # drop unused columns
-df <- subset(safety, select = -c(Case,Task,segmentind,yearind,milesa,milesind,nighta,nightind,pparkind,genderind,agea,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+# df <- subset(safety, select = -c(segmentind,yearind,milesa,milesind,nighta,nightind,pparkind,genderind,agea,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+df <- subset(safety, select = -c(segmentind,year,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
 head(df)
 ```
 
@@ -86,7 +88,8 @@ head(newdata)
 ```{r}
 # Multicollinearity
 # segmentSmall.Car, milesUnder.50.Miles, nightUnder.10., pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban, incomeUnder..29.999
-df_test_final <- subset(newdata, select = -c(milesUnder.50.Miles,nightUnder.10.,pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban))
+# df_test_final <- subset(newdata, select = -c(milesUnder.50.Miles,nightUnder.10.,pparkNever, genderFemale, ageUnder.30, educTrade.Vocational.School, regionW, UrbSuburban))
+df_test_final <- subset(newdata, select = -c(pparkNever, genderFemale, educTrade.Vocational.School, regionW, UrbSuburban))
 
 # Find columns missing in df_test_final
 missing_columns_in_df2 <- setdiff(names(df_train_final), names(df_test_final))
@@ -109,7 +112,7 @@ head(df_test_final)
 ## Export
 ```{r}
 # Writing the output to a csv file
-write.csv(df_test_final, file = "../input/test1_onehot.csv", row.names = FALSE)
+write.csv(df_test_final, file = "../input/test1_onehot2.csv", row.names = FALSE)
 ```
 
 
