@@ -117,6 +117,8 @@ write.csv(df_test_final, file = "../input/test1_onehot.csv", row.names = FALSE)
 ```{r}
 library(tensorflow)
 library(keras)
+# Clear the memory
+keras::k_clear_session()
 ```
 
 ```{r}
@@ -177,7 +179,6 @@ history <- model %>% fit(
   validation_split = 0.2,
   steps_per_epoch = 539, # steps_per_epoch for train
   validation_steps = 108, # steps_per_epoch for validation
-  callbacks = list(callback_early_stopping(patience = 5)) # Add early stopping
 )
 
 # Evaluate on test data
