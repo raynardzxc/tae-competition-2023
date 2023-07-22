@@ -37,7 +37,7 @@ test <- read.csv("./test1_preprocessed.csv")
 ```
 
 ```{r}
-safety <- subset(safety, select = -c(Case, No, Task, Ch1, Ch2, Ch3, Ch4, CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
+safety <- subset(safety, select = -c(Case, No, Task, Ch1, Ch2, Ch3, Ch4, CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4, SC3, MA2, FP1, FP3, FP2, SC2, MA3, NS3, NS1, NS2, BU1, BU2, BU3, Urbind, ageind, AF3, LD2, BZ2, CC3, TS2, BZ1, BZ3, PP2, AF1, LD3, LB3, LB2, LB1, MA1, SC1))
 
 set.seed(seed)
 trainingIndex <- createDataPartition(y = safety$Choice, times = 1, p = 0.8, list = FALSE)
@@ -77,6 +77,10 @@ testSet$Choice_pred <- as.numeric(testSet$Choice_pred)
 ```{r}
 cfn_table <- table(testSet$Choice, testSet$Choice_pred)
 cfn_table
+```
+```{r}
+acc <- sum(diag(cfn_table))/sum(cfn_table)
+acc
 ```
 
 ```{r}
