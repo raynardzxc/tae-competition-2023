@@ -34,7 +34,7 @@ table(safety$Choice)
 ```{r}
 # might have collinearity with miles, milesind and milesa
 # might have collinearity with night, nightind and nighta
-df <- subset(safety, select = -c(segment,year,miles,night,ppark,gender,age,educ,region,Urb,income))
+df <- subset(safety, select = -c(Ch1, Ch2, Ch3, Ch4, Case, No, segment,year,miles,night,ppark,gender,age,educ,region,Urb,income))
 head(df)
 ```
 
@@ -64,7 +64,7 @@ safety$Ch4 <- 0
 ```{r}
 # might have collinearity with miles, milesind and milesa
 # might have collinearity with night, nightind and nighta
-df <- subset(safety, select = -c(segment,year,miles,night,ppark,gender,age,educ,region,Urb,income))
+df <- subset(safety, select = -c(Ch1, Ch2, Ch3, Ch4, Case, No, segment,year,miles,night,ppark,gender,age,educ,region,Urb,income))
 head(df)
 ```
 
