@@ -32,8 +32,6 @@ table(safety$Choice)
 
 ## Drop Columns
 ```{r}
-# might have collinearity with miles, milesind and milesa
-# might have collinearity with night, nightind and nighta
 df <- subset(safety, select = -c(segmentind,yearind,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
 head(df)
 ```
