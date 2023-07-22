@@ -1,0 +1,52 @@
+---
+title: "Not Raynard's EDA Notebook"
+output: html_notebook
+---
+
+Discrete Choice Model
+
+# Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("caret","mlbench","tidyverse")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+# Import Data
+```{r}
+safety <- read.csv("../input/train1_preprocessed.csv")
+test <- read.csv("../input/test1_preprocessed.csv")
+str(safety)
+head(safety)
+```
+
+```{r}
+test_subset <- subset(test, select = -c(Ch1, Ch2, Ch3, Ch4, Choice))
+
+common_columns <- intersect(names(safety), names(test_subset))
+common_columns <- common_columns[3:94]
+
+# View the duplicated rows
+print(common_columns)
+```
+
+```{r}
+# Check for common values in df1's common columns that also exist in df2's common columns
+common_values <- safety[safety[, common_columns] %in% test_subset[, common_columns], ]
+
+# View the common values
+print(common_values)
+```
+
+```{r}
+# Check for duplicated rows in df2 (based on common columns) compared to df1
+duplicated_rows <- test_subset[duplicated(test_subset[, common_columns]), ]
+
+# View the duplicated rows
+print(duplicated_rows)
+```
+

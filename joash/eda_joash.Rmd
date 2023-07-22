@@ -1,0 +1,62 @@
+---
+title: "Not Raynard's EDA Notebook"
+output: html_notebook
+---
+
+Discrete Choice Model
+
+# Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("caret","randomForest", "ranger", "dplyr")
+# Use our custom load function
+loadPkgs(pkgnames)
+
+# Set seed
+seed <- 123
+```
+
+# Import Data
+```{r}
+safety <- read.csv("./train1_preprocessed.csv")
+test <- read.csv("./test1_preprocessed.csv")
+```
+
+```{r}
+#select_cols <- c("segmentind", "yearind", "milesind", "milesa", "nightind", "nighta", #"pparkind","genderind", "ageind", "agea","educind", "regionind", "Urbind", "incomeind", #"incomea")
+
+#for (i in select_cols) {
+#  result <- table(safety[[i]])
+#  print(paste("Frequency table for", i))
+#  print(result) # Check for 1s
+#  print("-------------------------------")
+#}
+```
+
+```{r}
+safety <- subset(safety, select = -c(Case, No, Task, Ch1, Ch2, Ch3, Ch4, CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
+safety
+
+set.seed(seed)
+trainingIndex <- createDataPartition(y = safety$Choice, times = 1, p = 0.8, list = FALSE)
+trainingSet <- safety[trainingIndex,]
+testSet <- safety[-trainingIndex,]
+```
+
+```{r}
+set.seed(seed)
+rf_ranger <- ranger(Choice ~ ., 
+  data = trainingSet, 
+  num.trees=1000)
+
+rf_ranger
+```
+
+```{r}
+result <- predict(rf_ranger, testSet)
+result
+```
+

@@ -121,11 +121,12 @@ library(keras)
 
 ```{r}
 # GPU can be added if available
-physical_devices <- tf$config$list_physical_devices("GPU")
-tf$config$experimental$set_memory_growth(physical_devices[[1]],TRUE)
+#physical_devices <- tf$config$list_physical_devices("GPU")
+#print(physical_devices)
+#tf$config$experimental$set_memory_growth(physical_devices[[1]],TRUE)
 # End of GPU optimisation
 
-tf$keras$backend$set_floatx('float32')
+#tf$keras$backend$set_floatx('float32')
 ```
 
 ```{r}
@@ -135,6 +136,9 @@ set.seed(42)
 inds <- partition(safety$Choice, p = c(train = 0.8, test = 0.2))
 train_set <- safety[inds$train, ]
 test_set <- safety[inds$test, ]
+```
+```{r}
+table(test_set$Choice)
 ```
 
 ```{r}
@@ -170,5 +174,10 @@ history <- model %>% fit(
 # Evaluate on test data
 score <- model %>% evaluate(x_test, y_test)
 print(score)
+```
+
+```{r}
+result <- predict(model, x_test)
+print(result)
 ```
 
