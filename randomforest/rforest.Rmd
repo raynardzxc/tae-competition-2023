@@ -11,20 +11,8 @@ library(mltools)
 library(data.table)
 library(dfidx)
 ```
-
-## Loading data
+## Function to calculate logloss
 ```{r}
-totrain<- read.csv("train1_rforest_preprocessed.csv")
-topredict <- read.csv("test1_rforest_preprocessed.csv")
-```
-
-
-## Processing data to train model
-```{r}
-## Split to train and test by Case -> to ensure everyone is represented in a sense
-# train <- dfidx(subset(totrain, Task<=12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
-# test <- dfidx(subset(totrain, Task>12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
-
 logloss <- function(test_set, testpredict_df) {
   # Create one-hot encoding for each choice on-the-fly
   Ch1 <- as.integer(test_set$Choice == 1)
@@ -39,19 +27,33 @@ logloss <- function(test_set, testpredict_df) {
                                     Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
   return(result)
 }
-train <- subset(totrain, Task<=15)
-train <- subset(train, select = -c(Case, No, Task))
-test <- subset(totrain, Task>15)
-test <- subset(test, select = -c(Case, No, Task))
 ```
 
+## Loading data
+```{r}
+totrain<- read.csv("train1_rforest_preprocessed.csv")
+topredict <- read.csv("test1_rforest_preprocessed.csv")
+```
 
+## Processing data to train model
+```{r}
+## Split to train and test by Case -> to ensure everyone is represented in a sense
+# train <- dfidx(subset(totrain, Task<=12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+# test <- dfidx(subset(totrain, Task>12), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+
+train <- subset(totrain, Task<=15)
+train <- subset(train, select = -c(Case, No))
+test <- subset(totrain, Task>15)
+test <- subset(test, select = -c(Case, No))
+```
+
+## Everything model to find important variables
 ```{r}
 set.seed(100)
 m1<- randomForest(as.factor(Choice)~.,data = train)
 summary(m1)
 importance(m1)
-varImpPlot(m1)
+#varImpPlot(m1)
 predicted <- predict(m1, newdata=test, type = "prob")
 actual <- test
 colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
@@ -60,7 +62,7 @@ logloss_value <- logloss(actual, as.data.frame(predicted))
 print(paste0("Test LogLoss: ", logloss_value))
 ```
 
-
+## MeanGiniDecrease > 400
 ```{r}
 set.seed(100)
 m2<- randomForest(as.factor(Choice)~ Price1+Price2+Price3+yearind+milesa+nighta+agea+incomea, data = train, ntree = 500)
@@ -71,6 +73,19 @@ colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 logloss_value <- logloss(actual, as.data.frame(predicted))
 print(paste0("Test LogLoss: ", logloss_value))
 ```
+
+## MeanGiniDecrease > 145
+```{r}
+set.seed(100)
+m2_1<- randomForest(as.factor(Choice)~ Task+BU1+Price1+BU2+Price2+BU3+Price3+yearind+milesa+nighta+agea+Urbind+incomea, data = train, ntree = 500)
+predicted <- predict(m2_1, newdata=test, type = "prob")
+actual <- test
+colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+
+logloss_value <- logloss(actual, as.data.frame(predicted))
+print(paste0("Test LogLoss: ", logloss_value))
+```
+
 ## For loop to lower LogLoss
 ```{r}
 actual <- test
