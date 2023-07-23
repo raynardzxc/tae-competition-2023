@@ -1,0 +1,69 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+# Import Libraries
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("caret","lightgbm", "readr")
+# Use our custom load function
+loadPkgs(pkgnames)
+
+# Set seed
+seed <- 123
+```
+
+# Import Data
+```{r}
+safety <- read.csv("./train1_preprocessed.csv")
+test <- read.csv("./test1_preprocessed.csv")
+```
+
+```{r}
+safety <- subset(safety, select = -c(Case, No, Task, Ch1, Ch2, Ch3, Ch4, CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
+
+set.seed(seed)
+trainingIndex <- createDataPartition(y = safety$Choice, times = 1, p = 0.8, list = FALSE)
+trainingSet <- safety[trainingIndex,]
+testSet <- safety[-trainingIndex,]
+```
+
+```{r}
+# Convert data to lgb.Dataset
+train_data <- lgb.Dataset(data = as.matrix(trainingSet[, -which(colnames(trainingSet)=="Choice")]), 
+                         label = trainingSet$Choice)
+```
+
+```{r}
+# Set parameters
+params <- list(objective = "binary",
+               metric = "binary_logloss",
+               learning_rate = 0.1)
+
+# Train the model
+model <- lgb.train(params,
+                   data = train_data,
+                   nrounds = 100,
+                   verbose = 0)
+
+```
+
+```{r}
+# Predict on the test set
+preds <- predict(model, as.matrix(testSet[, -which(colnames(testSet)=="Choice")]))
+
+# Compute logloss
+preds <- pmax(pmin(preds, 1-1e-15), 1e-15)
+
+logloss <- - mean(testSet$Choice * log(preds) + (1 - testSet$Choice) * log(1 - preds))
+print(paste0("Logloss: ", logloss))
+```
+

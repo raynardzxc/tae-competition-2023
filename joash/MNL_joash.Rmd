@@ -1,0 +1,55 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Import Libraries
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("caret","nnet")
+# Use our custom load function
+loadPkgs(pkgnames)
+
+# Set seed
+seed <- 123
+```
+
+# Import Data
+```{r}
+safety <- read.csv("./train1_preprocessed.csv")
+test <- read.csv("./test1_preprocessed.csv")
+```
+
+```{r}
+safety <- subset(safety, select = -c(CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
+```
+
+```{r}
+train_set <- subset(safety, Task <= 15)
+train_set <- subset(train_set, select = -c(Task))
+
+test_set <- subset(safety, Task > 15)
+test_set <- subset(test_set, select = -c(Task))
+```
+
+```{r}
+# Fit the multinomial logistic regression model
+model <- multinom(Choice ~ ., data = train_set)
+
+# Make predictions
+predictions <- predict(model, newdata = test_set, "probs")
+
+# Calculate log loss
+logLoss <- function(actual, predicted) {
+  sum(actual * log(predicted)) / -length(actual)
+}
+
+# Compute the log loss
+log_loss <- logLoss(test_set$Choice, predictions)
+
+print(paste("Log loss: ", log_loss))
+```
+

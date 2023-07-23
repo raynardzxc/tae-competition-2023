@@ -1,0 +1,148 @@
+---
+title: "xgboost Jeanelle"
+output: html_notebook
+---
+```{r}
+rm(list=ls())
+```
+
+```{r}
+# load libraries
+library(xgboost)
+library(caret)
+library(dplyr)
+library(splitTools)
+```
+
+```{r}
+# read csv
+safety <- read.csv("train1_preprocessed.csv")
+safety <- subset(safety, select = -c(CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
+
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 0)
+  Ch2 <- as.integer(test_set$Choice == 1)
+  Ch3 <- as.integer(test_set$Choice == 2)
+  Ch4 <- as.integer(test_set$Choice == 3)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+```
+
+
+## Without dropping variables (logloss = 1.08)
+https://www.projectpro.io/recipes/apply-xgboost-for-classification-r
+```{r}
+# Split data into train and test
+set.seed(41)
+train_set <- subset(safety, Task <= 14)
+train_set <- subset(train_set, select = -c(Task))
+train_set$Choice <- train_set$Choice - 1
+
+test_set <- subset(safety, Task > 14)
+test_set <- subset(test_set, select = -c(Task))
+test_set$Choice <- test_set$Choice - 1
+
+test_set
+```
+
+```{r}
+choicecol<-which(colnames(train_set)=="Choice")
+
+X_train = data.matrix(train_set[,-choicecol]) # independent variables for train
+y_train = train_set[,choicecol] # dependent variables for train
+
+X_test = data.matrix(test_set[,-choicecol]) # independent variables for test
+y_test = test_set[,choicecol] # dependent variables for test
+
+# convert the train and test data into xgboost matrix type.
+xgboost_train = xgb.DMatrix(data=X_train, label=y_train)
+xgboost_test = xgb.DMatrix(data=X_test, label=y_test)
+```
+
+
+```{r}
+# train a model using our training data
+model <- xgboost(data = xgboost_train,  # the data   
+                 max.depth = 3, # max depth 
+                 nrounds = 100, # max number of boosting iterations
+                 objective = "multi:softprob", 
+                 num_class = 4)
+
+summary(model)
+```
+
+```{r}
+#use model to make predictions on test data
+pred_test = predict(model, xgboost_test, type = "prob")
+
+# Reshape the predicted probabilities to have 4 columns
+pred_test_matrix <- matrix(pred_test, ncol = 4, byrow = TRUE)
+
+# Convert the matrix to a data frame and set column names
+df_pred_test <- data.frame(pred_test_matrix)
+colnames(df_pred_test) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+
+# Print the data frame
+print(df_pred_test)
+```
+
+```{r}
+loss <- logloss(test_set, df_pred_test)
+loss
+```
+
+## Find important variables
+```{r}
+# Extract feature importance
+importance_matrix <- xgb.importance(feature_names = colnames(X_train), model = model)
+
+# Order features by importance (Gain)
+importance_matrix <- importance_matrix[order(-importance_matrix$Gain),]
+
+# Extract feature names as a vector
+important_features <- importance_matrix$Feature
+
+# Print the vector of feature names
+print(important_features)
+
+# Print the feature importance matrix
+# print(importance_matrix)
+
+# Plot feature importance
+# xgb.plot.importance(importance_matrix)
+```
+
+```{r}
+# Fine tuning
+
+# Using caret's train function to perform grid search
+ctrl <- trainControl(method = "cv", number = 5)
+
+paramGrid <- expand.grid(nrounds = c(100, 200, 300), # number of boosting rounds
+                         max_depth = c(3, 5, 7), # maximum depth of each tree
+                         eta = c(0.005, 0.01, 0.05, 0.1), # learning rate
+                         gamma = c(0, 1, 3), # minimum loss reduction required to make a split
+                         colsample_bytree = c(0.5, 0.6, 0.7, 0.8), # subsample ratio of columns for each tree
+                         min_child_weight = c(1, 3, 5), # minimum sum of instance weight needed in a child
+                         subsample = c(0.6, 0.7, 0.8, 1) # subsample ratio of the training instances
+)
+
+xgb_tuned <- train(Choice ~ ., 
+                   data = train_set, 
+                   method = "xgbTree", 
+                   trControl = ctrl,
+                   tuneGrid = paramGrid)
+print(xgb_tuned)
+```
+
+
+
+
+
