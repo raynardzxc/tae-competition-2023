@@ -26,18 +26,24 @@ test <- read.csv("./test1_preprocessed.csv")
 ```
 
 ```{r}
-#select_cols <- c("segmentind", "yearind", "milesind", "milesa", "nightind", "nighta", #"pparkind","genderind", "ageind", "agea","educind", "regionind", "Urbind", "incomeind", #"incomea")
-
-#for (i in select_cols) {
-#  result <- table(safety[[i]])
-#  print(paste("Frequency table for", i))
-#  print(result) # Check for 1s
-#  print("-------------------------------")
-#}
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
 ```
 
 ```{r}
-safety <- subset(safety, select = -c(CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4, SC3, MA2, FP1, FP3, FP2, SC2, MA3, NS3, NS1, NS2, BU1, BU2, BU3, Urbind, ageind, AF3, LD2, BZ2, CC3, TS2, BZ1, BZ3, PP2, AF1, LD3, LB3, LB2, LB1, MA1, SC1, FA3, KA1, KA2, HU2, NV2, NV1, NV3, TS3, CC2, CC1, PP3, TS1, PP1, GN2, GN1, RP1, FC3, FC1, RP2, FC2, RP3, FA1, HU1, HU3, FA2, KA3, GN4, HU4, AF4, LB4, MA4, FP4, FA4, NS4, GN4, milesind, AF2, LD1, pparkind, regionind, segmentind, educind, nightind, GN3, genderind))
+safety <- subset(safety, select = -c(CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
 
 set.seed(seed)
 trainingSet <- subset(safety, Task <= 15)
@@ -55,15 +61,57 @@ model <- randomForest(Choice ~ .,
                    data = trainingSet,
                    ntree = 1000)
 
+pred <- predict(model, newdata = testSet, type="prob")
+colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+print(paste0("Logloss Test", logloss(testSet, as.data.frame(pred))))
+```
+
+# manually remove high meanDecreaseGini
+```{r}
+safety <- subset(safety, select = -c(SC3, MA2, FP1, FP3, FP2, SC2, MA3, NS3, NS1, NS2, BU1, BU2, BU3, Urbind, ageind, AF3, LD2, BZ2, CC3, TS2, BZ1, BZ3, PP2, AF1, LD3, LB3, LB2, LB1, MA1, SC1, FA3, KA1, KA2, HU2, NV2, NV1, NV3, TS3, CC2, CC1, PP3, TS1, PP1, GN2, GN1, RP1, FC3, FC1, RP2, FC2, RP3, FA1, HU1, HU3, FA2, KA3, GN4, HU4, AF4, LB4, MA4, FP4, FA4, NS4, GN4, milesind, AF2, LD1, pparkind, regionind, segmentind, educind, nightind, GN3, genderind))
+
+set.seed(seed)
+trainingSet <- subset(safety, Task <= 15)
+trainingSet <- subset(trainingSet, select = -c(Task))
+
+testSet <- subset(safety, Task > 15)
+testSet <- subset(testSet, select = -c(Task))
+
+trainingSet$Choice <- as.factor(trainingSet$Choice)
+```
+
+
+```{r}
 mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1],trainingSet$Choice, ntreeTry=1000,
                stepFactor=1.5,improve=0.001, trace=TRUE, plot=TRUE)
 best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
 print(mtry)
 print(best.m)
 ```
+
+```{r}
+#for (i in seq(500, 10000, by=100)){
+#  model <- randomForest(Choice ~ ., 
+#                    data = trainingSet,
+#                    ntree = i)
+
+#  pred <- predict(model, newdata = testSet, type="prob")
+#  colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+#  print(paste0("Logloss for tree", i," ", logloss(testSet, as.data.frame(pred))))
+#}
+```
+
+```{r}
+mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1],trainingSet$Choice, ntreeTry=1400,
+               stepFactor=1.5,improve=0.001, trace=TRUE, plot=TRUE)
+best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
+print(mtry)
+print(best.m)
+```
+
 ```{r}
 set.seed(seed)
-rf <-randomForest(Choice~.,data=trainingSet, mtry=best.m, importance=TRUE,ntree=1000)
+rf <-randomForest(Choice~.,data=trainingSet, mtry=best.m, importance=TRUE,ntree=1400)
 print(rf)
 #Evaluate variable importance
 importance(rf)
@@ -72,59 +120,14 @@ varImpPlot(rf)
 
 ```{r}
 pred <- predict(rf, testSet, type="prob")
-row.names(pred) <- NULL
-pred
-```
-```{r}
-length(testSet$Choice)
-length(pred)
+colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+predicted <- as.data.frame(pred)
+predicted
 ```
 
-```{r}
-cfn_table <- table(testSet$Choice, pred)
-cfn_table
-```
-```{r}
-acc <- sum(diag(cfn_table))/sum(cfn_table)
-acc
-```
 
 ```{r}
-log_loss <- function(actual, predicted) {
-  n <- length(actual)
-  actual <- as.integer(actual) # Ensure actual values are integers
-  predicted <- as.integer(predicted) # Ensure predicted values are integers
-
-  # Convert actual and predicted values to one-hot encoding
-  actual_one_hot <- matrix(0, nrow = n, ncol = max(actual))
-  predicted_one_hot <- matrix(0, nrow = n, ncol = max(predicted))
-  actual_one_hot[cbind(1:n, actual)] <- 1
-  predicted_one_hot[cbind(1:n, predicted)] <- 1
-
-  # Calculate log loss
-  epsilon <- 1e-15 # Small value to avoid division by zero
-  log_loss <- -sum(actual_one_hot * log(pmax(predicted_one_hot, epsilon))) / n
-  return(log_loss)
-}
-
-loss <- log_loss(testSet$Choice, testSet$Choice_pred)
-print(loss)
-```
-
-```{r}
-logloss <- function(test_set, testpredict_df) {
-  # Create one-hot encoding for each choice on-the-fly
-  Ch1 <- as.integer(test_set$Choice == 1)
-  Ch2 <- as.integer(test_set$Choice == 2)
-  Ch3 <- as.integer(test_set$Choice == 3)
-  Ch4 <- as.integer(test_set$Choice == 4)
-  
-  # Calculate logloss using these one-hot encoded variables
-  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
-                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
-                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
-                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
-  return(result)
-}
+loss <- logloss(testSet, predicted)
+loss
 ```
 
