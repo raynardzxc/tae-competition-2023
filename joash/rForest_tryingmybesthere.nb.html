@@ -1798,6 +1798,20 @@ testSet &lt;- safety[-trainingIndex,]</code></pre>
 mtry &lt;- tuneRF(trainingSet[1:ncol(trainingSet)-1], as.factor(trainingSet$Choice),
                stepFactor=1.5,improve=0.01, trace=TRUE, plot=FALSE)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibXRyeSA9IDkgIE9PQiBlcnJvciA9IDU0LjY5JSBcblNlYXJjaGluZyBsZWZ0IC4uLlxubXRyeSA9IDYgXHRPT0IgZXJyb3IgPSA1Ni40MyUgXG4tMC4wMzE4NTU2MiAwLjAxIFxuU2VhcmNoaW5nIHJpZ2h0IC4uLlxubXRyeSA9IDEzIFx0T09CIGVycm9yID0gNTMuNDIlIFxuMC4wMjMxMzQ2OSAwLjAxIFxubXRyeSA9IDE5IFx0T09CIGVycm9yID0gNTMuNjElIFxuLTAuMDAzNTk1Nzg0IDAuMDEgXG4ifQ== -->
+<pre><code>mtry = 9  OOB error = 54.69% 
+Searching left ...
+mtry = 6    OOB error = 56.43% 
+-0.03185562 0.01 
+Searching right ...
+mtry = 13   OOB error = 53.42% 
+0.02313469 0.01 
+mtry = 19   OOB error = 53.61% 
+-0.003595784 0.01 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmVzdC5tIDwtIG10cnlbbXRyeVssIDJdID09IG1pbihtdHJ5WywgMl0pLCAxXVxuYGBgIn0= -->
+<pre class="r"><code>best.m &lt;- mtry[mtry[, 2] == min(mtry[, 2]), 1]</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
