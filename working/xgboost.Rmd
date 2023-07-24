@@ -18,7 +18,7 @@ loadPkgs(pkgnames)
 ```
 
 ```{r}
-safety <- read.csv("../input/test1_onehot2.csv")
+safety <- read.csv("../input/train1_onehot2.csv")
 head(safety)
 ```
 # Label conversion
@@ -109,5 +109,31 @@ Don’t forget to re-convert your labels back to the names of the species by add
 xgb.pred = predict(xgb.fit,test.data,reshape=T)
 xgb.pred = as.data.frame(xgb.pred)
 colnames(xgb.pred) = levels(choices)
+```
+
+## Check logloss
+```{r}
+## add back 1 for the testing data's Choice
+test.label <- test.label+1
+test.label <- as.data.frame(test.label)
+colnames(test.label) <- c("Choice")
+
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+colnames(xgb.pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+logloss(test.label, xgb.pred)
+
 ```
 
