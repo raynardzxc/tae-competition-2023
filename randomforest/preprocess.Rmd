@@ -96,7 +96,7 @@ new_df_predict <- data.frame(predict(dummy, newdata = df_predict))
 ## one-hot did not account for this
 new_df_predict$segmentSmall.Car <- 0
 
-## Remove 1 column for each one-hot to reduce multi-colinearity (HAVE NOT TRIED)
+## Remove 1 column for each one-hot to reduce multi-colinearity
 new_df_train <- subset(new_df_train, select= -c(segmentSmall.Car, pparkYearly, genderMale, educTrade.Vocational.School, regionW))
 new_df_predict <- subset(new_df_predict, select= -c(segmentSmall.Car, pparkYearly, genderMale, educTrade.Vocational.School, regionW))
 
