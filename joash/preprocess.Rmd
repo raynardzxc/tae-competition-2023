@@ -34,14 +34,14 @@ table(safety$Choice)
 ```{r}
 # might have collinearity with miles, milesind and milesa
 # might have collinearity with night, nightind and nighta
-df <- subset(safety, select = -c(Ch1, Ch2, Ch3, Ch4, Case, No, segment,year,miles,night,ppark,gender,age,educ,region,Urb,income))
+df <- subset(safety, select = -c(Ch1, Ch2, Ch3, Ch4)) #, Case, No, segment,year,miles,night,ppark,gender,age,educ,region,Urb,income
 head(df)
 ```
 
 ## Export
 ```{r}
 # Writing the output to a csv file
-write.csv(df, file = "./train1_preprocessed.csv", row.names = FALSE)
+write.csv(df, file = "./train1_trying.csv", row.names = FALSE)
 ```
 
 # Test Data
@@ -64,12 +64,13 @@ safety$Ch4 <- 0
 ```{r}
 # might have collinearity with miles, milesind and milesa
 # might have collinearity with night, nightind and nighta
-df <- subset(safety, select = -c(Ch1, Ch2, Ch3, Ch4, Case, No, segment,year,miles,night,ppark,gender,age,educ,region,Urb,income))
+df <- subset(safety, select = -c(Ch1, Ch2, Ch3, Ch4))
 head(df)
+#, Case, No, segment,year,miles,night,ppark,gender,age,educ,region,Urb,income
 ```
 
 ## Export
 ```{r}
 # Writing the output to a csv file
-write.csv(df, file = "./test1_preprocessed.csv", row.names = FALSE)
+write.csv(df, file = "./test1_trying.csv", row.names = FALSE)
 ```
