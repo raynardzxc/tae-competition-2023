@@ -43,7 +43,7 @@ logloss <- function(test_set, testpredict_df) {
 ```
 
 ```{r}
-safety <- subset(safety, select = -c(CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4))
+safety <- subset(safety, select = -c(CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4, NS2, SC1, AF3, NS2, segmentind, MA2, PP2, NV1, LB3, FP1, SC3,NV3, FC3, BZ1, PP1, CC1, TS3, LB1, FP2, TS1, LD2, milesind, LD3, KA2, NS1, LD1, NS3, RP2, AF2, yearind, FC1, FC2, MA3, TS2, CC3, PP3, BZ2, FA2, GN3, FA1, AF1, RP1, KA3, RP3, KA1, BZ3, LB2, FA3, FP3, CC2, HU4, AF4, LB4, MA4, FP4, FA4, NS4, GN4, HU2, GN1, HU3, HU1, GN2, MA1, NV2, SC2, BU1, BU2, BU3))
 
 set.seed(seed)
 trainingSet <- subset(safety, Task <= 15)
@@ -56,19 +56,19 @@ trainingSet$Choice <- as.factor(trainingSet$Choice)
 ```
 
 ```{r}
-set.seed(seed)
-model <- randomForest(Choice ~ ., 
-                   data = trainingSet,
-                   ntree = 1000)
+#set.seed(seed)
+#model <- randomForest(Choice ~ ., 
+#                   data = trainingSet,
+#                   ntree = 1000)
 
-pred <- predict(model, newdata = testSet, type="prob")
-colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
-print(paste0("Logloss Test", logloss(testSet, as.data.frame(pred))))
+#pred <- predict(model, newdata = testSet, type="prob")
+#colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+#print(paste0("Logloss Test", logloss(testSet, as.data.frame(pred))))
 ```
 
 # manually remove high meanDecreaseGini
 ```{r}
-safety <- subset(safety, select = -c(SC3, MA2, FP1, FP3, FP2, SC2, MA3, NS3, NS1, NS2, BU1, BU2, BU3, Urbind, ageind, AF3, LD2, BZ2, CC3, TS2, BZ1, BZ3, PP2, AF1, LD3, LB3, LB2, LB1, MA1, SC1, FA3, KA1, KA2, HU2, NV2, NV1, NV3, TS3, CC2, CC1, PP3, TS1, PP1, GN2, GN1, RP1, FC3, FC1, RP2, FC2, RP3, FA1, HU1, HU3, FA2, KA3, GN4, HU4, AF4, LB4, MA4, FP4, FA4, NS4, GN4, milesind, AF2, LD1, pparkind, regionind, segmentind, educind, nightind, GN3, genderind))
+safety <- subset(safety, select = -c(agea, incomea, milesa, nighta))
 
 set.seed(seed)
 trainingSet <- subset(safety, Task <= 15)
@@ -80,29 +80,24 @@ testSet <- subset(testSet, select = -c(Task))
 trainingSet$Choice <- as.factor(trainingSet$Choice)
 ```
 
-
 ```{r}
-mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1],trainingSet$Choice, ntreeTry=1000,
-               stepFactor=1.5,improve=0.001, trace=TRUE, plot=TRUE)
-best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
-print(mtry)
-print(best.m)
-```
-
-```{r}
-#for (i in seq(500, 10000, by=100)){
-#  model <- randomForest(Choice ~ ., 
-#                    data = trainingSet,
-#                    ntree = i)
-
-#  pred <- predict(model, newdata = testSet, type="prob")
+#for (i in seq(1090, 1110, by=1)){
+#  mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1],trainingSet$Choice, ntreeTry=i,
+#                 stepFactor=1.5,improve=0.001, trace=TRUE, plot=FALSE)
+#  best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
+#  set.seed(seed)
+#  rf <-randomForest(Choice~.,data=trainingSet, mtry=best.m, importance=TRUE,ntree=i)
+#  pred <- predict(rf, testSet, type="prob")
 #  colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 #  print(paste0("Logloss for tree", i," ", logloss(testSet, as.data.frame(pred))))
 #}
+
+#print(mtry)
+#print(best.m)
 ```
 
 ```{r}
-mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1],trainingSet$Choice, ntreeTry=1400,
+mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1],trainingSet$Choice, ntreeTry=1099,
                stepFactor=1.5,improve=0.001, trace=TRUE, plot=TRUE)
 best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
 print(mtry)
@@ -111,7 +106,7 @@ print(best.m)
 
 ```{r}
 set.seed(seed)
-rf <-randomForest(Choice~.,data=trainingSet, mtry=best.m, importance=TRUE,ntree=1400)
+rf <-randomForest(Choice~.,data=trainingSet, mtry=best.m, importance=TRUE,ntree=1099)
 print(rf)
 #Evaluate variable importance
 importance(rf)
@@ -128,6 +123,32 @@ predicted
 
 ```{r}
 loss <- logloss(testSet, predicted)
-loss
+loss # 1.058145 is best
 ```
+# prepare to export
+```{r}
+getNum <- read.csv("./test1.csv")
+
+test <- subset(test, select = -c(Task, CC4, BU4, RP4, LD4, BZ4, FC4, PP4, KA4, SC4, TS4, NV4, Price4, SC3, MA2, FP1, FP3, FP2, SC2, MA3, NS3, NS1, NS2, BU1, BU2, BU3, Urbind, ageind, AF3, LD2, BZ2, CC3, TS2, BZ1, BZ3, PP2, AF1, LD3, LB3, LB2, LB1, MA1, SC1, FA3, KA1, KA2, HU2, NV2, NV1, NV3, TS3, CC2, CC1, PP3, TS1, PP1, GN2, GN1, RP1, FC3, FC1, RP2, FC2, RP3, FA1, HU1, HU3, FA2, KA3, GN4, HU4, AF4, LB4, MA4, FP4, FA4, NS4, GN4, milesind, AF2, LD1, pparkind, regionind, segmentind, educind, nightind, GN3, Choice))
+safety <- subset(safety, select = -c(Task))
+safety$Choice <- as.factor(safety$Choice)
+mtry <- tuneRF(safety[1:ncol(safety)-1],safety$Choice, ntreeTry=501,
+               stepFactor=1.5,improve=0.001, trace=TRUE, plot=TRUE)
+best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
+rf <-randomForest(Choice~.,data=safety, mtry=best.m, importance=TRUE,ntree=501)
+final_predict <- predict(rf, test, type="prob")
+colnames(final_predict) <- c("Ch1","Ch2","Ch3","Ch4")
+final_predict_df <- as.data.frame(final_predict)
+ 
+final_predict_df$No <- getNum$No
+
+final_predict_df <- final_predict_df[c("No","Ch1","Ch2","Ch3","Ch4")]
+
+```
+
+```{r}
+
+write.csv(final_predict_df, file = "./ranfor_Joash_submission.csv", row.names = FALSE)
+```
+
 
