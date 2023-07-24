@@ -1,0 +1,68 @@
+---
+title: "Preprocess Data"
+output: html_notebook
+---
+
+# Data Pre-processing
+## Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("dplyr")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+## Import Data
+```{r}
+safety <- read.csv("../input/train1.csv")
+str(safety)
+head(safety)
+```
+## Add Choice
+```{r}
+safety$Choice <- ifelse(safety$Ch1 == 1, 1,
+                        ifelse(safety$Ch2 == 1, 2,
+                               ifelse(safety$Ch3 == 1, 3,
+                                      ifelse(safety$Ch4 == 1, 4, NA))))
+table(safety$Choice)
+```
+
+## Drop Columns
+```{r}
+# CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4
+df <- subset(safety, select = -c(segment,year,miles,milesa,night,nighta,ppark,gender,age,agea,educ,region,Urb,income,incomea,Ch1,Ch2,Ch3,Ch4))
+head(df)
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df, file = "../input/train1_mlogit.csv", row.names = FALSE)
+```
+
+# Test Data
+## Import Test Data
+```{r}
+safety <- read.csv("../input/test1.csv")
+str(safety)
+head(safety)
+```
+## Add Choice
+```{r}
+safety$Choice <- 0
+```
+
+## Drop Columns
+```{r}
+df <- subset(safety, select = -c(segment,year,miles,milesa,night,nighta,ppark,gender,age,agea,educ,region,Urb,income,incomea,Ch1,Ch2,Ch3,Ch4))
+head(df)
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df, file = "../input/test1_mlogit.csv", row.names = FALSE)
+```
