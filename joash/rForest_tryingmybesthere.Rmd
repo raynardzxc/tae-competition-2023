@@ -18,7 +18,7 @@ seed <- 123
 
 ```{r}
 set.seed(seed)
-trainingIndex <- createDataPartition(safety$Choice, p = 0.7, list = FALSE)
+trainingIndex <- createDataPartition(safety$Choice, p = 0.8, list = FALSE)
 
 trainingSet <- safety[trainingIndex,]
 testSet <- safety[-trainingIndex,]
@@ -33,7 +33,8 @@ best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
 
 ```{r}
 set.seed(seed)
-model <- randomForest(as.factor(Choice)~., data = trainingSet, mtry=best.m, importance=TRUE)
+model <- randomForest(as.factor(Choice)~., data = trainingSet, mtry=best.m, importance=TRUE, ntree = 2001)
+#importance(model)
 model
 ```
 
@@ -69,15 +70,15 @@ getNum <- read.csv("./test1_trying.csv")
 
 test <- subset(getNum, select = -c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
 
-set.seed(seed)
-mtry <- tuneRF(safety[1:ncol(safety)-1], as.factor(safety$Choice),
-               stepFactor=1.5,improve=0.01, trace=TRUE, plot=FALSE)
-best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
+#set.seed(seed)
+#mtry <- tuneRF(safety[1:ncol(safety)-1], as.factor(safety$Choice),
+#               stepFactor=1.5,improve=0.01, trace=TRUE, plot=FALSE)
+#best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
 
-set.seed(seed)
-rf <-randomForest(as.factor(Choice)~., data = safety, mtry=best.m, importance=TRUE)
+#set.seed(seed)
+#rf <-randomForest(as.factor(Choice)~., data = safety, mtry=best.m, importance=TRUE)
 
-final_predict <- predict(rf, test, type="prob")
+final_predict <- predict(model, test, type="prob")
 
 colnames(final_predict) <- c("Ch1","Ch2","Ch3","Ch4")
 final_predict_df <- as.data.frame(final_predict)
@@ -87,6 +88,6 @@ final_predict_df <- final_predict_df[c("No","Ch1","Ch2","Ch3","Ch4")]
 ```
 
 ```{r}
-write.csv(final_predict_df, file = "./Rforest_tryingMyBest.csv", row.names = FALSE)
+write.csv(final_predict_df, file = "./Rforest_2001 trees.csv", row.names = FALSE)
 ```
 
