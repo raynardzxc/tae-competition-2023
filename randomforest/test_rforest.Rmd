@@ -70,23 +70,23 @@ topredict <- read.csv("test1_rforest_preprocessed.csv")
 
 ## Processing data to train model (split by random)
 ```{r}
-## Split to train and test by Case -> to ensure everyone is represented in a sense
-totrain_set <- dfidx(subset(totrain, Task<=15), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+## dfidx training set 
+totrain_set <- dfidx(totrain, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
 
 ## Convert back to dataframe
 totrain_set <- as.data.frame(totrain_set)
 
-## drop idx
+## drop idx and split to train test
+set.seed(100)
 totrain_set <- subset(totrain_set, select = -c(idx))
 inds <- partition(totrain_set$Choice, p = c(train = 0.8, test = 0.2))
 train <- totrain_set[inds$train, ]
 test <- totrain_set[inds$test, ]
-
 ```
 
 ## Preparing topredict for later
 ```{r}
-predict_set <- dfidx(subset(topredict, Task<=19), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+predict_set <- dfidx(topredict, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
 
 predict_set <- as.data.frame(predict_set)
 predict_set <- subset(predict_set, select = -c(idx))
@@ -185,9 +185,7 @@ for (i in 1:100){
 ## Train on full
 ```{r}
 ## Prep all training data
-full_train <- dfidx(totrain, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
-full_train <- as.data.frame(full_train)
-full_train <- subset(full_train, select = -c(idx))
+full_train <- totrain_set
 
 ## Train
 set.seed(100)
