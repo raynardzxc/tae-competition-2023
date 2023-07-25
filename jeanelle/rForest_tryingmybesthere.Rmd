@@ -1,0 +1,93 @@
+---
+title: "Random Forest"
+output: html_notebook
+---
+
+```{r}
+library(randomForest)
+library(caret)
+```
+
+```{r}
+safety <- read.csv("train1_trying.csv")
+safety <- subset(safety, select=-c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
+
+head(safety)
+seed <- 123
+```
+
+```{r}
+set.seed(seed)
+trainingIndex <- createDataPartition(safety$Choice, p = 0.8, list = FALSE)
+
+trainingSet <- safety[trainingIndex,]
+testSet <- safety[-trainingIndex,]
+```
+
+```{r}
+set.seed(seed)
+mtry <- tuneRF(trainingSet[1:ncol(trainingSet)-1], as.factor(trainingSet$Choice),
+               stepFactor=1.5,improve=0.01, trace=TRUE, plot=FALSE)
+best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
+```
+
+```{r}
+set.seed(seed)
+model <- randomForest(as.factor(Choice)~., data = trainingSet, mtry=best.m, importance=TRUE, ntree = 2001)
+#importance(model)
+model
+```
+
+```{r}
+pred <- predict(model, testSet, type="prob")
+colnames(pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+```
+
+```{r}
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+```
+
+```{r}
+loss <- logloss(testSet, as.data.frame(pred))
+loss
+```
+
+```{r}
+getNum <- read.csv("./test1_trying.csv")
+
+test <- subset(getNum, select = -c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
+
+#set.seed(seed)
+#mtry <- tuneRF(safety[1:ncol(safety)-1], as.factor(safety$Choice),
+#               stepFactor=1.5,improve=0.01, trace=TRUE, plot=FALSE)
+#best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
+
+#set.seed(seed)
+#rf <-randomForest(as.factor(Choice)~., data = safety, mtry=best.m, importance=TRUE)
+
+final_predict <- predict(model, test, type="prob")
+
+colnames(final_predict) <- c("Ch1","Ch2","Ch3","Ch4")
+final_predict_df <- as.data.frame(final_predict)
+final_predict_df$No <- getNum$No
+
+final_predict_df <- final_predict_df[c("No","Ch1","Ch2","Ch3","Ch4")]
+```
+
+```{r}
+write.csv(final_predict_df, file = "./Rforest_2001 trees.csv", row.names = FALSE)
+```
+
