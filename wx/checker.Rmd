@@ -1,0 +1,117 @@
+---
+title: "Checker"
+output: html_notebook
+---
+
+## Clear
+```{r}
+rm(list=ls())
+```
+
+## Init all functions
+```{r}
+get_choice <- function(row_data) {
+  max_val <- max(row_data)
+  choice <- which(row_data == max_val)
+  return(choice[1])
+}
+
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+```
+
+## For loop to check through all files
+```{r}
+## add filenames here as we submit
+filenames <- c("27875.csv",
+               "28114.csv",
+               "31746.csv",
+               "31840.csv",
+               "32977.csv",
+               "37238.csv")
+
+k <- length(filenames)
+result_matrix <- matrix(NA, nrow = k, ncol = k)
+
+for (i in 1:k){
+  benchmark <- read.csv(filenames[i])
+  benchmark <- subset(benchmark, select = -c(No))
+  for (n in 1:k){
+    submission <- read.csv(filenames[n])
+    submission <- subset(submission, select = -c(No))
+    
+    ## applying the function row-wise to the dataframe
+    benchmark_new <- benchmark
+    benchmark_new$Choice <- apply(benchmark, 1, get_choice)
+    result_matrix[i,n] <- logloss(benchmark_new, submission)
+  }
+}
+
+## presenting data
+result_df <- as.data.frame(result_matrix)
+colnames(result_df) <- filenames
+result_df$Benchmark <- filenames
+result_df <- result_df[c(c("Benchmark"),filenames)]
+
+result_df
+```
+
+
+## TRASH BELOW ---------------------------------------------------
+
+## Open files
+```{r}
+submission <- read.csv("unknown.csv")
+benchmark <- read.csv("37238.csv") #LL 1.145332 PB 1.27875
+```
+
+## Drop No.
+```{r}
+submission <- subset(submission, select = -c(No))
+benchmark <- subset(benchmark, select = -c(No))
+```
+
+## Find difference (NOT USEFUL)
+```{r}
+diff <- submission - benchmark
+```
+
+## Find mean absolute difference (NOT USEFUL)
+```{r}
+mean_abs_diff <- mean(abs(as.vector(as.matrix(diff))))
+print(paste("Mean absolute difference: ", mean_abs_diff))
+```
+
+## Add choice to benchmark
+```{r}
+## Code from chatgpt
+get_choice <- function(row_data) {
+  max_val <- max(row_data)
+  choice <- which(row_data == max_val)
+  return(choice[1])
+}
+
+# Applying the function row-wise to the dataframe
+benchmark_new <- benchmark
+benchmark_new$Choice <- apply(benchmark, 1, get_choice)
+
+```
+
+
+## Find Logloss
+```{r}
+logloss(benchmark_new, submission)
+```
+

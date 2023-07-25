@@ -11,6 +11,7 @@ library(mltools)
 library(data.table)
 library(dfidx)
 ```
+
 ## Function to calculate logloss
 ```{r}
 logloss <- function(test_set, testpredict_df) {
