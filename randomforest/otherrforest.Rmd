@@ -49,100 +49,68 @@ logloss <- function(test_set, testpredict_df) {
 
 ## Loading data
 ```{r}
-totrain<- read.csv("train1_rforest_preprocessed.csv")
-topredict <- read.csv("test1_rforest_preprocessed.csv")
+totrain<- read.csv("train1.csv")
+topredict <- read.csv("test1.csv")
 ```
 
-<!-- ## Processing data to train model (split by task) -->
-<!-- ```{r} -->
-<!-- ## Split to train and test by Case -> to ensure everyone is represented in a sense -->
-<!-- train <- dfidx(subset(totrain, Task<=15), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case")) -->
-<!-- test <- dfidx(subset(totrain, Task>15), shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case")) -->
+## Add Choice
+```{r}
+## Add Choice
+totrain$Choice <- ifelse(totrain$Ch1 == 1, 1,
+                        ifelse(totrain$Ch2 == 1, 2,
+                               ifelse(totrain$Ch3 == 1, 3,
+                                      ifelse(totrain$Ch4 == 1, 4, NA))))
+table(totrain$Choice)
 
-<!-- ## Convert back to dataframe -->
-<!-- train <- as.data.frame(train) -->
-<!-- test <- as.data.frame(test) -->
+totrain <- subset(totrain, select = -c(Ch1, Ch2, Ch3, Ch4))
+## Add and init Choice to 0
+topredict$Choice <- 0
+```
 
-<!-- ## drop idx -->
-<!-- train <- subset(train, select = -c(idx)) -->
-<!-- test <- subset(test, select = -c(idx)) -->
-<!-- ``` -->
 
 ## Processing data to train model (split by random)
 ```{r}
-## dfidx training set 
-totrain_set <- dfidx(totrain, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
-
-## Convert back to dataframe
-totrain_set <- as.data.frame(totrain_set)
-
-## drop idx and split to train test
+## planting my trees
 set.seed(100)
-totrain_set <- subset(totrain_set, select = -c(idx))
-inds <- partition(totrain_set$Choice, p = c(train = 0.8, test = 0.2))
-train <- totrain_set[inds$train, ]
-test <- totrain_set[inds$test, ]
+inds <- partition(totrain$Choice, p = c(train = 0.7, test = 0.3))
+train <- totrain[inds$train, ]
+test <- totrain[inds$test, ]
+
 ```
 
 ## Preparing topredict for later
 ```{r}
-predict_set <- dfidx(topredict, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
-
-predict_set <- as.data.frame(predict_set)
-predict_set <- subset(predict_set, select = -c(idx))
+predict_set <- topredict
 ```
 
 ## Creating model
 ```{r}
-## planting my trees
-set.seed(100)
+
 m1<- randomForest(as.factor(Choice)~.,data = train)
-importance(m1)
-```
-## Improved model
-```{r}
-set.seed(100)
-m2<- randomForest(as.factor(Choice)~Task+milesa+nighta+agea+incomea+Price,data = train)
+m1
 ```
 
 ## Testing model
 ```{r}
-predicted <- predict(m2, newdata=test, type = "prob")
-## Change prediction to dataframe
-predicted <- as.data.frame(predicted)
-colnames(predicted) <- c("f", "t")
-
-new_df <- data.frame()
-for (i in seq(1,nrow(predicted), by = 4)) {
-  ch1 <- predicted[i,]$t
-  ch2 <- predicted[i+1,]$t
-  ch3 <- predicted[i+2,]$t
-  ch4 <- predicted[i+3,]$t
-  
-  new_row <- c(ch1, ch2, ch3, ch4)
-  
-  ## Add a small value to each col if the whole row is equal to 0 (prevent divide zero)
-  if(sum(new_row)==0){
-    new_row <- new_row + .Machine$double.eps
-  }
-  
-  ## make them sum to 1
-  sum_row <- sum(new_row)
-  new_row <- new_row/sum_row
-  
-  new_df <- rbind(new_df, new_row)
-}
-colnames(new_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
-
+predicted <- predict(m1, newdata=test, type = "prob")
 ```
+
+```{r}
+importance(m1)
+```
+
 
 ## Check logloss
 ```{r}
 actual <- test
 # actual <- subset(totrain, Task>15)
-logloss_value <- logloss(actual, as.data.frame(new_df))
+colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+logloss_value <- logloss(actual, as.data.frame(predicted))
 print(paste0("Test LogLoss: ", logloss_value))
 ```
+
+
+
 ## Run model with different seed
 ```{r}
 for (i in 1:100){
@@ -185,7 +153,9 @@ for (i in 1:100){
 ## Train on full
 ```{r}
 ## Prep all training data
-full_train <- totrain_set
+full_train <- dfidx(totrain, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+full_train <- as.data.frame(full_train)
+full_train <- subset(full_train, select = -c(idx))
 
 ## Train
 set.seed(100)
