@@ -7,7 +7,7 @@ output: html_notebook
 
 The xgboost package contains the XGBoost algorithm and associated tools. You can view the formal documentation online: https://cran.r-project.org/web/packages/xgboost/xgboost.pdf.
 
-````{r}
+```{r}
 rm(list=ls())
 # Execute our custom script for loading packages
 source("usePackages.R")

@@ -1,0 +1,242 @@
+---
+title: "Random Forest"
+output: html_notebook
+---
+What I want to do:
+This Random Forest model uses dfidx to 4x the original data then predicting whether the row will be chosen. I think doing so will remove any influence other variables have on the choice made (ie CC3 will have no impact on the probability of Choice 1,2 and 4), but tbh idk if this actually changes anything it just seems legit in my head. This will result in certain tasks returning all false. To rectify this, we will normalise every 4 rows (1 task) to obtain probabilities for each choice, example:
+
+Output will return:
+row1: True: 0.1, False: 0.9
+row2: True: 0.2, False: 0.8
+row3: True: 0.6, False: 0.4
+row4: True: 0.3, False: 0.7
+row5: True: 0.12, False: 0.88
+...
+
+We normalise the first 4 rows to:
+task1: ch1: 0.083 ch2: 0.167 ch3: 0.5 ch4: 0.25
+...
+
+We do this for every 4 rows to obtain final result
+
+## Import libraries
+```{r}
+rm(list=ls())
+library(randomForest)
+library(mltools)
+library(data.table)
+library(dfidx)
+library(splitTools)
+```
+
+## Function to calculate logloss
+```{r}
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+```
+
+## Loading data
+```{r}
+totrain<- read.csv("train1.csv")
+topredict <- read.csv("test1.csv")
+```
+
+## Add Choice
+```{r}
+## Add Choice
+totrain$Choice <- ifelse(totrain$Ch1 == 1, 1,
+                        ifelse(totrain$Ch2 == 1, 2,
+                               ifelse(totrain$Ch3 == 1, 3,
+                                      ifelse(totrain$Ch4 == 1, 4, NA))))
+table(totrain$Choice)
+
+totrain <- subset(totrain, select = -c(Ch1, Ch2, Ch3, Ch4))
+## Add and init Choice to 0
+topredict$Choice <- 0
+```
+
+
+## Processing data to train model (split by random)
+```{r}
+## planting my trees
+set.seed(100)
+inds <- partition(totrain$Choice, p = c(train = 0.7, test = 0.3))
+train <- totrain[inds$train, ]
+test <- totrain[inds$test, ]
+
+```
+
+## Preparing topredict for later
+```{r}
+predict_set <- topredict
+```
+
+## Creating model
+```{r}
+
+m1<- randomForest(as.factor(Choice)~.,data = train)
+m1
+```
+
+## Testing model
+```{r}
+predicted <- predict(m1, newdata=test, type = "prob")
+```
+
+```{r}
+importance(m1)
+```
+
+
+## Check logloss
+```{r}
+actual <- test
+# actual <- subset(totrain, Task>15)
+colnames(predicted) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+logloss_value <- logloss(actual, as.data.frame(predicted))
+print(paste0("Test LogLoss: ", logloss_value))
+```
+
+
+
+## Run model with different seed
+```{r}
+for (i in 1:100){
+  set.seed(i)
+  mtest<- randomForest(as.factor(Choice)~Task+milesa+nighta+agea+incomea+Price,data = train)
+  
+  predicted <- predict(mtest, newdata=test, type = "prob")
+  ## Change prediction to dataframe
+  predicted <- as.data.frame(predicted)
+  colnames(predicted) <- c("f", "t")
+
+  new_df <- data.frame()
+  for (i in seq(1,nrow(predicted), by = 4)) {
+    ch1 <- predicted[i,]$t
+    ch2 <- predicted[i+1,]$t
+    ch3 <- predicted[i+2,]$t
+    ch4 <- predicted[i+3,]$t
+  
+    new_row <- c(ch1, ch2, ch3, ch4)
+    
+    ## Add a small value to each col if the whole row is equal to 0 (prevent divide zero)
+    if(sum(new_row)==0){
+      new_row <- new_row + .Machine$double.eps
+    }
+    
+    ## make them sum to 1
+    sum_row <- sum(new_row)
+    new_row <- new_row/sum_row
+  
+    new_df <- rbind(new_df, new_row)
+  }
+  colnames(new_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+  
+  actual <- subset(totrain, Task>15)
+  logloss_value <- logloss(actual, as.data.frame(new_df))
+  print(paste0("Test LogLoss: ", logloss_value))
+}
+```
+
+## Train on full
+```{r}
+## Prep all training data
+full_train <- dfidx(totrain, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+full_train <- as.data.frame(full_train)
+full_train <- subset(full_train, select = -c(idx))
+
+## Train
+set.seed(100)
+m3<- randomForest(as.factor(Choice)~Task+milesa+nighta+agea+incomea+Price,data = full_train)
+```
+
+## Generate output
+```{r}
+prediction <- predict(m3, newdata=predict_set, type = "prob")
+## Change prediction to dataframe
+prediction <- as.data.frame(prediction)
+colnames(prediction) <- c("f", "t")
+
+prediction_df <- data.frame()
+for (i in seq(1,nrow(prediction), by = 4)) {
+  ch1 <- prediction[i,]$t
+  ch2 <- prediction[i+1,]$t
+  ch3 <- prediction[i+2,]$t
+  ch4 <- prediction[i+3,]$t
+  
+  new_row <- c(ch1, ch2, ch3, ch4)
+  
+  ## Add a small value to each col if the whole row is equal to 0 (prevent divide zero)
+  if(sum(new_row)==0){
+    new_row <- new_row + .Machine$double.eps
+  }
+  
+  ## make them sum to 1
+  sum_row <- sum(new_row)
+  new_row <- new_row/sum_row
+  
+  prediction_df <- rbind(prediction_df, new_row)
+}
+colnames(prediction_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+```
+
+## Export
+```{r}
+# Converting the prediction matrix into a data frame
+# Adding the 'No' column from original dataset to the prediction data frame
+prediction_df$No <- topredict$No
+# Rearranging the columns
+prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+
+# Writing the output to a csv file
+write.csv(prediction_df, file = "submission_testrforest2.csv", row.names = FALSE)
+```
+
+
+## DO NOT LOOK BELOW HERE ------------------------------------------------------------------------------------------------
+
+## My playground
+```{r}
+
+```
+
+
+## Checking area for improvement
+```{r}
+summary(m1)
+importance(m1)
+varImpPlot(m1)
+```
+
+## Better model (MeanDecreaseGini >800)
+```{r}
+set.seed(100)
+m2<- randomForest(as.factor(Choice)~ milesa+nighta+agea+incomea+Price, data = train, ntree = 500)
+```
+
+## Testing better model
+```{r}
+predictforest2 <- predict(m2,newdata=test, type = "prob")
+acc2 <- table(test$Choice,predictforest2)
+acc2 <- sum(diag(acc2))/sum(acc2)
+acc2 #0.7801447
+```
+## Getting final prediction
+```{r}
+prediction <- predict(m2,newdata=predict_set)
+prediction_df <- as.data.frame(prediction)
+#colnames(prediction_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+```
+

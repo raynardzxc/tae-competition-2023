@@ -1,0 +1,156 @@
+---
+title: "XGBoost"
+output: html_notebook
+---
+
+# Load packages
+
+The xgboost package contains the XGBoost algorithm and associated tools. You can view the formal documentation online: https://cran.r-project.org/web/packages/xgboost/xgboost.pdf.
+````{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("dplyr","xgboost","splitTools")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+## Import Data
+```{r}
+totrain <- read.csv("train1_onehot2.csv")
+topredict <- read.csv("test1_onehot2.csv")
+```
+
+## Label conversion
+
+XGBoost requires the classes to be in an integer format, starting with 0. So, the first class should be 0. The Choice factor is converted to the proper integer format.
+```{r}
+# Convert the Choices factor to an integer class starting at 0
+# This is picky, but it's a requirement for XGBoost
+totrain$Choice <- as.factor(totrain$Choice)
+choices <- totrain$Choice
+label <- as.integer(totrain$Choice)-1
+totrain$Choice <- NULL
+```
+
+## Split the data for training and testing 
+```{r}
+set.seed(100)
+inds <- partition(totrain$Task, p = c(train = 0.8, test = 0.2))
+str(inds)
+train.data = as.matrix(totrain[inds$train, ])
+train.label = label[inds$train]
+test.data = as.matrix(totrain[inds$test, ])
+test.label = label[inds$test]
+```
+
+# Create the xgb.DMatrix objects
+
+Next, we transform the training and testing data sets into xgb.DMatrix objects that are used for fitting the XGBoost model and predicting new outcomes.
+
+```{r}
+# Transform the two data sets into xgb.Matrix
+xgb.train = xgb.DMatrix(data=train.data,label=train.label)
+xgb.test = xgb.DMatrix(data=test.data,label=test.label)
+```
+
+## Prepare topredict set for later
+```{r}
+totrain$Choice <- NULL
+
+set.seed(100)
+inds <- partition(totrain$Task, p = c(train = 0.8, test = 0.2))
+str(inds)
+train.data = as.matrix(totrain[inds$train, ])
+train.label = label[inds$train]
+test.data = as.matrix(totrain[inds$test, ])
+test.label = label[inds$test]
+
+xgb.train = xgb.DMatrix(data=train.data,label=train.label)
+xgb.test = xgb.DMatrix(data=test.data,label=test.label)
+```
+
+
+
+# Define the main parameters
+
+XGBoost, like most other algorithms, works best when its parameters are hypertuned for optimal performance. The algorithm requires that we define the booster, objective, learning rate, and other parameters. This example uses a set of parameters that I found to be optimal through simple cross-validation. You’ll need to spend most of your time in this step; it’s imperative that you understand your data and use cross-validation.
+
+The `multi:softprob` objective tells the algorithm to calculate probabilities for every possible outcome (in this case, a probability for each of the three flower species), for every observation.
+```{r}
+# Define the parameters for multinomial classification
+num_class = length(levels(choices))
+params = list(
+  booster="gbtree",
+  eta=0.001,
+  max_depth=5,
+  gamma=3,
+  subsample=0.8,
+  colsample_bytree=1,
+  objective="multi:softprob",
+  eval_metric="mlogloss",
+  num_class=num_class
+)
+```
+
+# Train the model
+
+We can finally train the XGBoost model! I only use one thread (versus parallel execution using multiple threads) because the data set is relatively small and the algorithm quickly converges. The test data set, xgb.test, is listed in the watchlist. This tells the algorithm to use the test data set for validating performance after every round, and the algorithm will stop early if the performance does not improve after 10 consecutive rounds. I include the training data for additional validation so I can assess the variance between the training precision and testing precision to avoid overfitting.
+
+You can set the verbose parameter is set to 1 so we can see the results for each round.
+
+```{r}
+# Train the XGBoost classifer
+xgb.fit=xgb.train(
+  params=params,
+  data=xgb.train,
+  nrounds=10000,
+  nthreads=2,
+  early_stopping_rounds=10,
+  watchlist=list(val1=xgb.train,val2=xgb.test),
+  verbose=0
+)
+
+# Review the final model and results
+xgb.fit
+```
+
+# Predict new outcomes
+
+Awesome, the model converged! Now we can predict new outcomes given the testing data set that we set aside earlier. We use the predict function to predict the likelihood of each observation in test.data of being each flower species.
+
+Don’t forget to re-convert your labels back to the names of the species by adding 1 back to the integer values
+```{r}
+# Predict outcomes with the test data
+xgb.pred = predict(xgb.fit,test.data,reshape=T)
+xgb.pred = as.data.frame(xgb.pred)
+colnames(xgb.pred) = levels(choices)
+```
+
+## Check logloss
+```{r}
+## add back 1 for the testing data's Choice
+test.label <- test.label+1
+test.label <- as.data.frame(test.label)
+colnames(test.label) <- c("Choice")
+
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+colnames(xgb.pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+logloss(test.label, xgb.pred)
+
+```
+
