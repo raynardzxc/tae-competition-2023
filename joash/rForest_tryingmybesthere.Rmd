@@ -6,6 +6,14 @@ output: html_notebook
 ```{r}
 library(randomForest)
 library(caret)
+library(mlr)
+library(data.table)
+```
+
+```{r}
+library(parallelMap)
+library(parallel)
+parallelStartSocket(cpus = detectCores())
 ```
 
 ```{r}
@@ -33,7 +41,7 @@ best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
 
 ```{r}
 set.seed(seed)
-model <- randomForest(as.factor(Choice)~., data = trainingSet, mtry=best.m, importance=TRUE, ntree = 2001)
+model <- randomForest(as.factor(Choice) ~ Price3 + Price2 + income + Price1 + agea + incomea + milesa + nighta + year + yearind + incomeind + miles + milesind + nightind + night + pparkind + ppark + segment + segmentind + region + regionind + BU3, data = trainingSet, mtry=best.m, importance=TRUE, ntree = 2001)
 #importance(model)
 model
 ```
@@ -64,6 +72,86 @@ logloss <- function(test_set, testpredict_df) {
 loss <- logloss(testSet, as.data.frame(pred))
 loss
 ```
+
+```{r}
+#set all character variables as factor
+fact_col <- colnames(trainingSet)[sapply(trainingSet,is.character)]
+
+for(i in fact_col)
+        set(trainingSet,j=i,value = factor(trainingSet[[i]]))
+
+for(i in fact_col)
+        set(testSet,j=i,value = factor(testSet[[i]]))
+```
+
+```{r}
+traintask <- makeClassifTask(data = trainingSet,target = "Choice")
+testtask <- makeClassifTask(data = testSet,target = "Choice")
+```
+
+```{r}
+rdesc <- makeResampleDesc("CV",iters=5L)
+```
+
+```{r}
+#Random Forest without Cutoff
+rf.lrn <- makeLearner("classif.randomForest", predict.type = "prob")
+rf.lrn$par.vals <- list(ntree = 100L,
+                        importance=TRUE)
+
+r <- resample(learner = rf.lrn
+              ,task = traintask
+              ,resampling = rdesc
+              ,measures = list(acc)
+              ,show.info = T,
+              mtry = best.m,
+              ntree = 2001)
+
+```
+```{r}
+CVmodel <- train(rf.lrn, traintask)
+```
+
+```{r}
+CVRF <- predict(CVmodel, testtask, type="prob")
+```
+
+```{r}
+CVRF
+```
+
+```{r}
+CVRF <- CVRF$data[,3:6]
+CVRF
+```
+
+```{r}
+colnames(CVRF) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+CVloss <- logloss(testSet, CVRF)
+CVloss
+```
+
+```{r}
+rfcontrol <- makeTuneControlGrid()
+
+randofor <- makeLearner("classif.randomForest", predict.type = "prob", par.vals = list(ntree = 2001, mtry = best.m))
+
+randofor$par.vals <- list(
+importance = TRUE
+)
+
+rf_param <- makeParamSet(
+makeIntegerParam("ntree",lower = 500, upper = 2100),
+makeIntegerParam("mtry", lower = 5, upper = 15),
+makeIntegerParam("nodesize", lower = 10, upper = 50)
+)
+
+set_cv <- makeResampleDesc("CV",iters = 5L)
+
+rf_tune <- tuneParams(learner = randofor, resampling = set_cv, task = traintask, par.set = rf_param, control = rfcontrol, measures = acc)
+```
+
+
 
 ```{r}
 getNum <- read.csv("./test1_trying.csv")

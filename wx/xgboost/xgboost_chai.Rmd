@@ -6,7 +6,7 @@ output: html_notebook
 # Load packages
 
 The xgboost package contains the XGBoost algorithm and associated tools. You can view the formal documentation online: https://cran.r-project.org/web/packages/xgboost/xgboost.pdf.
-````{r}
+```{r}
 rm(list=ls())
 # Execute our custom script for loading packages
 source("usePackages.R")
@@ -32,11 +32,13 @@ totrain$Choice <- as.factor(totrain$Choice)
 choices <- totrain$Choice
 label <- as.integer(totrain$Choice)-1
 totrain$Choice <- NULL
+totrain <- subset(totrain, select = -c(Case, No))
+totrain <- subset(totrain, select = -c(CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
 ```
 
 ## Split the data for training and testing 
 ```{r}
-set.seed(100)
+set.seed(123)
 inds <- partition(totrain$Task, p = c(train = 0.8, test = 0.2))
 str(inds)
 train.data = as.matrix(totrain[inds$train, ])
@@ -55,24 +57,6 @@ xgb.train = xgb.DMatrix(data=train.data,label=train.label)
 xgb.test = xgb.DMatrix(data=test.data,label=test.label)
 ```
 
-## Prepare topredict set for later
-```{r}
-totrain$Choice <- NULL
-
-set.seed(100)
-inds <- partition(totrain$Task, p = c(train = 0.8, test = 0.2))
-str(inds)
-train.data = as.matrix(totrain[inds$train, ])
-train.label = label[inds$train]
-test.data = as.matrix(totrain[inds$test, ])
-test.label = label[inds$test]
-
-xgb.train = xgb.DMatrix(data=train.data,label=train.label)
-xgb.test = xgb.DMatrix(data=test.data,label=test.label)
-```
-
-
-
 # Define the main parameters
 
 XGBoost, like most other algorithms, works best when its parameters are hypertuned for optimal performance. The algorithm requires that we define the booster, objective, learning rate, and other parameters. This example uses a set of parameters that I found to be optimal through simple cross-validation. You’ll need to spend most of your time in this step; it’s imperative that you understand your data and use cross-validation.
@@ -82,10 +66,9 @@ The `multi:softprob` objective tells the algorithm to calculate probabilities fo
 # Define the parameters for multinomial classification
 num_class = length(levels(choices))
 params = list(
-  booster="gbtree",
-  eta=0.001,
+  eta=0.001, ## lower implies larger nrounds, means more robust to overfitting but slower to compute
   max_depth=5,
-  gamma=3,
+  gamma=3, ## pruning var, larger more conservative
   subsample=0.8,
   colsample_bytree=1,
   objective="multi:softprob",
@@ -150,7 +133,30 @@ logloss <- function(test_set, testpredict_df) {
   return(result)
 }
 colnames(xgb.pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+#write.csv(xgb.pred, file = "testresults_xgb1.csv", row.names = FALSE)
 logloss(test.label, xgb.pred)
 
+```
+
+## Make prediction
+```{r}
+## preparing data for prediction
+predict_set <- subset(topredict, select = -c(Choice))
+predict_set <- subset(predict_set, select = -c(Case, No))
+predict_set <- subset(predict_set, select = -c(CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
+predict_set <- as.matrix(predict_set)
+
+## making prediction
+xgb.finalpred = predict(xgb.fit,predict_set,reshape=T)
+
+## preparing prediction for export
+predicted_df <- as.data.frame(xgb.finalpred)
+
+colnames(predicted_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+predicted_df$No <- topredict$No
+predicted_df <- predicted_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+
+## export
+write.csv(predicted_df, file = "submission_xgb2.csv", row.names = FALSE)
 ```
 

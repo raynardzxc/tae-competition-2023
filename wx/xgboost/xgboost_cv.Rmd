@@ -1,0 +1,185 @@
+---
+title: "XGBoost"
+output: html_notebook
+---
+
+# Load packages
+
+The xgboost package contains the XGBoost algorithm and associated tools. You can view the formal documentation online: https://cran.r-project.org/web/packages/xgboost/xgboost.pdf.
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("dplyr","xgboost","splitTools")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+## Function to calculate logloss
+```{r}
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+```
+
+
+## Import Data
+```{r}
+totrain <- read.csv("train1_onehot2.csv")
+topredict <- read.csv("test1_onehot2.csv")
+```
+
+## Label conversion
+
+XGBoost requires the classes to be in an integer format, starting with 0. So, the first class should be 0. The Choice factor is converted to the proper integer format.
+```{r}
+# convert the Choices factor to an integer class starting at 0
+totrain$Choice <- as.factor(totrain$Choice)
+choices <- totrain$Choice
+label <- as.integer(totrain$Choice)-1
+totrain$Choice <- NULL
+totrain <- subset(totrain, select = -c(Case, No))
+totrain <- subset(totrain, select = -c(CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
+```
+
+
+## Prepare for Cross Validation
+```{r}
+set.seed(123)
+num_folds <- 5
+label_mapping <- c(0,1,2,3)
+labelo <- as.numeric(factor(label, levels=label_mapping))
+cv_folds <- create_folds(labelo, k = num_folds)
+
+# Initialize a vector to store the predictions
+totrain_predictions <- rep(NA, length(labelo))
+totrain_logloss <- rep(NA, num_folds)
+```
+
+## Define the main parameters
+```{r}
+# define the parameters for multinomial classification
+num_class = length(levels(choices))
+params = list(
+  eta=0.001, # lower implies larger nrounds, means more robust to overfitting but slower to compute
+  max_depth=5,
+  gamma=3, # pruning var, larger more conservative
+  subsample=0.8,
+  colsample_bytree=1,
+  objective="multi:softprob",
+  eval_metric="mlogloss",
+  num_class=num_class
+)
+```
+
+## Train the model
+```{r}
+# Train the XGBoost classifer
+for (fold in 1:num_folds) {
+  print("run1")
+  train_idx <- unlist(cv_folds[-fold])
+  print("run2")
+  test_idx <- unlist(cv_folds[fold])
+  print("run3")
+  train.data = as.matrix(totrain[train_idx, ])
+  print("run4")
+  train.label = label[train_idx]
+  print("run5")
+  test.data = as.matrix(totrain[test_idx, ])
+  print("run6")
+  test.label = label[test_idx]
+  
+  # transform the two data sets into xgb.Matrix
+  xgb.train = xgb.DMatrix(data=train.data,label=train.label)
+  xgb.test = xgb.DMatrix(data=test.data,label=test.label)
+  
+  # train data based on current fold
+  xgb.fit=xgb.train(
+    params=params,
+    data=xgb.train,
+    nrounds=10000,
+    nthreads=2,
+    early_stopping_rounds=10,
+    watchlist=list(val1=xgb.train,val2=xgb.test),
+    verbose=0
+  )
+  
+  # making predictions
+  fold_predictions <- predict(xgb.fit, test.data, reshape=T)
+  totrain_predictions[test_idx] <- fold_predictions
+  
+  # print logloss
+  test.label_a <- test.label+1
+  test.label_a <- as.data.frame(test.label_a)
+  colnames(test.label_a) <- c("Choice")
+
+  xgb.pred = as.data.frame(fold_predictions)
+  colnames(xgb.pred) = levels(choices)
+  
+  colnames(xgb.pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+  
+  ll <- logloss(test.label_a, xgb.pred)
+  totrain_predictions[test_idx] <- ll
+  
+  print(paste0("Fold ", fold))
+  print(paste0("Fold LogLoss: ", ll))
+}
+# Review the final model and results
+xgb.fit
+```
+
+## Predict new outcomes
+```{r}
+# Predict outcomes with the test data
+xgb.pred = predict(xgb.fit,test.data,reshape=T)
+xgb.pred = as.data.frame(xgb.pred)
+colnames(xgb.pred) = levels(choices)
+```
+
+## Check logloss
+```{r}
+## add back 1 for the testing data's Choice
+test.label <- test.label+1
+test.label <- as.data.frame(test.label)
+colnames(test.label) <- c("Choice")
+
+
+colnames(xgb.pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+logloss(test.label, xgb.pred)
+
+```
+
+## Make prediction
+```{r}
+## preparing data for prediction
+predict_set <- subset(topredict, select = -c(Choice))
+predict_set <- subset(predict_set, select = -c(Case, No))
+predict_set <- subset(predict_set, select = -c(CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
+predict_set <- as.matrix(predict_set)
+
+## making prediction
+xgb.finalpred = predict(xgb.fit,predict_set,reshape=T)
+
+## preparing prediction for export
+predicted_df <- as.data.frame(xgb.finalpred)
+
+colnames(predicted_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+predicted_df$No <- topredict$No
+predicted_df <- predicted_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+
+## export
+write.csv(predicted_df, file = "submission_xgb2.csv", row.names = FALSE)
+```
+

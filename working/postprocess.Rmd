@@ -89,3 +89,8 @@ min(subset(final, select=-c(No)))
 max(subset(final, select=-c(No)))
 ```
 
+## Export
+```{r}
+write.csv(final, file = "ensemble_xgb1_rfor.csv", row.names = FALSE)
+```
+
