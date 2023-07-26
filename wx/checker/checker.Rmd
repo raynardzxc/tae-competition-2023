@@ -36,7 +36,9 @@ logloss <- function(test_set, testpredict_df) {
 ```{r}
 ## add filenames here as we submit
 filenames <- c("27875.csv",
+               "ensemble_xgb1_rfor.csv",
                "28114.csv",
+               "31175.csv",
                "31746.csv",
                "31840.csv",
                "32977.csv",
