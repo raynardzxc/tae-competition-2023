@@ -1,0 +1,134 @@
+---
+title: "Preprocess Data"
+output: html_notebook
+---
+
+# Data Pre-processing
+## Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("dplyr")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+## Import Data
+```{r}
+safety <- read.csv("../input/train1.csv")
+str(safety)
+head(safety)
+```
+
+## Add Choice
+```{r}
+safety$Choice <- ifelse(safety$Ch1 == 1, 1,
+                        ifelse(safety$Ch2 == 1, 2,
+                               ifelse(safety$Ch3 == 1, 3,
+                                      ifelse(safety$Ch4 == 1, 4, NA))))
+table(safety$Choice)
+```
+
+## Drop Columns
+```{r}
+# drop columns with all 0: CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4
+df <- subset(safety, select = -c(CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4,Ch1,Ch2,Ch3,Ch4))
+head(df)
+
+# drop case and no columns
+df <- subset(df, select = -c(Case, No))
+```
+
+## Change bin width for income
+```{r}
+# Define the breaks for the bins
+breaks <- c(-1, 0, 29999, 39999, 49999, 59999, 69999, 79999, 89999, 99999, 109999, 119999, 129999, 139999, 149999, 159999, 169999, 179999, 189999, 199999, 219999, 239999, 259999, 279999, 299999, Inf)
+
+# Define the labels for the bins
+labels <- 1:25
+
+# Convert the incomea column to bins and label them
+df$incomebins <- cut(df$incomea, breaks = breaks, labels = labels, include.lowest = TRUE)
+
+# Convert the income_bins column to a factor
+df$incomebins <- as.factor(df$incomebins)
+
+# Delete other income columns
+df <- subset(df, select = -c(incomeind,income))
+```
+
+```{r}
+# Find the position of 'incomea'
+pos <- which(names(df) == "incomea")
+
+# Create a new column order
+new_order <- c(names(df)[1:(pos-1)], "incomebins", names(df)[pos:(length(df)-1)])
+
+# Rearrange the columns
+df <- df[, new_order]
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df, file = "../input/train1_newpreprocessed.csv", row.names = FALSE)
+```
+
+# Test Data
+## Import Test Data
+```{r}
+safety <- read.csv("../input/test1.csv")
+str(safety)
+head(safety)
+```
+## Add Choice
+```{r}
+safety$Choice <- 0
+```
+
+## Drop Columns
+```{r}
+# drop columns with all 0: CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4
+df <- subset(safety, select = -c(CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4,Ch1,Ch2,Ch3,Ch4))
+head(df)
+
+# drop case and no columns
+df <- subset(df, select = -c(Case, No))
+```
+
+## Change bin width for income
+```{r}
+# Define the breaks for the bins
+breaks <- c(-1, 0, 29999, 39999, 49999, 59999, 69999, 79999, 89999, 99999, 109999, 119999, 129999, 139999, 149999, 159999, 169999, 179999, 189999, 199999, 219999, 239999, 259999, 279999, 299999, Inf)
+
+# Define the labels for the bins
+labels <- 1:25
+
+# Convert the incomea column to bins and label them
+df$incomebins <- cut(df$incomea, breaks = breaks, labels = labels, include.lowest = TRUE)
+
+# Convert the income_bins column to a factor
+df$incomebins <- as.factor(df$incomebins)
+
+# Delete other income columns
+df <- subset(df, select = -c(incomeind,income))
+```
+
+```{r}
+# Find the position of 'incomea'
+pos <- which(names(df) == "incomea")
+
+# Create a new column order
+new_order <- c(names(df)[1:(pos-1)], "incomebins", names(df)[pos:(length(df)-1)])
+
+# Rearrange the columns
+df <- df[, new_order]
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(df, file = "../input/test1_newpreprocessed.csv", row.names = FALSE)
+```
