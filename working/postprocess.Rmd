@@ -1,0 +1,91 @@
+---
+title: "Postprocessing"
+output: html_notebook
+---
+# Load the required library
+```{r}
+rm(list=ls())
+library(dplyr)
+```
+
+# Read in the prediction data
+```{r}
+pred1 <- read.csv("../output/Rforest_2001 trees.csv")
+pred2 <- read.csv("../output/submission_xgb1.csv")
+```
+
+```{r}
+# Soft voting function
+soft_voting <- function(pred1, pred2, weight1=0.5, weight2=0.5) {
+  # Ensure that the weights sum up to 1
+  if (weight1 + weight2 != 1) {
+    stop("The weights do not sum up to 1.")
+  }
+
+  # Join the two predictions based on 'No' (assumption: 'No' is the unique id)
+  pred <- inner_join(pred1, pred2, by = "No", suffix = c("_1", "_2"))
+
+  # Soft voting
+  pred <- pred %>%
+    mutate(
+      Ch1 = weight1 * Ch1_1 + weight2 * Ch1_2,
+      Ch2 = weight1 * Ch2_1 + weight2 * Ch2_2,
+      Ch3 = weight1 * Ch3_1 + weight2 * Ch3_2,
+      Ch4 = weight1 * Ch4_1 + weight2 * Ch4_2
+    )
+  # Remove the columns from individual models
+  pred <- pred %>% select(No, Ch1, Ch2, Ch3, Ch4)
+
+  return(pred)
+}
+
+# Function to adjust and normalize probabilities
+adjust_and_normalize <- function(df) {
+  
+  # List of column names containing probabilities
+  prob_cols <- c("Ch1", "Ch2", "Ch3", "Ch4")
+  
+  # Convert the dataframe to a matrix for easier row-wise operations
+  prob_matrix <- as.matrix(df[prob_cols])
+  
+  # For each row, find the min and max indices
+  min_indices <- apply(prob_matrix, 1, which.min)
+  max_indices <- apply(prob_matrix, 1, which.max)
+  
+  # Adjust the min and max values for each row
+  for(i in seq_len(nrow(prob_matrix))) {
+    prob_matrix[i, min_indices[i]] <- prob_matrix[i, min_indices[i]] / 2
+    prob_matrix[i, max_indices[i]] <- prob_matrix[i, max_indices[i]] + prob_matrix[i, min_indices[i]]
+  }
+  
+  # Normalize probabilities so they sum to 1
+  prob_matrix <- prob_matrix / rowSums(prob_matrix)
+  
+  # Replace the old probability columns in the dataframe
+  df[prob_cols] <- prob_matrix
+  
+  return(df)
+}
+```
+
+```{r}
+# Get soft voting result
+result <- soft_voting(pred1, pred2, 0.7,0.3)
+
+head(pred1)
+head(pred2)
+# View the result
+head(result)
+```
+```{r}
+# Apply the function
+final <- adjust_and_normalize(result)
+head(final)
+```
+```{r}
+min(subset(result, select=-c(No)))
+max(subset(result, select=-c(No)))
+min(subset(final, select=-c(No)))
+max(subset(final, select=-c(No)))
+```
+
