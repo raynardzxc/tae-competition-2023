@@ -1,0 +1,110 @@
+---
+title: "Preprocess Data for Random Forest"
+output: html_notebook
+---
+
+# Data Pre-processing
+## Import Libraries
+```{r}
+rm(list=ls())
+# Execute our custom script for loading packages
+source("usePackages.R")
+# Name of the packages 
+pkgnames <- c("dplyr","caret")
+# Use our custom load function
+loadPkgs(pkgnames)
+```
+
+## Import Data
+```{r}
+totrain <- read.csv("train1.csv")
+topredict <- read.csv("test1.csv")
+```
+## Add Choice
+```{r}
+## Add Choice
+totrain$Choice <- ifelse(totrain$Ch1 == 1, 1,
+                        ifelse(totrain$Ch2 == 1, 2,
+                               ifelse(totrain$Ch3 == 1, 3,
+                                      ifelse(totrain$Ch4 == 1, 4, NA))))
+table(totrain$Choice)
+
+## Add and init Choice to 0
+topredict$Choice <- 0
+```
+
+## Drop Columns
+```{r}
+## The demographic columns are represented in different form (ie ind, a). We will use the a form if available as these give us more information than a one-hot or ind form. For the rest we will decide as such:
+
+## criteria: factor if ind cannot be meaningfully compared with each other, else ind
+## segment -> one-hot
+## year -> ind
+## ppark -> one-hot
+## gender -> one-hot
+## educ -> one-hot
+## region -> one-hot
+## Urb -> ind
+
+#### note to self: doing all ind or a will lower the number of branches, maybe can try?
+df_train <- subset(totrain, select = -c(segmentind,
+                                 year,
+                                 miles,
+                                 milesind,
+                                 night,
+                                 nightind,
+                                 pparkind,
+                                 genderind,
+                                 age,
+                                 ageind,
+                                 educind,
+                                 regionind,
+                                 Urb,
+                                 income,
+                                 incomeind,
+                                 Ch1,
+                                 Ch2,
+                                 Ch3,
+                                 Ch4))
+
+df_predict <- subset(topredict, select = -c(segmentind,
+                                 year,
+                                 miles,
+                                 milesind,
+                                 night,
+                                 nightind,
+                                 pparkind,
+                                 genderind,
+                                 age,
+                                 ageind,
+                                 educind,
+                                 regionind,
+                                 Urb,
+                                 income,
+                                 incomeind,
+                                 Ch1,
+                                 Ch2,
+                                 Ch3,
+                                 Ch4))
+
+dummy <- dummyVars(" ~ .", data=df_train)
+new_df_train <- data.frame(predict(dummy, newdata = df_train)) 
+
+dummy <- dummyVars(" ~ .", data=df_predict)
+new_df_predict <- data.frame(predict(dummy, newdata = df_predict)) 
+
+## one-hot did not account for this
+new_df_predict$segmentSmall.Car <- 0
+
+## Remove 1 column for each one-hot to reduce multi-colinearity
+new_df_train <- subset(new_df_train, select= -c(segmentSmall.Car, pparkYearly, genderMale, educTrade.Vocational.School, regionW))
+new_df_predict <- subset(new_df_predict, select= -c(segmentSmall.Car, pparkYearly, genderMale, educTrade.Vocational.School, regionW))
+
+```
+
+## Export
+```{r}
+# Writing the output to a csv file
+write.csv(new_df_train, file = "train1_rforest_preprocessed.csv", row.names = FALSE)
+write.csv(new_df_predict, file = "test1_rforest_preprocessed.csv", row.names = FALSE)
+```
