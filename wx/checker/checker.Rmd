@@ -35,15 +35,14 @@ logloss <- function(test_set, testpredict_df) {
 ## For loop to check through all files
 ```{r}
 ## add filenames here as we submit
+setwd("~/GitHub/tae-competition-2023/wx/checker")
 filenames <- c("25892_e.csv",
-               "s_m2.csv",
-               "s_m3.csv",
-               #"27875.csv",
-               #"28114.csv",
-               #"30004_x.csv",
-               #"30384.csv",
-               #"31175_x.csv",
-               #"31746.csv",
+               # "27875.csv",
+               # "28114.csv",
+               # "30004_x.csv",
+               # "30384.csv",
+               # "31175_x.csv",
+               "31746_m.csv",
                "31840_m.csv",
                "32977_m.csv",
                "37238.csv")
@@ -77,19 +76,18 @@ result_df
 ## For loop to check through all files
 ```{r}
 ## add filenames here as we submit
-setwd()
-filenames <- c("25892_e.csv",
-               "s_m2.csv",
-               "s_m3.csv",
-               #"27875.csv",
-               #"28114.csv",
-               #"30004_x.csv",
-               #"30384.csv",
-               #"31175_x.csv",
-               #"31746.csv",
-               "31840_m.csv",
-               "32977_m.csv",
-               "37238.csv")
+setwd("~/GitHub/tae-competition-2023/wx/checker/allensemble")
+filenames <- c("ensemble_4060.csv",
+               "ensemble_4555.csv",
+               "ensemble_5050.csv",
+               "ensemble_5545.csv",
+               "ensemble_6040.csv",
+               "ensemble_6535.csv",
+               "ensemble_7030.csv",
+               "ensemble_403030.csv",
+               "ensemble_503020.csv",
+               "ensemble_503515.csv",
+               "ensemble_504010.csv")
 
 k <- length(filenames)
 result_matrix <- matrix(NA, nrow = k, ncol = k)

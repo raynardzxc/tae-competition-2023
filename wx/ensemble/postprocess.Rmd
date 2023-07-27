@@ -12,12 +12,12 @@ library(ggplot2)
 
 # Read in the prediction data
 ```{r}
-test1 <- read.csv("../input/testresults_2001for_allvariables.csv")
-test2 <- read.csv("../input/testresults_xgb3.csv")
-test3 <- read.csv("../input/testresults_mlogitM3.csv")
-pred1 <- read.csv("../output/Rforest_2001_trees.csv")
-pred2 <- read.csv("../output/submission_xgb3.csv")
-pred3 <- read.csv("../output/submission_M3.csv")
+test1 <- read.csv("fulltestresults_rfor.csv")
+test2 <- read.csv("fulltestresults_xgb3.csv")
+test3 <- read.csv("../../input/testresults_mlogitM3.csv")
+pred1 <- read.csv("Rforest_2001_trees.csv")
+pred2 <- read.csv("submission_xgb3.csv")
+pred3 <- read.csv("../../output/submission_M3.csv")
 ```
 
 ```{r}
@@ -119,7 +119,7 @@ logloss <- function(testpredict_df) {
 
 ```{r}
 # With two predictions
-vote2 <- soft_voting(test1, test2, weights = c(0.6, 0.4))
+vote2 <- soft_voting(test1, test2, weights = c(0.99, 0.01))
 loss2 <- logloss(vote2)
 loss2
 
@@ -144,13 +144,13 @@ optimal_weight <- NULL
 df_loss <- data.frame(weight1 = numeric(), loss = numeric())
 
 # Iterate over the range of weights
-for(weight1 in seq(0, 1, by=0.01)){
+for(weight1 in seq(0, 0.99, by=0.01)){
   # Get soft voting result
-  result <- soft_voting(test1, test2, weights=c(weight1, 1-weight1))
+  result <- soft_voting(test1, test2, weights = c(weight1, 1-weight1))
   
   # Calculate the logloss
   loss <- logloss(result)
-  print(c(weight1,loss))
+  print(c(weight1, loss))
   # Check if this loss is less than the current minimum loss
   if(loss < min_loss){
     # If so, update the minimum loss and the corresponding weight

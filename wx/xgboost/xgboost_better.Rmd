@@ -45,8 +45,13 @@ train.data = as.matrix(totrain[inds, ])
 train.label = label[inds]
 test.data = as.matrix(totrain[-inds, ])
 test.label = label[-inds]
+
 tempno <- pure$No[-inds]
 tempchoice <- pure$Choice[-inds]
+
+tempfullno <- pure$No
+tempfullchoice <- pure$Choice
+tempfulltrain <- totrain
 ```
 
 <!-- ## Split the data for training and testing (OUTDATED) -->
@@ -68,6 +73,7 @@ Next, we transform the training and testing data sets into xgb.DMatrix objects t
 # Transform the two data sets into xgb.Matrix
 xgb.train = xgb.DMatrix(data=train.data,label=train.label)
 xgb.test = xgb.DMatrix(data=test.data,label=test.label)
+xgb.fulltrain = xgb.DMatrix(data=as.matrix(totrain),label=label)
 ```
 
 ## Define grid of hyperparameters to try
@@ -123,6 +129,10 @@ xgb.newfit=xgb.train(
 xgb.pred = predict(xgb.newfit,xgb.test,reshape=T)
 xgb.pred = as.data.frame(xgb.pred)
 colnames(xgb.pred) = levels(choices)
+
+xgb.fullpred = predict(xgb.newfit,xgb.fulltrain,reshape=T)
+xgb.fullpred = as.data.frame(xgb.fullpred)
+colnames(xgb.fullpred) = levels(choices)
 ```
 
 ## Check logloss
@@ -148,14 +158,28 @@ logloss <- function(test_set, testpredict_df) {
 }
 colnames(xgb.pred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 logloss(test.label, xgb.pred)
+
+colnames(xgb.fullpred) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+templabel <- label + 1
+templabel <- as.data.frame(templabel)
+colnames(templabel) <- c("Choice")
+logloss(templabel, xgb.fullpred)
 ```
 ## Store predictions of test set
 ```{r}
+## export testresults
 xgb.pred$No <- tempno
 xgb.pred$Choice <- tempchoice
 xgb.pred <- xgb.pred[c("No", "Ch1", "Ch2", "Ch3", "Ch4", "Choice")]
 
 write.csv(xgb.pred, file = "testresults_xgb3.csv", row.names = FALSE)
+
+## export testresults on full training set
+xgb.fullpred$No <- tempfullno
+xgb.fullpred$Choice <- tempfullchoice
+xgb.fullpred <- xgb.fullpred[c("No", "Ch1", "Ch2", "Ch3", "Ch4", "Choice")]
+
+write.csv(xgb.fullpred, file = "fulltestresults_xgb3.csv", row.names = FALSE)
 ```
 
 ## Make prediction
