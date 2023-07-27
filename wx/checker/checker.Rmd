@@ -35,16 +35,60 @@ logloss <- function(test_set, testpredict_df) {
 ## For loop to check through all files
 ```{r}
 ## add filenames here as we submit
-filenames <- c("25892.csv",
-               "sc_m.csv",
-               "27875.csv",
-               "28114.csv",
+filenames <- c("25892_e.csv",
+               "s_m2.csv",
+               "s_m3.csv",
+               #"27875.csv",
+               #"28114.csv",
                #"30004_x.csv",
-               "30384.csv",
+               #"30384.csv",
                #"31175_x.csv",
-               "31746.csv",
-               "31840.csv",
-               "32977.csv",
+               #"31746.csv",
+               "31840_m.csv",
+               "32977_m.csv",
+               "37238.csv")
+
+k <- length(filenames)
+result_matrix <- matrix(NA, nrow = k, ncol = k)
+
+for (i in 1:k){
+  benchmark <- read.csv(filenames[i])
+  benchmark <- subset(benchmark, select = -c(No))
+  for (n in 1:k){
+    submission <- read.csv(filenames[n])
+    submission <- subset(submission, select = -c(No))
+    
+    ## applying the function row-wise to the dataframe
+    benchmark_new <- benchmark
+    benchmark_new$Choice <- apply(benchmark, 1, get_choice)
+    result_matrix[i,n] <- logloss(benchmark_new, submission)
+  }
+}
+
+## presenting data
+result_df <- as.data.frame(result_matrix)
+colnames(result_df) <- filenames
+result_df$Benchmark <- filenames
+result_df <- result_df[c(c("Benchmark"),filenames)]
+
+result_df
+```
+
+## For loop to check through all files
+```{r}
+## add filenames here as we submit
+setwd()
+filenames <- c("25892_e.csv",
+               "s_m2.csv",
+               "s_m3.csv",
+               #"27875.csv",
+               #"28114.csv",
+               #"30004_x.csv",
+               #"30384.csv",
+               #"31175_x.csv",
+               #"31746.csv",
+               "31840_m.csv",
+               "32977_m.csv",
                "37238.csv")
 
 k <- length(filenames)
