@@ -6,12 +6,16 @@ output: html_notebook
 ```{r}
 rm(list=ls())
 library(dplyr)
+library(purrr)
+library(ggplot2)
 ```
 
 # Read in the prediction data
 ```{r}
-pred1 <- read.csv("../output/Rforest_2001 trees.csv")
-pred2 <- read.csv("../output/submission_xgb1.csv")
+test1 <- read.csv("../input/testresults_2001for_allvariables.csv")
+test2 <- read.csv("../input/testresults_xgb3.csv")
+pred1 <- read.csv("../output/Rforest_2001_trees.csv")
+pred2 <- read.csv("../output/submission_xgb3.csv")
 ```
 
 ```{r}
@@ -20,6 +24,19 @@ soft_voting <- function(pred1, pred2, weight1=0.5, weight2=0.5) {
   # Ensure that the weights sum up to 1
   if (weight1 + weight2 != 1) {
     stop("The weights do not sum up to 1.")
+  }
+
+  # Check if 'Choice' column exists in both dataframes
+  choice_exists_pred1 <- 'Choice' %in% colnames(pred1)
+  choice_exists_pred2 <- 'Choice' %in% colnames(pred2)
+
+  # If 'Choice' column exists, rename it temporarily to avoid conflicts in join
+  if (choice_exists_pred1) {
+    pred1 <- pred1 %>% rename(Choice_temp = Choice)
+  }
+  
+  if (choice_exists_pred2) {
+    pred2 <- pred2 %>% rename(Choice_temp = Choice)
   }
 
   # Join the two predictions based on 'No' (assumption: 'No' is the unique id)
@@ -33,14 +50,25 @@ soft_voting <- function(pred1, pred2, weight1=0.5, weight2=0.5) {
       Ch3 = weight1 * Ch3_1 + weight2 * Ch3_2,
       Ch4 = weight1 * Ch4_1 + weight2 * Ch4_2
     )
+
+  # If 'Choice' column existed, rename it back to 'Choice'
+  if (choice_exists_pred1 | choice_exists_pred2) {
+    pred <- pred %>% rename(Choice = Choice_temp_1)  # assuming pred1 is your validation set
+  }
+  
   # Remove the columns from individual models
-  pred <- pred %>% select(No, Ch1, Ch2, Ch3, Ch4)
+  if (choice_exists_pred1 | choice_exists_pred2) {
+    pred <- pred %>% select(No, Ch1, Ch2, Ch3, Ch4, Choice)
+  } else {
+    pred <- pred %>% select(No, Ch1, Ch2, Ch3, Ch4)
+  }
 
   return(pred)
 }
 
+
 # Function to adjust and normalize probabilities
-adjust_and_normalize <- function(df) {
+adjust_and_normalize <- function(df, min_proportion=0.5) {
   
   # List of column names containing probabilities
   prob_cols <- c("Ch1", "Ch2", "Ch3", "Ch4")
@@ -54,8 +82,14 @@ adjust_and_normalize <- function(df) {
   
   # Adjust the min and max values for each row
   for(i in seq_len(nrow(prob_matrix))) {
-    prob_matrix[i, min_indices[i]] <- prob_matrix[i, min_indices[i]] / 2
-    prob_matrix[i, max_indices[i]] <- prob_matrix[i, max_indices[i]] + prob_matrix[i, min_indices[i]]
+    # Calculate how much of the min to give to the max
+    transfer_amount <- prob_matrix[i, min_indices[i]] * min_proportion
+    
+    # Subtract the transfer amount from the min
+    prob_matrix[i, min_indices[i]] <- prob_matrix[i, min_indices[i]] - transfer_amount
+    
+    # Add the transfer amount to the max
+    prob_matrix[i, max_indices[i]] <- prob_matrix[i, max_indices[i]] + transfer_amount
   }
   
   # Normalize probabilities so they sum to 1
@@ -66,21 +100,86 @@ adjust_and_normalize <- function(df) {
   
   return(df)
 }
+
+logloss <- function(testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(testpredict_df$Choice == 1)
+  Ch2 <- as.integer(testpredict_df$Choice == 2)
+  Ch3 <- as.integer(testpredict_df$Choice == 3)
+  Ch4 <- as.integer(testpredict_df$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(testpredict_df) * sum(Ch1 * log(testpredict_df$Ch1) +
+                                    Ch2 * log(testpredict_df$Ch2) +
+                                    Ch3 * log(testpredict_df$Ch3) +
+                                    Ch4 * log(testpredict_df$Ch4))
+  return(result)
+}
 ```
 
 ```{r}
-# Get soft voting result
-result <- soft_voting(pred1, pred2, 0.7,0.3)
+# Initialize variables to store the minimum loss and corresponding weight
+min_loss <- Inf
+optimal_weight <- NULL
 
-head(pred1)
-head(pred2)
-# View the result
-head(result)
+# Initialize the dataframe to store the weight and corresponding loss
+df_loss <- data.frame(weight1 = numeric(), loss = numeric())
+
+# Iterate over the range of weights
+for(weight1 in seq(0, 1, by=0.01)){
+  # Get soft voting result
+  result <- soft_voting(test1, test2, weight1, 1-weight1)
+  
+  # Calculate the logloss
+  loss <- logloss(result)
+  
+  # Check if this loss is less than the current minimum loss
+  if(loss < min_loss){
+    # If so, update the minimum loss and the corresponding weight
+    min_loss <- loss
+    optimal_weight <- weight1
+  }
+  
+  # Append the weight and corresponding loss to the dataframe
+  df_loss <- rbind(df_loss, data.frame(weight1 = weight1, loss = loss))
+}
+
+# Print the optimal weight and corresponding loss
+cat("Optimal weight1: ", optimal_weight, "\n")
+cat("Minimum loss: ", min_loss, "\n")
+
+# Plot the loss against weight
+ggplot(df_loss, aes(x=weight1, y=loss)) +
+  geom_line() +
+  labs(x="Weight1", y="Loss", title="Loss vs Weight1")
 ```
+```{r}
+weight = 0.6 ## gut feel
+result <- soft_voting(test1, test2, weight, 1-weight)
+loss <- logloss(result)
+loss
+```
+
 ```{r}
 # Apply the function
-final <- adjust_and_normalize(result)
-head(final)
+final <- adjust_and_normalize(result, 0.5)
+loss <- logloss(final)
+loss
+```
+
+```{r}
+rf <- adjust_and_normalize(test1, 0.5)
+loss <- logloss(rf)
+loss
+```
+
+
+```{r}
+weight = 0.6
+result <- soft_voting(pred1, pred2, weight, 1-weight)
+result
+# final <- adjust_and_normalize(pred1, 0.5)
+# final
 ```
 ```{r}
 min(subset(result, select=-c(No)))
@@ -91,6 +190,6 @@ max(subset(final, select=-c(No)))
 
 ## Export
 ```{r}
-write.csv(final, file = "ensemble_xgb1_rfor.csv", row.names = FALSE)
+write.csv(result, file = "../output/ensemble_rf_xgb.csv", row.names = FALSE)
 ```
 
