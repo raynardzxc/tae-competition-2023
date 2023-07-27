@@ -4,6 +4,7 @@ output: html_notebook
 ---
 
 ```{r}
+rm(list=ls())
 library(randomForest)
 library(caret)
 library(mlr)
@@ -20,7 +21,33 @@ parallelStartSocket(cpus = detectCores())
 safety <- read.csv("train1_trying.csv")
 safety <- subset(safety, select=-c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
 
-head(safety)
+# Define the breaks for the bins
+#breaks <- c(-1, 0, 29999, 39999, 49999, 59999, 69999, 79999, 89999, 99999, 109999, 119999, 129999, 139999, 149999, 159999, 169999, 179999, 189999, 199999, 219999, 239999, 259999, 279999, 299999, Inf)
+
+# Define the labels for the bins
+#labels <- 1:25
+
+# Convert the incomea column to bins and label them
+#safety$incomebins <- cut(safety$incomea, breaks = breaks, labels = labels, include.lowest = TRUE)
+
+# Convert the income_bins column to a factor
+#safety$incomebins <- as.factor(safety$incomebins)
+
+# Delete other income columns
+#safety <- subset(safety, select = -c(incomeind,income))
+```
+
+```{r}
+# Find the position of 'incomea'
+#pos <- which(names(safety) == "incomea")
+
+# Create a new column order
+#new_order <- c(names(safety)[1:(pos-1)], "incomebins", names(safety)[pos:(length(safety)-1)])
+
+# Rearrange the columns
+#safety <- safety[, new_order]
+
+#head(safety)
 seed <- 123
 ```
 
@@ -41,7 +68,7 @@ best.m <- mtry[mtry[, 2] == min(mtry[, 2]), 1]
 
 ```{r}
 set.seed(seed)
-model <- randomForest(as.factor(Choice) ~ Price3 + Price2 + income + Price1 + agea + incomea + milesa + nighta + year + yearind + incomeind + miles + milesind + nightind + night + pparkind + ppark + segment + segmentind + region + regionind + BU3, data = trainingSet, mtry=best.m, importance=TRUE, ntree = 2001)
+model <- randomForest(as.factor(Choice) ~ ., data = trainingSet, mtry=best.m, importance=TRUE, ntree = 2001)
 #importance(model)
 model
 ```
@@ -72,9 +99,20 @@ logloss <- function(test_set, testpredict_df) {
 loss <- logloss(testSet, as.data.frame(pred))
 loss
 ```
+```{r}
+raynard_df <- as.data.frame(pred)
+raynard_df$No <- testSet$No
+raynard_df <- raynard_df[c("No","Ch1","Ch2","Ch3","Ch4")]
+write.csv(raynard_df, file = "./testresults_2001for_allvariables.csv", row.names = FALSE)
+```
+
 
 ```{r}
 #set all character variables as factor
+trainingSet <- subset(trainingSet, select=c(Choice, Price3, Price2, Price1, agea, incomea, milesa, nighta, year, yearind, incomebins, miles, milesind ,nightind, night, pparkind, ppark, segment, segmentind, region, regionind, BU3))
+
+testSet <- subset(testSet, select=c(Choice, Price3, Price2, Price1, agea, incomea, milesa, nighta, year, yearind, incomebins, miles, milesind ,nightind, night, pparkind, ppark, segment, segmentind, region, regionind, BU3))
+
 fact_col <- colnames(trainingSet)[sapply(trainingSet,is.character)]
 
 for(i in fact_col)
@@ -83,6 +121,12 @@ for(i in fact_col)
 for(i in fact_col)
         set(testSet,j=i,value = factor(testSet[[i]]))
 ```
+
+```{r}
+levels(trainingSet$incomebins)
+levels(testSet$incomebins)
+```
+
 
 ```{r}
 traintask <- makeClassifTask(data = trainingSet,target = "Choice")
@@ -96,7 +140,7 @@ rdesc <- makeResampleDesc("CV",iters=5L)
 ```{r}
 #Random Forest without Cutoff
 rf.lrn <- makeLearner("classif.randomForest", predict.type = "prob")
-rf.lrn$par.vals <- list(ntree = 100L,
+rf.lrn$par.vals <- list(ntree = 2001L,
                         importance=TRUE)
 
 r <- resample(learner = rf.lrn
@@ -104,12 +148,15 @@ r <- resample(learner = rf.lrn
               ,resampling = rdesc
               ,measures = list(acc)
               ,show.info = T,
-              mtry = best.m,
-              ntree = 2001)
-
+              mtry = best.m)
 ```
+
 ```{r}
 CVmodel <- train(rf.lrn, traintask)
+```
+
+```{r}
+CVmodel
 ```
 
 ```{r}
@@ -132,32 +179,41 @@ CVloss
 ```
 
 ```{r}
-rfcontrol <- makeTuneControlGrid()
-
-randofor <- makeLearner("classif.randomForest", predict.type = "prob", par.vals = list(ntree = 2001, mtry = best.m))
-
-randofor$par.vals <- list(
-importance = TRUE
-)
-
-rf_param <- makeParamSet(
-makeIntegerParam("ntree",lower = 500, upper = 2100),
-makeIntegerParam("mtry", lower = 5, upper = 15),
-makeIntegerParam("nodesize", lower = 10, upper = 50)
-)
-
-set_cv <- makeResampleDesc("CV",iters = 5L)
-
-rf_tune <- tuneParams(learner = randofor, resampling = set_cv, task = traintask, par.set = rf_param, control = rfcontrol, measures = acc)
-```
-
-
-
-```{r}
 getNum <- read.csv("./test1_trying.csv")
 
 test <- subset(getNum, select = -c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
 
+# Convert the incomea column to bins and label them
+#test$incomebins <- cut(test$incomea, breaks = breaks, labels = labels, include.lowest = TRUE)
+
+# Convert the income_bins column to a factor
+#test$incomebins <- as.factor(test$incomebins)
+
+# Delete other income columns
+#test <- subset(test, select = -c(incomeind,income))
+
+# Find the position of 'incomea'
+#pos <- which(names(test) == "incomea")
+
+# Create a new column order
+#new_order <- c(names(test)[1:(pos-1)], "incomebins", names(test)[pos:(length(test)-1)])
+
+# Rearrange the columns
+#test <- test[, new_order]
+
+#head(safety)
+
+```
+
+```{r}
+#test <- subset(test, select = c(Choice, Price3, Price2, Price1, agea, incomea, milesa, nighta, year, yearind, income, incomeind, miles, milesind ,nightind, night, pparkind, ppark, segment, segmentind, region, regionind, BU3))
+#fact_col <- colnames(test)[sapply(test,is.character)]
+
+#for(i in fact_col)
+#       set(test,j=i,value = factor(test[[i]]))
+
+
+#testClass <- makeClassifTask(data = test,target = "Choice")
 #set.seed(seed)
 #mtry <- tuneRF(safety[1:ncol(safety)-1], as.factor(safety$Choice),
 #               stepFactor=1.5,improve=0.01, trace=TRUE, plot=FALSE)
@@ -167,7 +223,7 @@ test <- subset(getNum, select = -c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4
 #rf <-randomForest(as.factor(Choice)~., data = safety, mtry=best.m, importance=TRUE)
 
 final_predict <- predict(model, test, type="prob")
-
+#final_predict <- final_predict$data[,3:6]
 colnames(final_predict) <- c("Ch1","Ch2","Ch3","Ch4")
 final_predict_df <- as.data.frame(final_predict)
 final_predict_df$No <- getNum$No
@@ -176,6 +232,13 @@ final_predict_df <- final_predict_df[c("No","Ch1","Ch2","Ch3","Ch4")]
 ```
 
 ```{r}
-write.csv(final_predict_df, file = "./Rforest_2001 trees.csv", row.names = FALSE)
+write.csv(final_predict_df, file = "./Joash_randForest_nobins.csv", row.names = FALSE)
+```
+
+```{r}
+traintask
+```
+```{r}
+testClass
 ```
 
