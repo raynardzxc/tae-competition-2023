@@ -36,9 +36,11 @@ logloss <- function(test_set, testpredict_df) {
 ```{r}
 ## add filenames here as we submit
 filenames <- c("27875.csv",
-               "submission_xgb3.csv",
+               "ensemble_xgb1_rf.csv",
                "28114.csv",
-               "31175.csv",
+               #"30004_x.csv",
+               "30384.csv",
+               #"31175_x.csv",
                "31746.csv",
                "31840.csv",
                "32977.csv",
@@ -68,6 +70,11 @@ result_df$Benchmark <- filenames
 result_df <- result_df[c(c("Benchmark"),filenames)]
 
 result_df
+```
+
+## Plot maybe
+```{r}
+heatmap(result_matrix, Rowv = NA, Colv = NA, col = heat.colors(256), scale = "none")
 ```
 
 

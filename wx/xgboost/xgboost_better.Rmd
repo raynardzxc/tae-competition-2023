@@ -46,6 +46,7 @@ train.label = label[inds]
 test.data = as.matrix(totrain[-inds, ])
 test.label = label[-inds]
 tempno <- pure$No[-inds]
+tempchoice <- pure$Choice[-inds]
 ```
 
 <!-- ## Split the data for training and testing (OUTDATED) -->
@@ -151,7 +152,8 @@ logloss(test.label, xgb.pred)
 ## Store predictions of test set
 ```{r}
 xgb.pred$No <- tempno
-xgb.pred <- xgb.pred[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
+xgb.pred$Choice <- tempchoice
+xgb.pred <- xgb.pred[c("No", "Ch1", "Ch2", "Ch3", "Ch4", "Choice")]
 
 write.csv(xgb.pred, file = "testresults_xgb3.csv", row.names = FALSE)
 ```
