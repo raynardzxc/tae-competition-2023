@@ -1,0 +1,81 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+rm(list=ls())
+library(mlogit)
+library(caret)
+safety <- read.csv("train1.csv")
+which(colnames(safety)=="CC1")
+which(colnames(safety)=="Price4")
+
+safety$Choice <- ifelse(safety$Ch1 == 1, 1,
+                        ifelse(safety$Ch2 == 1, 2,
+                               ifelse(safety$Ch3 == 1, 3,
+                                      ifelse(safety$Ch4 == 1, 4, NA))))
+
+set.seed(123)
+inds <- createDataPartition(safety$Choice, p = 0.8, list = FALSE)
+train <- as.data.frame(safety[inds, ])
+test <- as.data.frame(safety[-inds, ])
+
+S <- dfidx(safety, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+S_test <- dfidx(test, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+head(S)
+table(safety$Choice)
+summary(S)
+```
+
+```{r}
+M<-mlogit(Choice~CC+GN+NS+BU+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price|incomeind+ppark+gender+educind+Urb+agea+segmentind+year+milesa+regionind+nighta, data=S)
+M$logLik
+summary(M)
+```
+
+```{r}
+ActualChoice <- safety[,"Choice"]
+P <- predict(M, newdata=S)
+
+P_test <- predict(M, newdata=S_test)
+predicted_df <- as.data.frame(P_test)
+colnames(predicted_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
+predicted_df$No <- test$No
+predicted_df$Choice <- test$Choice
+predicted_df <- predicted_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4", "Choice")]
+
+## export
+write.csv(predicted_df, file = "testresult_mlogit.csv", row.names = FALSE)
+
+PredictedChoice <- apply(P,1,which.max)
+```
+
+```{r}
+Tabtrain=table(PredictedChoice, ActualChoice)
+Tabtrain
+```
+
+```{r}
+CorPredTrain<-sum(diag(Tabtrain))/sum(Tabtrain)
+CorPredTrain
+```
+
+**Predicted Output
+```{r}
+test <- read.csv("test1.csv")
+
+MrChoice <-sample(c(1,2,3,4),nrow(test),replace=TRUE, prob = c(0.25, 0.25, 0.25,0.25))
+test$Choice<-MrChoice
+table(test$Choice)
+S1 <- dfidx(test, shape="wide", choice="Choice", sep="", varying = c(4:83), idx = c("No", "Case"))
+head(S1)
+P1 <- predict(M, newdata=S1)
+write.csv(P1, file = "submission_xgb3.csv", row.names = FALSE)
+PredictedTest <- apply(P1,1,which.max)
+table(PredictedTest)
+```

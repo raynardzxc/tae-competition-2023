@@ -120,7 +120,7 @@ xgb.newfit=xgb.train(
   verbose=0
 )
 
-xgb.pred = predict(xgb.newfit,test.data,reshape=T)
+xgb.pred = predict(xgb.newfit,xgb.test,reshape=T)
 xgb.pred = as.data.frame(xgb.pred)
 colnames(xgb.pred) = levels(choices)
 ```
