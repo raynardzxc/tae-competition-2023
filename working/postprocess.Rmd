@@ -14,58 +14,58 @@ library(ggplot2)
 ```{r}
 test1 <- read.csv("../input/testresults_2001for_allvariables.csv")
 test2 <- read.csv("../input/testresults_xgb3.csv")
+test3 <- read.csv("../input/testresults_mlogitM3.csv")
 pred1 <- read.csv("../output/Rforest_2001_trees.csv")
 pred2 <- read.csv("../output/submission_xgb3.csv")
+pred3 <- read.csv("../output/submission_M3.csv")
 ```
 
 ```{r}
 # Soft voting function
-soft_voting <- function(pred1, pred2, weight1=0.5, weight2=0.5) {
+soft_voting <- function(pred1, pred2, pred3=NULL, weights=c(0.5, 0.5, 0)) {
   # Ensure that the weights sum up to 1
-  if (weight1 + weight2 != 1) {
+  if (sum(weights) != 1) {
     stop("The weights do not sum up to 1.")
   }
 
-  # Check if 'Choice' column exists in both dataframes
-  choice_exists_pred1 <- 'Choice' %in% colnames(pred1)
-  choice_exists_pred2 <- 'Choice' %in% colnames(pred2)
-
-  # If 'Choice' column exists, rename it temporarily to avoid conflicts in join
-  if (choice_exists_pred1) {
-    pred1 <- pred1 %>% rename(Choice_temp = Choice)
-  }
-  
-  if (choice_exists_pred2) {
-    pred2 <- pred2 %>% rename(Choice_temp = Choice)
+  # Remove 'Choice' from pred2 and pred3 (if present)
+  pred2 <- pred2[ , !(names(pred2) %in% "Choice")]
+  if (!is.null(pred3)) {
+    pred3 <- pred3[ , !(names(pred3) %in% "Choice")]
   }
 
-  # Join the two predictions based on 'No' (assumption: 'No' is the unique id)
-  pred <- inner_join(pred1, pred2, by = "No", suffix = c("_1", "_2"))
-
-  # Soft voting
-  pred <- pred %>%
-    mutate(
-      Ch1 = weight1 * Ch1_1 + weight2 * Ch1_2,
-      Ch2 = weight1 * Ch2_1 + weight2 * Ch2_2,
-      Ch3 = weight1 * Ch3_1 + weight2 * Ch3_2,
-      Ch4 = weight1 * Ch4_1 + weight2 * Ch4_2
-    )
-
-  # If 'Choice' column existed, rename it back to 'Choice'
-  if (choice_exists_pred1 | choice_exists_pred2) {
-    pred <- pred %>% rename(Choice = Choice_temp_1)  # assuming pred1 is your validation set
-  }
-  
-  # Remove the columns from individual models
-  if (choice_exists_pred1 | choice_exists_pred2) {
-    pred <- pred %>% select(No, Ch1, Ch2, Ch3, Ch4, Choice)
+  if (!is.null(pred3)) {
+    # Merge all predictions based on 'No'
+    pred <- merge(merge(pred1, pred2, by = "No", suffixes = c("_1", "_2")), pred3, by = "No")
+    
+    # Soft voting
+    pred <- pred %>%
+      mutate(
+        Ch1 = weights[1] * Ch1_1 + weights[2] * Ch1_2 + weights[3] * Ch1,
+        Ch2 = weights[1] * Ch2_1 + weights[2] * Ch2_2 + weights[3] * Ch2,
+        Ch3 = weights[1] * Ch3_1 + weights[2] * Ch3_2 + weights[3] * Ch3,
+        Ch4 = weights[1] * Ch4_1 + weights[2] * Ch4_2 + weights[3] * Ch4
+      )
   } else {
-    pred <- pred %>% select(No, Ch1, Ch2, Ch3, Ch4)
+    # Merge pred1 and pred2 based on 'No'
+    pred <- merge(pred1, pred2, by = "No", suffixes = c("_1", "_2"))
+
+    # Soft voting
+    pred <- pred %>%
+      mutate(
+        Ch1 = weights[1] * Ch1_1 + weights[2] * Ch1_2,
+        Ch2 = weights[1] * Ch2_1 + weights[2] * Ch2_2,
+        Ch3 = weights[1] * Ch3_1 + weights[2] * Ch3_2,
+        Ch4 = weights[1] * Ch4_1 + weights[2] * Ch4_2
+      )
   }
 
+  # Remove the columns from individual models
+  cols_to_drop <- grep("_", names(pred), value = TRUE)
+  pred <- pred %>% select(-cols_to_drop)
+  
   return(pred)
 }
-
 
 # Function to adjust and normalize probabilities
 adjust_and_normalize <- function(df, min_proportion=0.5) {
@@ -118,6 +118,24 @@ logloss <- function(testpredict_df) {
 ```
 
 ```{r}
+# With two predictions
+vote2 <- soft_voting(test1, test2, weights = c(0.6, 0.4))
+loss2 <- logloss(vote2)
+loss2
+
+# With three predictions
+vote3 <- soft_voting(test1, test2, test3, weights = c(0.5, 0.35, 0.15))
+loss3 <- logloss(vote3)
+loss3
+```
+
+```{r}
+vote2
+vote3
+```
+
+
+```{r}
 # Initialize variables to store the minimum loss and corresponding weight
 min_loss <- Inf
 optimal_weight <- NULL
@@ -153,34 +171,27 @@ ggplot(df_loss, aes(x=weight1, y=loss)) +
   geom_line() +
   labs(x="Weight1", y="Loss", title="Loss vs Weight1")
 ```
-```{r}
-weight = 0.6 ## gut feel
-result <- soft_voting(test1, test2, weight, 1-weight)
-loss <- logloss(result)
-loss
-```
+
 
 ```{r}
 # Apply the function
-final <- adjust_and_normalize(result, 0.5)
-loss <- logloss(final)
-loss
+final2 <- adjust_and_normalize(vote2, 0.5)
+loss2 <- logloss(final2)
+loss2
+final3 <- adjust_and_normalize(vote3, 0.5)
+loss3 <- logloss(final3)
+loss3
 ```
 
+# Exporting
 ```{r}
-rf <- adjust_and_normalize(test1, 0.5)
-loss <- logloss(rf)
-loss
+# With two predictions
+vote2 <- soft_voting(pred1, pred2, weights = c(0.40, 0.60))
+
+# # With three predictions
+# vote3 <- soft_voting(pred1, pred2, pred3, weights = c(0.4, 0.30, 0.30))
 ```
 
-
-```{r}
-weight = 0.6
-result <- soft_voting(pred1, pred2, weight, 1-weight)
-result
-# final <- adjust_and_normalize(pred1, 0.5)
-# final
-```
 ```{r}
 min(subset(result, select=-c(No)))
 max(subset(result, select=-c(No)))
@@ -190,6 +201,6 @@ max(subset(final, select=-c(No)))
 
 ## Export
 ```{r}
-write.csv(result, file = "../output/ensemble_rf_xgb.csv", row.names = FALSE)
+write.csv(vote2, file = "../output/ensemble_4060.csv", row.names = FALSE)
 ```
 

@@ -7,10 +7,34 @@ output: html_notebook
 rm(list=ls())
 library(dplyr)
 library(mlogit)
+library(caret)
 ```
 
 ```{r}
-safety <- read.csv("../input/train1_mlogit.csv")
+safety <- read.csv("../input/train1.csv")
+safety$Choice <- ifelse(safety$Ch1 == 1, 1,
+                        ifelse(safety$Ch2 == 1, 2,
+                               ifelse(safety$Ch3 == 1, 3,
+                                      ifelse(safety$Ch4 == 1, 4, NA))))
+df <- subset(safety, select = -c(segmentind,year,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+dummy <- dummyVars(" ~ .", data=df)
+newdata <- data.frame(predict(dummy, newdata = df)) 
+df_train_final <- subset(newdata, select = -c(segmentSmall.Car,pparkNever, genderFemale, educTrade.Vocational.School, regionW, UrbSuburban))
+# Writing the output to a csv file
+write.csv(df_train_final, file = "../input/train1_onehot2.csv", row.names = FALSE)
+safety <- read.csv("../input/test1.csv")
+safety$Choice <- 0
+df <- subset(safety, select = -c(segmentind,year,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
+dummy <- dummyVars(" ~ .", data=df)
+newdata <- data.frame(predict(dummy, newdata = df)) 
+df_test_final <- subset(newdata, select = -c(pparkNever, genderFemale, educTrade.Vocational.School, regionW, UrbSuburban))
+# Writing the output to a csv file
+write.csv(df_test_final, file = "../input/test1_onehot2.csv", row.names = FALSE)
+```
+
+
+```{r}
+safety <- read.csv("../input/train1_onehot2.csv")
 head(safety)
 ```
 
@@ -19,9 +43,17 @@ which(colnames(safety)=="CC1")
 which(colnames(safety)=="Price4")
 ```
 
+```{r}
+set.seed(123)
+trainingIndex <- createDataPartition(safety$Choice, p = 0.8, list = FALSE)
+
+trainingSet <- safety[trainingIndex,]
+testSet <- safety[-trainingIndex,]
+```
+
 
 ```{r}
-training<-dfidx(subset(safety, Task<=15), shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
+training<-dfidx(trainingSet, shape="wide", choice="Choice", varying =c(4:83), sep="",idx = list(c("No", "Case")))
 head(training)
 ```
 ```{r}
@@ -32,33 +64,25 @@ concatenate_column_names <- function(df) {
 }
 
 # Usage
-safety_names_concatenated <- concatenate_column_names(training)
+safety_names_concatenated <- concatenate_column_names(trainingSet)
 safety_names_concatenated
 ```
 
 
 ```{r}
-# M1 <- mlogit(Choice~CC+GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + yearind + milesa + nighta + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + agea + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City + incomea+0, data=training, rpar=c(CC='n', FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
-M1 <- mlogit(Choice~GN + FA + LD + BZ + FC + FP + RP + PP + SC + TS + NV + LB + AF + HU + Price | yearind + milesind + nightind + genderind + ageind + educind + regionind + Urbind + incomeind + 0, data=training, print.level=TRUE)
-```
-
-```{r}
+M1 <- mlogit(Choice~CC+GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + yearind + milesa + nighta + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + agea + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City + incomea+0, data=training, rpar=c(CC='n', FA='n',LD='n',BZ='n',FC='n',FP='n',RP='n',PP='n',KA='n',SC='n',TS='n',NV='n',MA='n',LB='n',AF='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
 summary(M1)
-```
-
-```{r}
 M1loglik<-round(as.numeric(M1$logLik),digits=2)
 M1loglik
 ```
 
 ```{r}
-test_set <- subset(safety, Task>15)
-Test <- dfidx(test_set, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+Test <- dfidx(testSet, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
 TestPredict1 <- predict(M1, newdata=Test)
 testpredict_df <- as.data.frame(TestPredict1)
 colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 PredictedChoice1 <- apply(TestPredict1,1,which.max)
-ActualChoice1 <- test_set[,"Choice"]
+ActualChoice1 <- testSet[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
 
@@ -78,26 +102,24 @@ logloss <- function(test_set, testpredict_df) {
 }
 
 # Calculate logloss
-logloss_value <- logloss(test_set, testpredict_df)
+logloss_value <- logloss(testSet, testpredict_df)
 print(paste0("Test LogLoss: ", logloss_value))
 ```
 ## No RV
 ```{r}
-M2 <- mlogit(Choice~CC+GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + year + miles101.To.150.Miles + miles151.To.200.Miles + miles201.To.250.Miles + miles251.To.300.Miles + miles301.To.350.Miles + miles351.To.400.Miles + miles51.To.100.Miles + milesOver.400.Miles + night10..To.20. + night21..To.30. + night31..To.40. + night41..To.50. + night51..To.60. + night61..To.70. + night71..To.80. + night81..To.90. + night91..To.100. + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + age30.To.39 + age40.To.49 + age50.To.59 + age60...Over + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City + incomea +0, data=training,print.level=TRUE)
+M2 <- mlogit(Choice~CC+GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + yearind + milesa + nighta + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + agea + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City + incomea +0, data=training,print.level=TRUE)
 summary(M2)
-
 M2loglik<-round(as.numeric(M2$logLik),digits=2)
 M2loglik
 ```
 
 ```{r}
-test_set <- subset(safety, Task>15)
-Test <- dfidx(test_set, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+Test <- dfidx(testSet, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
 TestPredict1 <- predict(M2, newdata=Test)
 testpredict_df <- as.data.frame(TestPredict1)
 colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 PredictedChoice1 <- apply(TestPredict1,1,which.max)
-ActualChoice1 <- test_set[,"Choice"]
+ActualChoice1 <- testSet[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
 
@@ -117,13 +139,13 @@ logloss <- function(test_set, testpredict_df) {
 }
 
 # Calculate logloss
-logloss_value <- logloss(test_set, testpredict_df)
+logloss_value <- logloss(testSet, testpredict_df)
 print(paste0("Test LogLoss: ", logloss_value))
 ```
 
 ## Remove CC
 ```{r}
-M3 <- mlogit(Choice~GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + year + miles101.To.150.Miles + miles151.To.200.Miles + miles201.To.250.Miles + miles251.To.300.Miles + miles301.To.350.Miles + miles351.To.400.Miles + miles51.To.100.Miles + milesOver.400.Miles + night10..To.20. + night21..To.30. + night31..To.40. + night41..To.50. + night51..To.60. + night61..To.70. + night71..To.80. + night81..To.90. + night91..To.100. + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + age30.To.39 + age40.To.49 + age50.To.59 + age60...Over + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City + incomea +0, data=training,print.level=TRUE)
+M3 <- mlogit(Choice~GN+FA+LD+BZ+FC+FP+RP+PP+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + yearind + nighta + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + agea + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City +0, data=training,print.level=TRUE)
 summary(M3)
 
 M3loglik<-round(as.numeric(M3$logLik),digits=2)
@@ -131,13 +153,12 @@ M3loglik
 ```
 
 ```{r}
-test_set <- subset(safety, Task>15)
-Test <- dfidx(test_set, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
+Test <- dfidx(testSet, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
 TestPredict1 <- predict(M3, newdata=Test)
 testpredict_df <- as.data.frame(TestPredict1)
 colnames(testpredict_df) <- c("Ch1", "Ch2", "Ch3", "Ch4")
 PredictedChoice1 <- apply(TestPredict1,1,which.max)
-ActualChoice1 <- test_set[,"Choice"]
+ActualChoice1 <- testSet[,"Choice"]
 Tabtestmixed= table(PredictedChoice1, ActualChoice1)
 Tabtestmixed
 
@@ -157,9 +178,19 @@ logloss <- function(test_set, testpredict_df) {
 }
 
 # Calculate logloss
-logloss_value <- logloss(test_set, testpredict_df)
+logloss_value <- logloss(testSet, testpredict_df)
 print(paste0("Test LogLoss: ", logloss_value))
 ```
+```{r}
+testpredict_df$No <- testSet$No
+testpredict_df$Choice <- testSet$Choice
+testpredict_df <- testpredict_df %>%
+  select(No, Ch1, Ch2, Ch3, Ch4, Choice)
+# Writing the output to a csv file
+write.csv(testpredict_df, file = "../input/testresults_mlogitM2.csv", row.names = FALSE)
+```
+
+
 ```{r}
 M4 <- mlogit(Choice~GN+FA+LD+BZ+FC+FP+RP+PP+KA+SC+TS+NV+MA+LB+AF+HU+Price| segmentFull.size.Pickup + segmentMidsize.Car + segmentMidsize.Luxury.Utility.segements + segmentMidsize.Utility + segmentPrestige.Luxury.Sedan + year + miles101.To.150.Miles + miles151.To.200.Miles + miles201.To.250.Miles + miles251.To.300.Miles + miles301.To.350.Miles + miles351.To.400.Miles + miles51.To.100.Miles + milesOver.400.Miles + night10..To.20. + night21..To.30. + night31..To.40. + night41..To.50. + night51..To.60. + night61..To.70. + night71..To.80. + night81..To.90. + night91..To.100. + pparkDaily + pparkMonthly + pparkWeekly + pparkYearly + genderMale + age30.To.39 + age40.To.49 + age50.To.59 + age60...Over + educCollege.Graduate..4.Years. + educGrade.School + educHigh.School + educPostgraduate.College + educSome.College..1.3.Years. + regionMW + regionNE + regionSE + regionSW + UrbRural.Country + UrbUrban.City + incomea +0, data=training, rpar=c(FA='n',BZ='n',FP='n',RP='n',PP='n',SC='n',TS='n',NV='n',MA='n',LB='n',HU='n',Price='n'), panel = TRUE, print.level=TRUE)
 summary(M4)
@@ -202,7 +233,7 @@ print(paste0("Test LogLoss: ", logloss_value))
 
 # Generate Predictions
 ```{r}
-predict_data <- read.csv("../input/test1_onehot.csv")
+predict_data <- read.csv("../input/test1_onehot2.csv")
 
 which(colnames(predict_data)=="CC1")
 which(colnames(predict_data)=="Price4")
@@ -210,7 +241,7 @@ which(colnames(predict_data)=="Price4")
 
 ```{r}
 predict_set <- dfidx(predict_data, shape="wide", choice="Choice", varying = c(4:83), sep="",idx = list(c("No", "Case")))
-prediction <- predict(M3, newdata=predict_set)
+prediction <- predict(M2, newdata=predict_set)
 
 # Converting the prediction matrix into a data frame
 prediction_df <- as.data.frame(prediction)
@@ -222,5 +253,5 @@ prediction_df$No <- predict_data$No
 prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
 
 # Writing the output to a csv file
-write.csv(prediction_df, file = "../output/submission_M3.csv", row.names = FALSE)
+write.csv(prediction_df, file = "../output/submission_M2.csv", row.names = FALSE)
 ```
