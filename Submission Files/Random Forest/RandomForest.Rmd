@@ -102,6 +102,6 @@ final_predict_df <- final_predict_df[c("No","Ch1","Ch2","Ch3","Ch4")]
 
 ```{r}
 # Export
-write.csv(final_predict_df, file = "../Output/RandomForest_best.csv", row.names = FALSE)
+write.csv(final_predict_df, file = "../output/RandomForest_best.csv", row.names = FALSE)
 ```
 
