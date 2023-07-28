@@ -185,11 +185,11 @@ loss3
 
 # Exporting
 ```{r}
-# With two predictions
-vote2 <- soft_voting(pred1, pred2, weights = c(0.40, 0.60))
+# # With two predictions
+# vote2 <- soft_voting(pred1, pred2, weights = c(0.40, 0.60))
 
-# # With three predictions
-# vote3 <- soft_voting(pred1, pred2, pred3, weights = c(0.4, 0.30, 0.30))
+# With three predictions
+vote3 <- soft_voting(pred1, pred2, pred3, weights = c(0.45, 0.35, 0.20))
 ```
 
 ```{r}
@@ -201,6 +201,6 @@ max(subset(final, select=-c(No)))
 
 ## Export
 ```{r}
-write.csv(vote2, file = "../output/ensemble_4060.csv", row.names = FALSE)
+write.csv(vote3, file = "../output/ensemble_453520.csv", row.names = FALSE)
 ```
 
