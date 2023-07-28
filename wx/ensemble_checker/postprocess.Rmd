@@ -1,0 +1,205 @@
+---
+title: "Postprocessing"
+output: html_notebook
+---
+# Load the required library
+```{r}
+rm(list=ls())
+library(dplyr)
+library(purrr)
+library(ggplot2)
+```
+
+# Read in the prediction data
+```{r}
+test1 <- read.csv("testresults_2001for_allvariables.csv")
+test2 <- read.csv("testresults_xgb3.csv")
+test3 <- read.csv("testresults_mlogitM3.csv")
+pred1 <- read.csv("Rforest_2001_trees.csv")
+pred2 <- read.csv("submission_xgb3.csv")
+pred3 <- read.csv("submission_M3.csv")
+```
+
+```{r}
+## Function for checker
+get_choice <- function(row_data) {
+  max_val <- max(row_data)
+  choice <- which(row_data == max_val)
+  return(choice[1])
+}
+
+# Soft voting function
+soft_voting <- function(pred1, pred2, pred3=NULL, weights=c(0.5, 0.5, 0)) {
+  # Ensure that the weights sum up to 1
+
+  # Remove 'Choice' from pred2 and pred3 (if present)
+  pred2 <- pred2[ , !(names(pred2) %in% "Choice")]
+  if (!is.null(pred3)) {
+    pred3 <- pred3[ , !(names(pred3) %in% "Choice")]
+  }
+
+  if (!is.null(pred3)) {
+    # Merge all predictions based on 'No'
+    pred <- merge(merge(pred1, pred2, by = "No", suffixes = c("_1", "_2")), pred3, by = "No")
+    
+    # Soft voting
+    pred <- pred %>%
+      mutate(
+        Ch1 = weights[1] * Ch1_1 + weights[2] * Ch1_2 + weights[3] * Ch1,
+        Ch2 = weights[1] * Ch2_1 + weights[2] * Ch2_2 + weights[3] * Ch2,
+        Ch3 = weights[1] * Ch3_1 + weights[2] * Ch3_2 + weights[3] * Ch3,
+        Ch4 = weights[1] * Ch4_1 + weights[2] * Ch4_2 + weights[3] * Ch4
+      )
+  } else {
+    # Merge pred1 and pred2 based on 'No'
+    pred <- merge(pred1, pred2, by = "No", suffixes = c("_1", "_2"))
+
+    # Soft voting
+    pred <- pred %>%
+      mutate(
+        Ch1 = weights[1] * Ch1_1 + weights[2] * Ch1_2,
+        Ch2 = weights[1] * Ch2_1 + weights[2] * Ch2_2,
+        Ch3 = weights[1] * Ch3_1 + weights[2] * Ch3_2,
+        Ch4 = weights[1] * Ch4_1 + weights[2] * Ch4_2
+      )
+  }
+
+  # Remove the columns from individual models
+  cols_to_drop <- grep("_", names(pred), value = TRUE)
+  pred <- pred %>% select(-cols_to_drop)
+  
+  return(pred)
+}
+
+# Function to adjust and normalize probabilities
+adjust_and_normalize <- function(df, min_proportion=0.5) {
+  
+  # List of column names containing probabilities
+  prob_cols <- c("Ch1", "Ch2", "Ch3", "Ch4")
+  
+  # Convert the dataframe to a matrix for easier row-wise operations
+  prob_matrix <- as.matrix(df[prob_cols])
+  
+  # For each row, find the min and max indices
+  min_indices <- apply(prob_matrix, 1, which.min)
+  max_indices <- apply(prob_matrix, 1, which.max)
+  
+  # Adjust the min and max values for each row
+  for(i in seq_len(nrow(prob_matrix))) {
+    # Calculate how much of the min to give to the max
+    transfer_amount <- prob_matrix[i, min_indices[i]] * min_proportion
+    
+    # Subtract the transfer amount from the min
+    prob_matrix[i, min_indices[i]] <- prob_matrix[i, min_indices[i]] - transfer_amount
+    
+    # Add the transfer amount to the max
+    prob_matrix[i, max_indices[i]] <- prob_matrix[i, max_indices[i]] + transfer_amount
+  }
+  
+  # Normalize probabilities so they sum to 1
+  prob_matrix <- prob_matrix / rowSums(prob_matrix)
+  
+  # Replace the old probability columns in the dataframe
+  df[prob_cols] <- prob_matrix
+  
+  return(df)
+}
+
+logloss <- function(test_set, testpredict_df) {
+  # Create one-hot encoding for each choice on-the-fly
+  Ch1 <- as.integer(test_set$Choice == 1)
+  Ch2 <- as.integer(test_set$Choice == 2)
+  Ch3 <- as.integer(test_set$Choice == 3)
+  Ch4 <- as.integer(test_set$Choice == 4)
+  
+  # Calculate logloss using these one-hot encoded variables
+  result <- -1/nrow(test_set) * sum(Ch1 * log(testpredict_df$Ch1+.Machine$double.eps) +
+                                    Ch2 * log(testpredict_df$Ch2+.Machine$double.eps) +
+                                    Ch3 * log(testpredict_df$Ch3+.Machine$double.eps) +
+                                    Ch4 * log(testpredict_df$Ch4+.Machine$double.eps))
+  return(result)
+}
+```
+
+## iterate with many combinations
+This is iterate over a range of weights then store the confidence in a dataframe
+```{r}
+result_frame <- data.frame(Bench=numeric(), Logloss=numeric(), AgainstBench=numeric())
+best <- model <- soft_voting(pred1, pred2, pred3, weights = c(0.5, 0.3, 0.2))
+best <- subset(best, select = -c(No))
+best$Choice <- apply(best, 1, get_choice)
+
+for (weight1 in seq(0, 1, by = 0.05)){
+  for (weight2 in seq(0, 1-weight1, by = 0.05)){
+    weight1 <- round(weight1,2)
+    weight2 <- round(weight2,2)
+    weight3 <- round(1 - weight1-weight2,2)
+    print(c(weight1, weight2, weight3))
+    # print(sum(weight1, weight2, weight3))
+    model <- soft_voting(pred1, pred2, pred3, weights = c(weight1, weight2, weight3))
+    
+    benchmark_new <- subset(model, select = -c(No))
+    benchmark_new$Choice <- apply(benchmark_new, 1, get_choice)
+    ll <- logloss(benchmark_new,model)
+    ll2 <- logloss(best,model)
+    
+    benchlabel <- paste0(weight1*100, ",",weight2*100, ",",weight3*100)
+    print(benchlabel)
+    
+    new_row <- data.frame(Bench = benchlabel, Logloss = ll, AgainstBench = ll2)
+    result_frame <- rbind(result_frame, new_row)
+  }
+}
+pure <- result_frame
+
+## used to reset result_frame
+result_frame <- pure
+
+result_frame$ind <- seq_len(nrow(result_frame))
+
+result_frame$cat <- "Possible Combination"
+bench_ind <- as.numeric(which(result_frame$Bench == "50,30,20"))
+
+allowance <- 0.01 ## CHANGE THIS: higher means a larger range, public score will deviate much more
+
+## Close to the benchmark
+below_ind <- as.numeric(which(result_frame$AgainstBench < 0.8261964 + allowance & result_frame$AgainstBench > 0.8261964 - allowance))
+## Close to the benchmark and more confident
+belowplus_ind <- as.numeric(which(result_frame$AgainstBench < 0.8261964 + allowance & result_frame$AgainstBench > 0.8261964 - allowance & result_frame$Logloss < 0.8261964))
+
+result_frame[below_ind,]$cat <- "Close to Benchmark"
+result_frame[belowplus_ind,]$cat <- "Close to Benchmark and more confident"
+result_frame[bench_ind,]$cat <- "Benchmark"
+
+ggplot(data = result_frame,
+       mapping = aes(x = ind, y = Logloss)) +
+  geom_point(aes(colour=cat)) +
+  coord_cartesian(xlim=c(140,190), ylim=c(0.805,0.84)) +
+  labs(x="Combination", y="Logloss") +
+  geom_hline(yintercept = 0.8261964) 
+```
+
+## Show Close to benchmark and more confident
+```{r}
+finalresult <- subset(result_frame, result_frame$cat=="Close to Benchmark and more confident")
+finalresult
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
