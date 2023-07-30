@@ -14,7 +14,7 @@ loadPkgs(pkgnames)
 ```
 
 ```{r}
-safety <- read.csv("../input/train1.csv")
+safety <- read.csv("../../input/train1.csv")
 safety$Choice <- ifelse(safety$Ch1 == 1, 1,
                         ifelse(safety$Ch2 == 1, 2,
                                ifelse(safety$Ch3 == 1, 3,
@@ -24,20 +24,20 @@ dummy <- dummyVars(" ~ .", data=df)
 newdata <- data.frame(predict(dummy, newdata = df)) 
 df_train_final <- subset(newdata, select = -c(segmentSmall.Car,pparkNever, genderFemale, educTrade.Vocational.School, regionW, UrbSuburban))
 # Writing the output to a csv file
-write.csv(df_train_final, file = "../input/train1_onehot2.csv", row.names = FALSE)
-safety <- read.csv("../input/test1.csv")
+write.csv(df_train_final, file = "../../input/train1_onehot2.csv", row.names = FALSE)
+safety <- read.csv("../../input/test1.csv")
 safety$Choice <- 0
 df <- subset(safety, select = -c(segmentind,year,miles,milesind,night,nightind,pparkind,genderind,age,ageind,educind,regionind,Urbind,income,incomeind,Ch1,Ch2,Ch3,Ch4))
 dummy <- dummyVars(" ~ .", data=df)
 newdata <- data.frame(predict(dummy, newdata = df)) 
 df_test_final <- subset(newdata, select = -c(pparkNever, genderFemale, educTrade.Vocational.School, regionW, UrbSuburban))
 # Writing the output to a csv file
-write.csv(df_test_final, file = "../input/test1_onehot2.csv", row.names = FALSE)
+write.csv(df_test_final, file = "../../input/test1_onehot2.csv", row.names = FALSE)
 ```
 
 
 ```{r}
-safety <- read.csv("../input/train1_onehot2.csv")
+safety <- read.csv("../../input/train1_onehot2.csv")
 head(safety)
 ```
 
@@ -67,7 +67,7 @@ concatenate_column_names <- function(df) {
 }
 
 # Usage
-safety_names_concatenated <- concatenate_column_names(trainingSet)
+safety_names_concatenated <- concatenate_column_names(training)
 safety_names_concatenated
 ```
 
@@ -236,7 +236,7 @@ print(paste0("Test LogLoss: ", logloss_value))
 
 # Generate Predictions
 ```{r}
-predict_data <- read.csv("../input/test1_onehot2.csv")
+predict_data <- read.csv("../../input/test1_onehot2.csv")
 
 which(colnames(predict_data)=="CC1")
 which(colnames(predict_data)=="Price4")
@@ -256,5 +256,5 @@ prediction_df$No <- predict_data$No
 prediction_df <- prediction_df[c("No", "Ch1", "Ch2", "Ch3", "Ch4")]
 
 # Writing the output to a csv file
-write.csv(prediction_df, file = "../output/submission_M3.csv", row.names = FALSE)
+write.csv(prediction_df, file = "../../output/submission_M3.csv", row.names = FALSE)
 ```
