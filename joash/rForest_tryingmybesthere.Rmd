@@ -12,12 +12,6 @@ library(data.table)
 ```
 
 ```{r}
-library(parallelMap)
-library(parallel)
-parallelStartSocket(cpus = detectCores())
-```
-
-```{r}
 safety <- read.csv("train1_trying.csv")
 safety <- subset(safety, select=-c(No, Case, CC4,GN4,NS4,BU4,FA4,LD4,BZ4,FC4,FP4,RP4,PP4,KA4,SC4,TS4,NV4,MA4,LB4,AF4,HU4,Price4))
 
@@ -53,7 +47,7 @@ seed <- 123
 
 ```{r}
 set.seed(seed)
-trainingIndex <- createDataPartition(safety$Choice, p = 0.8, list = FALSE)
+trainingIndex <- createDataPartition(safety$Choice, p = 1, list = FALSE)
 
 trainingSet <- safety[trainingIndex,]
 testSet <- safety[-trainingIndex,]
@@ -232,7 +226,7 @@ final_predict_df <- final_predict_df[c("No","Ch1","Ch2","Ch3","Ch4")]
 ```
 
 ```{r}
-write.csv(final_predict_df, file = "./Joash_randForest_nobins.csv", row.names = FALSE)
+write.csv(final_predict_df, file = "./rand 100.csv", row.names = FALSE)
 ```
 
 ```{r}
