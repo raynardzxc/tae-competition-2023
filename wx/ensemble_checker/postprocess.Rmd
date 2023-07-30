@@ -152,7 +152,7 @@ for (weight1 in seq(0, 1, by = 0.05)){
 }
 pure <- result_frame
 
-## used to reset result_frame
+## used to reset result_frame when changing allowance
 result_frame <- pure
 
 result_frame$ind <- seq_len(nrow(result_frame))
