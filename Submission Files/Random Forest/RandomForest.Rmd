@@ -4,6 +4,7 @@ output: html_notebook
 ---
 
 ```{r}
+rm(list=ls())
 # Libraries
 library(randomForest)
 library(caret)
@@ -50,7 +51,7 @@ model <- randomForest(as.factor(Choice) ~ ., data = trainingSet, mtry=best.m, im
 varImpPlot(model)
 ```
 ```{r}
-imp = as.data.frame(importance(iris.rf))
+imp = as.data.frame(importance(model))
 imp = cbind(vars=rownames(imp), imp)
 imp = imp[order(imp$MeanDecreaseAccuracy),]
 imp$vars = factor(imp$vars, levels=unique(imp$vars))
